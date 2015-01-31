@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  start: 2015-01-31 20:30:12
+  end: 2015-01-31 20:30:12
+  durationEvent: false
+  place: MyString
+  description: MyText
+
+two:
+  title: MyString
+  start: 2015-01-31 20:30:12
+  end: 2015-01-31 20:30:12
+  durationEvent: false
+  place: MyString
+  description: MyText
