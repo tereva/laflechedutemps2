@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150131193204) do
+ActiveRecord::Schema.define(:version => 20150203134336) do
 
   create_table "chronologies", :force => true do |t|
     t.string   "title"
@@ -31,6 +31,24 @@ ActiveRecord::Schema.define(:version => 20150131193204) do
     t.text     "description"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.boolean  "validated"
   end
+
+  create_table "histories", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "registres", :force => true do |t|
+    t.integer  "history_id"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "registres", ["event_id"], :name => "index_registres_on_event_id"
+  add_index "registres", ["history_id"], :name => "index_registres_on_history_id"
 
 end

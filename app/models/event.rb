@@ -8,4 +8,9 @@ class Event < ActiveRecord::Base
   validates :start, presence: true
   validates :place, presence: true
 
+  has_many :registres, foreign_key: "event_id", dependent: :destroy
+  has_many  :histories, through: :registres
+
 end
+
+

@@ -1,4 +1,6 @@
 Krono::Application.routes.draw do
+  resources :histories
+
   #get "home/index"
   
   resources :events
