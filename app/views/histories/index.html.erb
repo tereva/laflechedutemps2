@@ -1,5 +1,16 @@
 <h1>Listing histories</h1>
 
+
+<%= form_for(@history) do |f| %>
+<div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+
+  </div>
+<%= f.submit "Créer", class: "btn btn-large btn-primary" %>
+<% end %>
+
+
 <table>
   <tr>
     <th>Title</th>

@@ -1,6 +1,33 @@
-<h1>Editing history</h1>
+<h1>Editing history : <%= @history.title %></h1>
 
 <%= render 'form' %>
+
+<%= render 'eventsform' %>
+
+ <% if @history.events.any? %>
+  <h3>Events (<%= @history.events.count %>)</h3>
+
+
+<% if false %>
+  <ol>
+   <%= render @events %>
+  </ol>
+ <%= will_paginate @events %>
+<% end %>
+
+<ol>
+<% @history.registres.each do |registre| %>
+   <li>
+  <span><%= Event.find(registre.event_id).title %></span>
+  <span> |  <%= registre.event.place %></span>
+  <span> <%= link_to "| Voir", registre.event%></span>
+  <span> <%= link_to "| Edit", edit_event_path(registre.event_id)%></span>
+  <span><%= link_to "| delete", registre, method: :delete, confirm: "You sure?" %></span>
+   </li>
+
+<% end %>
+</ol>
+<% end %>
 
 <%= link_to 'Show', @history %> |
 <%= link_to 'Back', histories_path %>

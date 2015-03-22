@@ -10,6 +10,13 @@
   <%= @history.description %>
 </p>
 
-
-<%= link_to 'Edit', edit_history_path(@history) %> |
 <%= link_to 'Back', histories_path %>
+
+
+ <% if @history.events.any? %>
+  <h3>Events (<%= @history.events.count %>)</h3>                 
+  <ol>
+   <%= render @events %>
+  </ol>
+ <%= will_paginate @events %>                                     
+ <% end %>  

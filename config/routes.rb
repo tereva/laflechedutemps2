@@ -1,11 +1,11 @@
 Krono::Application.routes.draw do
-  resources :histories
-
   #get "home/index"
   
   resources :events
+  resources :histories
+  resources :registres, only: [:create, :destroy]
 
-  root to: 'home#index'
+  root to: 'histories#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

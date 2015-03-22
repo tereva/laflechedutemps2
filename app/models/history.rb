@@ -5,3 +5,12 @@ class History < ActiveRecord::Base
   has_many  :events, through: :registres
 
 end
+
+
+def eventin?(event)
+registres.find_by_event_id(event.id)
+end
+def eventin!(event)
+registres.create!(event_id: event.id)
+end
+

@@ -1,0 +1,5 @@
+<%= form_tag({controller: "registres", action: "destroy"}, method:"delete" ) do%>
+<%= collection_select(:event, :event_id, @events.all, :id, :title) %>
+<%= hidden_field_tag(:history_id, @history.id ) %>
+<%= submit_tag "Enlever", class: "btn btn-large btn-primary" %>
+<% end %>
