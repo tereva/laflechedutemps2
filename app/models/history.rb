@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: histories
+#
+#  id          :integer         not null, primary key
+#  title       :string(255)
+#  description :text
+#  created_at  :datetime        not null
+#  updated_at  :datetime        not null
+#
+
 class History < ActiveRecord::Base
   attr_accessible :description, :title
   
