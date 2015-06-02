@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150203134336) do
+ActiveRecord::Schema.define(:version => 20150602073452) do
 
   create_table "chronologies", :force => true do |t|
     t.string   "title"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(:version => 20150203134336) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "joint_histoire_evenements", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "history_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "joint_histoire_evenements", ["event_id"], :name => "index_joint_histoire_evenements_on_event_id"
+  add_index "joint_histoire_evenements", ["history_id"], :name => "index_joint_histoire_evenements_on_history_id"
+
   create_table "registres", :force => true do |t|
     t.integer  "history_id"
     t.integer  "event_id"
@@ -50,5 +60,15 @@ ActiveRecord::Schema.define(:version => 20150203134336) do
 
   add_index "registres", ["event_id"], :name => "index_registres_on_event_id"
   add_index "registres", ["history_id"], :name => "index_registres_on_history_id"
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "password_digest"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
 end
