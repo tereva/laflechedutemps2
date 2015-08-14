@@ -24,9 +24,15 @@
   <tr>
     <td><%= history.title %></td>
     <td><%= history.description %></td>
+
     <td><%= link_to 'Show', history %></td>
+    
+    <% if signed_in? %>
     <td><%= link_to 'Edit', edit_history_path(history) %></td>
     <td><%= link_to 'Destroy', history, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+
+
   </tr>
 <% end %>
 </table>

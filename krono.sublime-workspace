@@ -8,66 +8,60 @@
 	"buffers":
 	[
 		{
-			"file": "app/controllers/events_controller.rb",
-			"settings":
-			{
-				"buffer_size": 1899,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/controllers/histories_controller.rb",
-			"settings":
-			{
-				"buffer_size": 2297,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "app/models/user.rb",
 			"settings":
 			{
-				"buffer_size": 752,
+				"buffer_size": 1001,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "spec/models/user_spec.rb",
+			"file": "app/controllers/users_controller.rb",
 			"settings":
 			{
-				"buffer_size": 1713,
+				"buffer_size": 263,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "db/migrate/20150531101827_add_index_to_users_email.rb",
+			"file": "Gemfile",
 			"settings":
 			{
-				"buffer_size": 118,
+				"buffer_size": 651,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/views/histories/edit.html.erb",
+			"file": "app/views/users/show.html.erb",
 			"settings":
 			{
-				"buffer_size": 769,
+				"buffer_size": 62,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/views/histories/_eventsform.html.erb",
+			"file": "app/views/users/new.html.erb",
 			"settings":
 			{
-				"buffer_size": 335,
-				"line_ending": "Unix"
+				"buffer_size": 489,
+				"line_ending": "Unix",
+				"name": "<h1>Users#new</h1>"
 			}
 		},
 		{
-			"file": "app/controllers/registres_controller.rb",
+			"file": "spec/requests/user_pages_spec.rb",
 			"settings":
 			{
-				"buffer_size": 728,
+				"buffer_size": 1046,
+				"line_ending": "Unix",
+				"name": "require 'spec helper'"
+			}
+		},
+		{
+			"file": "config/routes.rb",
+			"settings":
+			{
+				"buffer_size": 1991,
 				"line_ending": "Unix"
 			}
 		}
@@ -96,6 +90,24 @@
 	},
 	"file_history":
 	[
+		"/home/tev/WEB/sample_app/spec/requests/user_pages_spec.rb",
+		"/home/tev/WEB/sample_app/spec/models/user_spec.rb",
+		"/home/tev/WEB/krono/spec/factories.rb",
+		"/home/tev/WEB/krono/config/environments/test.rb",
+		"/home/tev/WEB/krono/app/views/layouts/application.html.erb",
+		"/home/tev/WEB/krono/app/helpers/application_helper.rb",
+		"/home/tev/WEB/krono/config/routes.rb",
+		"/home/tev/WEB/krono/app/controllers/histories_controller.rb",
+		"/home/tev/WEB/krono/app/controllers/events_controller.rb",
+		"/home/tev/WEB/krono/spec/models/user_spec.rb",
+		"/home/tev/WEB/krono/Gemfile",
+		"/home/tev/.bash_aliases",
+		"/home/tev/.bash_profile",
+		"/home/tev/.bashrc",
+		"/home/tev/WEB/krono/db/migrate/20150531101827_add_index_to_users_email.rb",
+		"/home/tev/WEB/krono/app/controllers/registres_controller.rb",
+		"/home/tev/WEB/krono/app/views/histories/edit.html.erb",
+		"/home/tev/WEB/krono/app/views/histories/_eventsform.html.erb",
 		"/home/tev/WEB/PHP_DOMParser/test.php",
 		"/home/tev/WEB/PHP_DOMParser/comparateurV0.php",
 		"/home/tev/WEB/BarreProgressionDynamique/upload.php",
@@ -103,7 +115,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -135,23 +147,22 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/controllers/events_controller.rb",
+					"file": "app/models/user.rb",
 					"settings":
 					{
-						"buffer_size": 1899,
+						"buffer_size": 1001,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1282,
-								1282
+								435,
+								435
 							]
 						],
 						"settings":
@@ -161,32 +172,31 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 450.0,
+						"translation.y": 45.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/controllers/histories_controller.rb",
+					"file": "app/controllers/users_controller.rb",
 					"settings":
 					{
-						"buffer_size": 2297,
+						"buffer_size": 263,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								134,
-								134
+								128,
+								128
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -196,18 +206,18 @@
 				},
 				{
 					"buffer": 2,
-					"file": "app/models/user.rb",
+					"file": "Gemfile",
 					"settings":
 					{
-						"buffer_size": 752,
+						"buffer_size": 651,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								589,
-								589
+								281,
+								281
 							]
 						],
 						"settings":
@@ -215,106 +225,25 @@
 							"syntax": "Packages/Ruby/Ruby.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 90.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "spec/models/user_spec.rb",
+					"file": "app/views/users/show.html.erb",
 					"settings":
 					{
-						"buffer_size": 1713,
+						"buffer_size": 62,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1377,
-								1377
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 679.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "db/migrate/20150531101827_add_index_to_users_email.rb",
-					"settings":
-					{
-						"buffer_size": 118,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								107,
-								107
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "app/views/histories/edit.html.erb",
-					"settings":
-					{
-						"buffer_size": 769,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								130,
-								130
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "app/views/histories/_eventsform.html.erb",
-					"settings":
-					{
-						"buffer_size": 335,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								335,
-								335
+								0,
+								0
 							]
 						],
 						"settings":
@@ -328,19 +257,75 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "app/controllers/registres_controller.rb",
+					"buffer": 4,
+					"file": "app/views/users/new.html.erb",
 					"settings":
 					{
-						"buffer_size": 728,
+						"buffer_size": 489,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								489,
+								489
+							]
+						],
+						"settings":
+						{
+							"auto_name": "<h1>Users#new</h1>",
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "spec/requests/user_pages_spec.rb",
+					"settings":
+					{
+						"buffer_size": 1046,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								672,
+								672
+							]
+						],
+						"settings":
+						{
+							"auto_name": "require 'spec helper'",
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "config/routes.rb",
+					"settings":
+					{
+						"buffer_size": 1991,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								286,
+								286
 							]
 						],
 						"settings":

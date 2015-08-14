@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
   # mise en minuscule avant sauvegarde dans la base
   before_save { |user| user.email = email.downcase }
 
+  # callback function to create remember token 
+  before_save :create_remember_token
+
+
 
   validates :name, presence: true, length: { maximum: 50 }
 
@@ -33,5 +37,12 @@ class User < ActiveRecord::Base
 validates :password, presence: true, length: { minimum: 6 }
 validates :password_confirmation, presence: true
  				
+private
+
+  def create_remember_token
+    self.remember_token = SecureRandom.urlsafe_base64
+  end
+
+
 
 end
