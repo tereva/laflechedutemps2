@@ -10,8 +10,11 @@
 #
 
 class History < ActiveRecord::Base
-  attr_accessible :description, :title
+  attr_accessible :description, :title, :status
   
+  validates :title, presence: true
+  validates :description, presence: true
+
   has_many :registres, foreign_key: "history_id", dependent: :destroy
   has_many  :events, through: :registres
 

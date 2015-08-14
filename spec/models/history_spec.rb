@@ -12,5 +12,17 @@
 require 'spec_helper'
 
 describe History do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+	before do
+			 @history = History.new(title: "Histoire test", description: "Description histoire test")
+	end
+
+	it { should respond_to(:title) }
+	it { should respond_to(:description) }
+	it { should respond_to(:owner) }
+	it { should respond_to(:status) }
+
+	it { should be_valid }
 end
+
+

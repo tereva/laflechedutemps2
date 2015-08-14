@@ -24,7 +24,6 @@ class User < ActiveRecord::Base
   before_save :create_remember_token
 
 
-
   validates :name, presence: true, length: { maximum: 50 }
 
   # Regex qui donne le format standard possible pour l'email
