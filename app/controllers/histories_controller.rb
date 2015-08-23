@@ -4,7 +4,6 @@ class HistoriesController < ApplicationController
   # GET /histories.json
   def index
     @histories = History.all
-    @history = History.new 
   end
 
   # GET /histories/1

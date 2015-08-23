@@ -1,24 +1,33 @@
 class UsersController < ApplicationController
  
- before_filter :signed_in_admin, only: [:new, :edit, :update, :toggle_approve ]
-
-
- 
-
+ before_filter :signed_in_user
+ before_filter :admin_user, only: [:index, :new, :toggle_approve ]
+ before_filter :correct_user, only: [:edit, :update]
 
   def index
-    @histories = History.all
+    @users= User.all
   end
 
-
-
-	def show
-		@user = User.find(params[:id])
-	end
+  def show
+	@user = User.find(params[:id])
+  end
 
 	def new
 		@user = User.new
 	end
+
+
+  def edit
+  end
+
+  def update
+   if @user.update_attributes(params[:user])
+     flash[:success] = "Modification OK"
+     redirect_to @user
+   else
+    render 'edit'
+   end
+  end
 
 	def create
 		@user = User.new(params[:user])
@@ -41,10 +50,17 @@ class UsersController < ApplicationController
     #render :nothing => true
   end
 
-def signed_in_admin
- redirect_to signin_path, notice: "Please sign in as admin." unless current_user.admin
+
+private
+
+def admin_user
+ redirect_to signin_path, notice: "Please sign in as admin." unless (signed_in? && current_user.admin?)
 end
 
+  def correct_user
+   @user = User.find(params[:id])
+   redirect_to root_path, notice: "Vous ne pouvez modifier que votre compte" unless (current_user?(@user) || current_user.admin?)
+  end
 
 
 end

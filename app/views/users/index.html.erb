@@ -1,12 +1,23 @@
 
 
+<h1>Tous les utilisateurs</h1>
 
-<% if signed_in? %>
-  <% if admin? %>
-    <%= render 'users/admin' %>
-  <% else %>
-    <%= render 'users/contrib' %>
-  <% end %>
- <% else %>
-  <%= render 'histories/index' %>
-<% end %>
+<table>
+      <tr>
+        <th>Nom</th>
+        <th>Date creation</th>
+        <th>Statut</th>  
+        <th></th>
+      </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.created_at %></td>
+        <td><%= user.admin ? 'admin' : 'contrib'  %></td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+      </tr>
+      <% end %>
+    </table>
+
+  <%= link_to "Create New user", signup_path %></p>

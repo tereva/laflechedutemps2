@@ -1,27 +1,7 @@
 <% provide(:title, @user.name) %>
-<h1><%= @user.name %> (<%= @user.id %>)</h1>
-
-<% if current_user.admin %>
-
-<p>Vous etes admin</p>
+<h1>Profil de l'utilisateur : <%= @user.name %> (<%= @user.id %>)</h1>
 
 
 
-<%end %>
-
-
-<% if current_user.id == @user.id %>
-
-	<h2>Mes chronologies</h2>
-
-	<h2>Mes évènements</h2>
-
-	<h2>Mes arbres</h2>
-
-<% else %>
-
-<p>Vous ne pouvez pas afficher  un autre profil que le votre</p>
-     
-<% end %>
 
 

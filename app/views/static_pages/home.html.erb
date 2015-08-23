@@ -1,2 +1,81 @@
 <h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+
+
+<% if signed_in? %>
+
+	<% if current_user.admin %>
+
+	<h2>ADMIN : Histoires à valider</h2>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+	<% @histories.each do |histo| %>
+      <tr>
+        <td><%= histo.title %></td>
+        <td><%= histo.description %></td>
+        <td><%= link_to 'Show', histo %></td>
+        <td><%= link_to 'Edit', edit_history_path(histo) %></td> 
+        <td><%= link_to approve_link_text(histo), toggle_approve_user_path(histo), 
+        :remote => true,  :id => "approve_link_#{histo.id}" %></td> 
+        <td><%= link_to 'Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+      <% end %>
+    </table>
+	<% end %>
+
+<h2> CONTRIB : Toutes mes histoires</h2>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+      </tr>
+	<% @myhistories.each do |histo| %>
+      <tr>
+        <td><%= histo.title %></td>
+        <td><%= histo.description %></td>
+        <td><%= link_to 'Show', histo %></td>
+        <td><%= link_to 'Edit', edit_history_path(histo) %></td> 
+      </tr>
+      <% end %>
+    </table>
+
+
+<% else %>
+
+<h2>Les 10 dernières Histoires validées...</h2>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    <% @histories.each do |histo| %>
+    <% if histo.approved%>
+      <tr>
+        <td><%= histo.title %></td>
+        <td><%= histo.description %></td>
+        <td><%= link_to 'Show', histo %></td>        
+      </tr>
+      <% end %>
+      <% end %>
+    </table>
+
+ 
+
+<% end %>
+
+
+
+
+
