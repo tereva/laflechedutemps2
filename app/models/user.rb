@@ -16,6 +16,12 @@ class User < ActiveRecord::Base
   # magique : fait le lien avec la colonne password_digest de la base 
   has_secure_password
 
+  # jonction one-to-many avec histories, pas de "dependent: : destroy" pour le moment
+  # methodes dispo :
+  # cf p434
+  has_many :histories
+
+
 
   # mise en minuscule avant sauvegarde dans la base
   before_save { |user| user.email = email.downcase }

@@ -1,0 +1,12 @@
+
+
+
+<% if signed_in? %>
+  <% if admin? %>
+    <%= render 'users/admin' %>
+  <% else %>
+    <%= render 'users/contrib' %>
+  <% end %>
+ <% else %>
+  <%= render 'histories/index' %>
+<% end %>

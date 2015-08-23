@@ -1,0 +1,27 @@
+
+
+<h1>Toutes les histoires validées</h1>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    <% @histories.each do |histo| %>
+    <% if histo.approved%>
+      <tr>
+        <td><%= histo.title %></td>
+        <td><%= histo.description %></td>
+        <td><%= link_to 'Show', histo %></td>
+      </tr>
+      <% end %>
+      <% end %>
+    </table>
+
+
+
+<% if signed_in? %>
+  <%= render 'histories/form' %>
+<% end %>
+

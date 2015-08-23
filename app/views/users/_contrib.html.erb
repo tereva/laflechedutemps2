@@ -1,0 +1,20 @@
+<h1>Vue Contrib</h1>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+      </tr>
+    <% @histories.each do |histo| %>
+    <% if current_user.id == histo.user_id %>
+      <tr>
+        <td>[Statut : <%= approve_link_text(histo) %> ] <%= histo.title %></td>
+        <td><%= histo.description %></td>
+        <td><%= link_to 'Show', histo %></td>
+        <td><%= link_to 'Edit', edit_history_path(histo) %></td> 
+      </tr>
+      <% end %>
+      <% end %>
+    </table>

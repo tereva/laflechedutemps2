@@ -5,11 +5,6 @@ class HistoriesController < ApplicationController
   def index
     @histories = History.all
     @history = History.new 
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @histories }
-    end
   end
 
   # GET /histories/1
@@ -42,19 +37,13 @@ class HistoriesController < ApplicationController
     #@registre = @history.registres.build
   end
 
-  # POST /histories
-  # POST /histories.json
   def create
-    @history = History.new(params[:history])
-   # @history.title = params[:title]
-    respond_to do |format|
-      if @history.save
-        format.html { redirect_to edit_history_path @history.id, notice: 'History was successfully created.' }
-        format.json { render json: @history, status: :created, location: @history }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @history.errors, status: :unprocessable_entity }
-      end
+    @history = current_user.histories.build(params[:history])
+    if @history.save
+      flash[:success] = "Histoiry created!"
+      redirect_to root_path
+    else
+      render 'histories/index'
     end
   end
 
@@ -85,4 +74,8 @@ class HistoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+ 
+
 end

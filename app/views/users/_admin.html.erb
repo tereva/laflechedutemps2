@@ -1,0 +1,23 @@
+<h1>Vue admin</h1>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+        <th></th> 
+        <th></th>
+        <th></th>
+      </tr>
+    <% @histories.each do |histo| %>
+      <tr>
+        <td><%= histo.title %></td>
+        <td><%= histo.description %></td>
+        <td><%= link_to 'Show', histo %></td>
+        <td><%= link_to 'Edit', edit_history_path(histo) %></td> 
+        <td><%= link_to approve_link_text(histo), toggle_approve_user_path(histo), 
+        :remote => true,  :id => "approve_link_#{histo.id}" %></td> 
+        <td><%= link_to 'Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+      <% end %>
+    </table>

@@ -1,6 +1,5 @@
 Krono::Application.routes.draw do
-  #get "home/index"
-  
+ 
   resources :events
   resources :histories
   resources :registres, only: [:create, :destroy]
@@ -8,13 +7,20 @@ Krono::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
 
-  root to: 'histories#index'
+  # Ajout de la methode toggle_approve comme ressource routable de l'objet Histoire
+  resources :users do
+    get 'toggle_approve', :on => :member
+  end
+
+  root to: 'static_pages#home'
 
   match '/signup',to: 'users#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
-
-
+  match  '/help', to: 'static_pages#help'
+  match '/about', to: 'static_pages#about'
+  match '/contact', to: 'static_pages#contact'
+  match '/home', to: 'static_pages#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
