@@ -11,16 +11,18 @@
 
 class History < ActiveRecord::Base
   
-  attr_accessible :description, :title, :approved
+  attr_accessible :description, :title
 
   belongs_to :user
   
   validates :title, presence: true
-  validates :description, presence: true
+  #validates :description, presence: true
   validates :user_id, presence: true
 
   has_many :registres, foreign_key: "history_id", dependent: :destroy
   has_many  :events, through: :registres
+
+ default_scope order: 'histories.created_at DESC'
 
 end
 

@@ -11,7 +11,6 @@
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
-
   
   # magique : fait le lien avec la colonne password_digest de la base 
   has_secure_password
@@ -21,6 +20,7 @@ class User < ActiveRecord::Base
   # cf p434
   has_many :histories
 
+  has_many :events
 
 
   # mise en minuscule avant sauvegarde dans la base
@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
 
 validates :password, presence: true, length: { minimum: 6 }
 validates :password_confirmation, presence: true
+
  				
 private
 

@@ -35,6 +35,20 @@ describe User do
 	it { should be_valid }
 	it { should_not be_admin }
 
+
+	describe "accessible attributes" do
+		it "should not allow access to admin flag" do
+			expect do
+				User.new(admin: true)
+			end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+		end
+	end
+
+
+
+
+
+
 	describe "with admin attribute set to 'true'" do
 		before { @user.toggle!(:admin)}
 		it { should be_admin }
@@ -135,4 +149,20 @@ describe User do
 		its(:remember_token) { should_not be_blank }
 	end
 
+	describe "history associations" do
+
+		before { @user.save }
+		let!(:older_history) do
+		FactoryGirl.create(:history, user: @user, created_at: 1.day.ago)
+		end
+
+		let!(:newer_history) do
+		FactoryGirl.create(:history, user: @user, created_at: 1.hour.ago)
+		end
+
+		it "should have the right history in the right order" do
+			@user.histories.should == [newer_history, older_history]
+		end
+
+	end
 end

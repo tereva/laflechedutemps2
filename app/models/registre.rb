@@ -10,12 +10,18 @@
 #
 
 class Registre < ActiveRecord::Base
+
+  attr_accessible :event_id, :history_id
+  
   belongs_to :history
   belongs_to :event
   
-  attr_accessible :event_id, :history_id
   
   validates :history_id, presence: true
-  validates :event_id, presence: true
+  validates :event_id, presence: true, uniqueness: { :scope => :history_id }
+
+	def approve
+		self.approved = true
+	end
 
 end

@@ -8,12 +8,9 @@
         <th></th>
       </tr>
     <% @histories.each do |histo| %>
-    <% if histo.approved%>
       <tr>
         <td><%= histo.title %></td>
         <td><%= histo.description %></td>
         <td><%= link_to 'Show', histo %></td>
-      </tr>
-      <% end %>
       <% end %>
     </table>

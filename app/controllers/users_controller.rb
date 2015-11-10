@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
  
- before_filter :signed_in_user
- before_filter :admin_user, only: [:index, :new, :toggle_approve ]
- before_filter :correct_user, only: [:edit, :update]
+ before_filter :signed_user
+ before_filter :signed_admin, only: [:index, :new, :toggle_approve ]
+ before_filter :correct_user, only: [:edit, :update, :show]
 
   def index
     @users= User.all
@@ -53,9 +53,7 @@ class UsersController < ApplicationController
 
 private
 
-def admin_user
- redirect_to signin_path, notice: "Please sign in as admin." unless (signed_in? && current_user.admin?)
-end
+
 
   def correct_user
    @user = User.find(params[:id])

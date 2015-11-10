@@ -1,0 +1,7 @@
+<%= form_tag({controller: "histories", action: "compare"}, method:"post",
+                    class: "nifty_form") do %>
+<%= select_tag(:history1_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %>
+
+<%= select_tag(:history2_id, options_from_collection_for_select(History.all, :id, :title))  %>
+<%= submit_tag "Compare", class: "btn btn-large btn-primary" %>
+<% end %>

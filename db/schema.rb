@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150822220525) do
+ActiveRecord::Schema.define(:version => 20151001174807) do
 
   create_table "chronologies", :force => true do |t|
     t.string   "title"
@@ -29,10 +29,14 @@ ActiveRecord::Schema.define(:version => 20150822220525) do
     t.boolean  "durationEvent"
     t.string   "place"
     t.text     "description"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.boolean  "validated"
+    t.integer  "user_id"
+    t.boolean  "approved",      :default => false
   end
+
+  add_index "events", ["user_id", "created_at"], :name => "index_events_on_user_id_and_created_at"
 
   create_table "histories", :force => true do |t|
     t.string   "title"
@@ -60,8 +64,9 @@ ActiveRecord::Schema.define(:version => 20150822220525) do
   create_table "registres", :force => true do |t|
     t.integer  "history_id"
     t.integer  "event_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "approved",   :default => false
   end
 
   add_index "registres", ["event_id"], :name => "index_registres_on_event_id"

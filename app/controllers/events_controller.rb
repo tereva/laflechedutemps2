@@ -1,4 +1,11 @@
 class EventsController < ApplicationController
+
+  before_filter :signed_user, only: [:new, :create, :edit, :update, :destroy]
+  before_filter :signed_admin, only: [:import]
+  before_filter :can_modify_event,  only: [:edit, :update, :destroy] 
+
+
+
   # GET /events
   # GET /events.json
   def index
@@ -44,6 +51,9 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
+         if current_user.admin 
+          @event.toggle!(:approved)
+      end
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render json: @event, status: :created, location: @event }
       else
@@ -80,4 +90,19 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def import
+    Event.import(params[:file], params[:history_id], current_user.id)
+    redirect_to events_url, notice: "Events imported"
+  end
+
+private 
+
+
+def can_modify_event
+@event= Event.find(params[:id])
+redirect_to root_path, notice: "Event Error Edit/Update/Delete : Action impossible" unless (signed_admin? || (owner?(@event) && !@event.approved))
+end
+
+
 end

@@ -1,9 +1,13 @@
 class HistoriesController < ApplicationController
 
+ before_filter :signed_user, only: [:edit, :update, :new, :create, :destroy]
+ before_filter :can_delete, only: [:destroy]
+ before_filter :correct_history2,  only: [:edit, :update, :show]
+
   # GET /histories
   # GET /histories.json
   def index
-    @histories = History.all
+    @histories = History.where(approved: true)
   end
 
   # GET /histories/1
@@ -39,10 +43,14 @@ class HistoriesController < ApplicationController
   def create
     @history = current_user.histories.build(params[:history])
     if @history.save
-      flash[:success] = "Histoiry created!"
-      redirect_to root_path
+      if current_user.admin 
+          @history.toggle!(:approved)
+      end
+      flash[:success] = "History created!"
+       redirect_to edit_history_path @history.id
     else
       render 'histories/index'
+
     end
   end
 
@@ -69,12 +77,42 @@ class HistoriesController < ApplicationController
     @history.destroy
 
     respond_to do |format|
-      format.html { redirect_to histories_url }
+      format.html { redirect_to root_path, notice: "Suppression ok" }
       format.json { head :no_content }
     end
   end
 
 
- 
+  def compare
+    if params[:history1_id] && params[:history2_id]
+      @history1=History.find(params[:history1_id])
+      @history2=History.find(params[:history2_id])
+    end
+
+  end
+
+private
+
+def correct_history
+  if current_user
+    @history = History.find(params[:id])
+    redirect_to root_path, notice: "Action impossible" unless (current_user.admin || @history.approved  || (!@history.approved && current_user.id == @history.user_id  ))
+  end 
+end
+
+def correct_history2
+@history = History.find(params[:id])
+redirect_to root_path, notice: "error : Action impossible" unless (@history.approved ||  signed_admin? || owner?(@history))
+end
+
+
+
+def can_delete
+@history = History.find(params[:id])
+redirect_to root_path, notice: "error : Action impossible" unless (signed_admin? || (owner?(@history) && !@history.approved))
+end
+
 
 end
+
+ 

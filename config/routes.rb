@@ -1,6 +1,11 @@
 Krono::Application.routes.draw do
  
-  resources :events
+
+ resources :events do
+    collection {post :import}
+  end
+
+
   resources :histories
   resources :registres, only: [:create, :destroy]
   resources :users
@@ -12,6 +17,16 @@ Krono::Application.routes.draw do
     get 'toggle_approve', :on => :member
   end
 
+   resources :registres do
+    get 'toggle_approve', :on => :member
+  end
+
+ resources :histories do
+    get 'compare', :on => :member
+  end
+
+
+
   root to: 'static_pages#home'
 
   match '/signup',to: 'users#new'
@@ -21,6 +36,9 @@ Krono::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
   match '/home', to: 'static_pages#home'
+
+  match '/compare', to: 'histories#compare'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

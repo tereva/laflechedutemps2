@@ -1,33 +1,33 @@
 <h1>Editing history : <%= @history.title %></h1>
 
+
+
+<% if current_user.admin %>
 <%= render 'form' %>
+<%= render 'body' %>
 
-<%= render 'eventsform' %>
-
- <% if @history.events.any? %>
-  <h3>Events (<%= @history.events.count %>)</h3>
+<%= render 'importevents' %>
 
 
-<% if false %>
-  <ol>
-   <%= render @events %>
-  </ol>
- <%= will_paginate @events %>
-<% end %>
+<% elsif(!@history.approved && (@history.user_id == current_user.id )) %>
 
-<ol>
-<% @history.registres.each do |registre| %>
-   <li>
-  <span><%= Event.find(registre.event_id).title %></span>
-  <span> |  <%= registre.event.place %></span>
-  <span> <%= link_to "| Voir", registre.event%></span>
-  <span> <%= link_to "| Edit", edit_event_path(registre.event_id)%></span>
-  <span><%= link_to "| delete", registre, method: :delete, confirm: "You sure?" %></span>
-   </li>
+<%= render 'form' %>
+<%= render 'body' %>
+
+<% elsif @history.approved %>
+
+<h2>Description</h2>
+ <p> <%=  @history.description %> </p>
+<%= render 'body' %>
 
 <% end %>
-</ol>
-<% end %>
+
+
+
+
+
 
 <%= link_to 'Show', @history %> |
 <%= link_to 'Back', histories_path %>
+
+

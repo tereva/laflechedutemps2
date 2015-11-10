@@ -10,7 +10,7 @@ module SessionsHelper
 	end
 
    def signed_admin?
-		current_user.admin
+		!current_user.nil? && current_user.admin
 	end
 
 
@@ -28,14 +28,35 @@ module SessionsHelper
 	end
 
 
-def current_user?(user)
-  user == current_user
- end
-	 def signed_in_user
-   unless signed_in?
-     store_location
-     redirect_to signin_path, notice: "Please sign in."
-   end
-  end
+	def current_user?(user)
+	  user == current_user
+	 end
+
+
+	def redirect_back_or(default)
+		redirect_to(session[:return_to] || default)
+		session.delete(:return_to)
+	end
+
+
+	def store_location
+		session[:return_to] = request.fullpath
+	end
+
+	 def signed_user
+	   unless signed_in?
+	     store_location
+	     redirect_to signin_path, notice: "Please sign in."
+	   end
+  	end
+
+	def signed_admin
+	 redirect_to signin_path, notice: "Please sign in as admin." unless signed_admin?
+	end
+
+
+	def owner?(object)
+		!current_user.nil? && (current_user.id == object.user_id)
+	end
 
 end

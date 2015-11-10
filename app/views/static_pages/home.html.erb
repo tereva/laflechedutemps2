@@ -1,11 +1,61 @@
-<h1>StaticPages#home</h1>
+
+<div class="center hero-unit">
+<h1>Welcome to KRONOFIL</h1>
+<h2>This is the home page for KRONOFIL application</h2>
+</div>
+
+
+
+<h2>Les dernieres Histoires validées...</h2>
+
+    <table>
+      <tr> 
+        <th>Owner</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    <% @histories_block_five.each do |histo| -%>
+      <tr>
+        <td>[<%= User.where(id: histo.user_id).name %>]</td>
+        <td>[<%= histo.user_id %>]</td>
+        <td>[<%= histo.user ? histo.user.name : 'Nil' %>]</td>
+        <td><%= histo.title %></td>
+        <td><%= histo.description %></td>
+        <td><%= link_to 'Show', histo %></td>      
+      </tr>
+      <% end %>
+    </table>
 
 
 <% if signed_in? %>
 
-	<% if current_user.admin %>
+	<% if current_user.admin %>  
 
-	<h2>ADMIN : Histoires à valider</h2>
+  <h2>ADMIN : Inlcusion à valider</h2>
+
+    <table>
+      <tr>
+        <th>Titre Histoire</th>
+        <th>Titre Evenement</th>
+        <th></th>
+        <th></th>
+      </tr>
+  <% @registres_block_admin.each do |registre| %>
+      <tr>
+        <td>
+          <% if registre.history %>
+          <%= link_to registre.history.title, edit_history_path(registre.history )%>
+          <% end %>
+        </td>
+        <td><%= link_to registre.event.title,  registre.event %></td>
+        <td><%= link_to approve_link_text(registre), toggle_approve_registre_path(registre), :remote => true, :id => "approve_link_#{registre.id}" %></td> 
+        <td><%= link_to ' | Destroy', registre, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+      <% end %>
+    </table>
+
+	<h2>ADMIN : (<%= @histories_block_admin.count %>) Histoires à valider</h2>
 
     <table>
       <tr>
@@ -16,62 +66,51 @@
         <th></th>
         <th></th>
       </tr>
-	<% @histories.each do |histo| %>
+	<% @histories_block_admin.each do |histo| %>
       <tr>
         <td><%= histo.title %></td>
         <td><%= histo.description %></td>
-        <td><%= link_to 'Show', histo %></td>
-        <td><%= link_to 'Edit', edit_history_path(histo) %></td> 
-        <td><%= link_to approve_link_text(histo), toggle_approve_user_path(histo), 
-        :remote => true,  :id => "approve_link_#{histo.id}" %></td> 
-        <td><%= link_to 'Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+        <td><%= link_to 'Show | ', histo %></td>
+        <td><%= link_to 'Edit | ', edit_history_path(histo) %></td> 
+        <td><%= link_to approve_link_text(histo), toggle_approve_user_path(histo), :remote => true, :id => "approve_link_#{histo.id}" %></td> 
+        <td><%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
       </tr>
       <% end %>
     </table>
+
+
+
+
+
+
+
 	<% end %>
 
 <h2> CONTRIB : Toutes mes histoires</h2>
 
     <table>
       <tr>
+        <th>Status</th>
         <th>Title</th>
         <th>Description</th>
         <th></th>
         <th></th>
-      </tr>
-	<% @myhistories.each do |histo| %>
-      <tr>
-        <td><%= histo.title %></td>
-        <td><%= histo.description %></td>
-        <td><%= link_to 'Show', histo %></td>
-        <td><%= link_to 'Edit', edit_history_path(histo) %></td> 
-      </tr>
-      <% end %>
-    </table>
-
-
-<% else %>
-
-<h2>Les 10 dernières Histoires validées...</h2>
-
-    <table>
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
         <th></th>
       </tr>
-    <% @histories.each do |histo| %>
-    <% if histo.approved%>
+
+	<% @histories_block_contrib.each do |histo| %>
       <tr>
+        <td><%= histo.approved ? '[Approved]' : '[Not approved]'%></td> 
         <td><%= histo.title %></td>
         <td><%= histo.description %></td>
-        <td><%= link_to 'Show', histo %></td>        
+        <td><%= link_to 'Show | ', histo %></td>
+        <td><%= link_to 'Edit | ', edit_history_path(histo) %></td> 
+          <% if !histo.approved %> 
+ <td><%= link_to 'Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+          <% end %>
       </tr>
       <% end %>
-      <% end %>
     </table>
-
- 
 
 <% end %>
 

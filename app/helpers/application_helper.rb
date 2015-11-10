@@ -11,11 +11,7 @@ module ApplicationHelper
  end
 
 def approve_link_text(approvable)
-	approvable.approved ? 'Approved' : 'Un-approved'
-end
-
-def admin?
-	current_user.admin
+	approvable.approved ? 'Un-approve' : 'Approve'
 end
 
 

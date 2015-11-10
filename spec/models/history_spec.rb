@@ -10,19 +10,44 @@
 #
 
 require 'spec_helper'
+require 'pp'
 
 describe History do
 
-	before do
-			 @history = History.new(title: "Histoire test", description: "Description histoire test")
-	end
+
+	let(:user) { FactoryGirl.create(:user) }
+
+
+	before { @history = user.histories.build(title: "Histoire test", description: "Description histoire test" ) }
+	
+
+	subject { @history }
 
 	it { should respond_to(:title) }
 	it { should respond_to(:description) }
-	it { should respond_to(:owner) }
-	it { should respond_to(:status) }
+	it { should respond_to(:user_id) }
+	it { should respond_to(:approved) }
+	it { should respond_to(:user) }
 
-	it { should be_valid }
+	its(:user) { should == user }
+
+
+	describe "accessible attributes" do
+	
+		it "should not allow access to user_id" do
+			expect do
+				History.new(user_id: user.id)
+			end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+		end
+	end
+
+	describe "when user_id is not present" do
+		before { @history.user_id = nil }
+		it { should_not be_valid }
+	end
+
+	
+
 end
 
 
