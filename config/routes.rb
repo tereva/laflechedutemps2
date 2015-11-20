@@ -23,6 +23,7 @@ Krono::Application.routes.draw do
 
  resources :histories do
     get 'compare', :on => :member
+    get 'jsonized', :on => :member
   end
 
 
@@ -40,6 +41,8 @@ Krono::Application.routes.draw do
   match '/compare', to: 'histories#compare'
 
 
+match '/timeline', to: 'histories#show_timeline'
+match '/jsonized', to: 'histories#jsonized'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

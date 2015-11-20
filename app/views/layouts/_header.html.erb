@@ -4,14 +4,14 @@
   
 
   <div class="container">
-   <%= link_to "kronofil", '#', id: "logo" %>
+   <%= link_to "kronofil", root_path, id: "logo" %>
    <nav>
    <ul class="nav pull-right">
 
     <li id="fat-menu" class="dropdown">
       <a href="#"  class="dropdown-toggle" data-toggle="dropdown">Chronologies<b class="caret"></b></a>
       <ul class="dropdown-menu">
-       <li><%= link_to "Toutes le Chronologies", histories_path%></li>
+       <li><%= link_to "Toutes les Chronologies", histories_path%></li>
        <li><%= link_to "Comparer",  compare_path%> </li>
       <li><%= link_to "Généalogie",  '#'%> </li>
       </ul>
@@ -25,6 +25,7 @@
       <ul class="dropdown-menu">
        <li><%= link_to "Home Page", root_path %></li>
        <li><%= link_to "Ajouter une Histoire",  new_history_path %> </li>
+       <li><%= link_to "Ajouter un Evenement",  new_event_path %> </li>
        <% if signed_admin? %>
         <li><%= link_to "Gérer contributeurs", users_path %></li>
        <% end %>

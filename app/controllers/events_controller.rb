@@ -3,13 +3,13 @@ class EventsController < ApplicationController
   before_filter :signed_user, only: [:new, :create, :edit, :update, :destroy]
   before_filter :signed_admin, only: [:import]
   before_filter :can_modify_event,  only: [:edit, :update, :destroy] 
-
+  before_filter :can_show_event,  only: [:show] 
 
 
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @events = Event.where(approved: true)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -104,5 +104,9 @@ def can_modify_event
 redirect_to root_path, notice: "Event Error Edit/Update/Delete : Action impossible" unless (signed_admin? || (owner?(@event) && !@event.approved))
 end
 
+def can_show_event
+@event= Event.find(params[:id])
+redirect_to root_path, notice: "Event Error Show : Action impossible" unless (@event.approved || signed_admin? || owner?(@event))
+end
 
 end

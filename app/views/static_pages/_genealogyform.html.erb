@@ -1,0 +1,17 @@
+<%= form_tag({controller: "static_pages", action: "genealogy"}, method:"post",
+                    class: "nifty_form") do %>
+<%= select_tag(:history1_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %>
+
+<%= select_tag(:history2_id, options_from_collection_for_select(History.all, :id, :title))  %>
+<%= submit_tag "Compare", class: "btn btn-large btn-primary" %>
+<% end %>
+
+<h2>Import Gedcom</h2>
+
+
+<%= form_tag import_events_path, multipart: true,
+                    class: "nifty_form" do %>
+  <%= file_field_tag :file %>
+  <%= hidden_field_tag(:history_id, @history.id ) %>
+  <%= submit_tag "Import" , class: "btn btn-large btn-primary" %>
+<% end %>

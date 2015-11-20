@@ -6,20 +6,23 @@ describe "StaticPages" do
 
   describe "Home page" do
 
-  let(:user){FactoryGirl.create(:user)}
-  let(:admin){FactoryGirl.create(:admin)}
+  let(:pierpoljak){FactoryGirl.create(:user)}
+  let(:tev){FactoryGirl.create(:admin)}
+
+  before do 
+        FactoryGirl.reload
+        10.times { FactoryGirl.create(:approved_history, user: pierpoljak)  }
+        FactoryGirl.create(:history, user: pierpoljak)
+  end
+
 
     describe "with block 5 for all visitor" do
     
+    # 5 last approved history
 
-      before do 
-        FactoryGirl.reload
-        10.times { FactoryGirl.create(:approved_history, user: user)  }
-        FactoryGirl.create(:history, user: user, description: "An un-approved history 11")
-        visit root_path 
-      end
+      before {visit root_path}
 
-      it { should_not have_content('un-approved history 11')}
+      it { should_not have_content('history 11')}
       it { should have_content('history 10')}
       it { should have_content('history 9')} 
       it { should have_content('history 8')}
@@ -36,18 +39,27 @@ describe "StaticPages" do
 
     describe "for admin user" do
 
+
+        # Should list all histories : status : approved / not approved, title, owner, links : show, edit, destroy, approve/un-approve
+        # Should list all events  : 
+        # Should list all regitres : 
+
       let(:other_user) { FactoryGirl.create(:user) }
      
       before do
-        @histo = FactoryGirl.create(:history, user: user, title: "Voyage de Cook")
+        @histo = FactoryGirl.create(:history, user: pierpoljak, title: "Voyage de Cook")
         @event = FactoryGirl.create(:event, user: other_user, title: "Arrivee a Tahiti")
         @registre = Registre.create(history_id: @histo.id, event_id: @event.id)
-        sign_in admin
+        sign_in tev
         visit root_path
       end
    
       it { should have_content('Cook')}
-      it { should have_content('Tahiti')}
+      it { should have_content('Tahiti')}  
+      it {should have_link('Show', href: history_path(@histo))}
+      it {should have_link('Edit', href: edit_history_path(@histo))}
+      it {should have_link('Destroy', href: history_path(@histo))}
+      it {should have_link('Destroy', href: history_path(@histo))}
 
 
 

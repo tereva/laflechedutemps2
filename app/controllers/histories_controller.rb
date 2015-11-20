@@ -21,6 +21,29 @@ class HistoriesController < ApplicationController
     end
   end
 
+  def show_timeline
+   #@history = History.find(params[:id])
+   render :layout => 'timeline'
+  end
+
+  
+  def jsonized
+   @history = History.find(params[:id])
+   @events = @history.events.select("title, start, end, durationEvent, description")
+   
+   #@events.each do |event|
+    #@eventAtt = {'start' => event.start, 'end' => event.end, 'description' => event.title}
+   #end
+  @data =  {'wiki-url'=>'http://simile.mit.edu/shelf',
+        'wiki-section'=>'Simile Cubism Timeline',
+        'dateTimeFormat'=>'Gregorian', 
+        'events'=> @events} 
+
+    #@data =  {title: @history.title,  description: @history.description} 
+    render json: @data
+  end
+
+
   # GET /histories/new
   # GET /histories/new.json
   def new

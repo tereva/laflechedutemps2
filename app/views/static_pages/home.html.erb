@@ -10,27 +10,122 @@
 
     <table>
       <tr> 
-        <th>Owner</th>
-        <th>Title</th>
-        <th>Description</th>
+        <th>Titre</th>
         <th></th>
       </tr>
-    <% @histories_block_five.each do |histo| -%>
+    <% @histories_block_five.each do |histo| %>
       <tr>
-        <td>[<%= User.where(id: histo.user_id).name %>]</td>
-        <td>[<%= histo.user_id %>]</td>
-        <td>[<%= histo.user ? histo.user.name : 'Nil' %>]</td>
-        <td><%= histo.title %></td>
-        <td><%= histo.description %></td>
+        <td><%= histo.title%> (<%= histo.events.count %> évènements)</td>
         <td><%= link_to 'Show', histo %></td>      
       </tr>
       <% end %>
     </table>
 
 
+<h2>Les dernieres Evènement validés...</h2>
+
+    <table>
+      <tr> 
+      <th>Titre</th>
+        <th></th>
+      </tr>
+    <% @events_block_five.each do |event| %>
+      <tr>
+        <td><%= event.title %>  (<%= event.histories.count %> histoires)</td>
+        <td><%= link_to 'Show', event %></td>      
+      </tr>
+      <% end %>
+    </table>
+
+
+
+
 <% if signed_in? %>
 
+
+<h2> CONTRIB : Toutes mes histoires</h2>
+
+    <table>
+      <tr>
+        <th>Status</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+      </tr>
+
+  <% @histories_block_contrib.each do |histo| %>
+      <tr>
+        <td><%= histo.approved ? '[Approved]' : '[Not approved]'%></td> 
+        <td><%= histo.title %>  (<%= histo.events.count %> évènements)</td>
+        <td><%= link_to 'Show', histo %></td>
+        <td><%= link_to ' | Edit', edit_history_path(histo) %></td> 
+          <% if !histo.approved || current_user.admin %> 
+ <td><%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+          <% end %>
+      </tr>
+      <% end %>
+    </table>
+
 	<% if current_user.admin %>  
+
+
+	<h2>ADMIN : (<%= @histories_block_admin.count %>) Histoires </h2>
+
+    <table>
+      <tr>
+        <th>Status</th>
+        <th>Proprio</th>
+        <th>Titre</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+	<% @histories_block_admin.each do |histo| %>
+      <tr>
+        <td><%= histo.approved ? '[Approved]' : '[Not approved]'%></td> 
+        <td>[<%= histo.user ? histo.user.name : 'Nil' %>]</td>
+        <td><%= histo.title %>  (<%= histo.events.count %> évènements)</td>
+        <td><%= link_to 'Show | ', histo %></td>
+        <td><%= link_to 'Edit | ', edit_history_path(histo) %></td> 
+        <td><%= link_to approve_link_text(histo), toggle_approve_user_path(histo), :remote => true, :id => "approve_link_#{histo.id}" %></td> 
+        <td><%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+      <% end %>
+    </table>
+
+
+
+
+  <h2>ADMIN : (<%= @events_block_admin.count %>) Evènements</h2>
+
+    <table>
+      <tr>
+        <th>Status</th>
+        <th>Proprio</th>
+        <th>Titre</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+  <% @events_block_admin.each do |event| %>
+      <tr>
+        <td><%= event.approved ? '[Approved]' : '[Not approved]'%></td> 
+        <td>[<%= event.user ? event.user.name : 'Nil' %>]</td>
+        <td><%= event.title %></td>
+         <td><%= link_to 'Show | ', event %></td>
+        <td><%= link_to 'Edit | ', edit_event_path(event) %></td> 
+        <td><%= link_to approve_link_text(event), toggle_approve_user_path(event), :remote => true, :id => "approve_link_#{event.id}" %></td> 
+        <td><%= link_to ' | Destroy', event, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+      <% end %>
+    </table>
+
+
+
+
 
   <h2>ADMIN : Inlcusion à valider</h2>
 
@@ -55,62 +150,12 @@
       <% end %>
     </table>
 
-	<h2>ADMIN : (<%= @histories_block_admin.count %>) Histoires à valider</h2>
-
-    <table>
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-	<% @histories_block_admin.each do |histo| %>
-      <tr>
-        <td><%= histo.title %></td>
-        <td><%= histo.description %></td>
-        <td><%= link_to 'Show | ', histo %></td>
-        <td><%= link_to 'Edit | ', edit_history_path(histo) %></td> 
-        <td><%= link_to approve_link_text(histo), toggle_approve_user_path(histo), :remote => true, :id => "approve_link_#{histo.id}" %></td> 
-        <td><%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
-      </tr>
-      <% end %>
-    </table>
-
-
-
-
 
 
 
 	<% end %>
 
-<h2> CONTRIB : Toutes mes histoires</h2>
 
-    <table>
-      <tr>
-        <th>Status</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-
-	<% @histories_block_contrib.each do |histo| %>
-      <tr>
-        <td><%= histo.approved ? '[Approved]' : '[Not approved]'%></td> 
-        <td><%= histo.title %></td>
-        <td><%= histo.description %></td>
-        <td><%= link_to 'Show | ', histo %></td>
-        <td><%= link_to 'Edit | ', edit_history_path(histo) %></td> 
-          <% if !histo.approved %> 
- <td><%= link_to 'Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
-          <% end %>
-      </tr>
-      <% end %>
-    </table>
 
 <% end %>
 
