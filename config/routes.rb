@@ -24,6 +24,7 @@ Krono::Application.routes.draw do
  resources :histories do
     get 'compare', :on => :member
     get 'jsonized', :on => :member
+    get 'timeline', :on => :member
   end
 
 

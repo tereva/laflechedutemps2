@@ -16,7 +16,8 @@
     <% @histories_block_five.each do |histo| %>
       <tr>
         <td><%= histo.title%> (<%= histo.events.count %> évènements)</td>
-        <td><%= link_to 'Show', histo %></td>      
+        <td><%= link_to 'Show', histo %></td>     
+        <td><%= link_to 'Timeline', timeline_history_path(histo) %></td>  
       </tr>
       <% end %>
     </table>

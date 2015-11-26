@@ -21,9 +21,9 @@ class HistoriesController < ApplicationController
     end
   end
 
-  def show_timeline
-   #@history = History.find(params[:id])
-   render :layout => 'timeline'
+  def timeline
+   @history = History.find(params[:id])
+   render :layout => 'timeline_layout'
   end
 
   
