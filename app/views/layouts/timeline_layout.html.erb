@@ -24,7 +24,7 @@
            
 
              var eventSource = new Timeline.DefaultEventSource();
-             var tl;
+    
 
 
             
@@ -32,8 +32,8 @@
             theme1.autoWidth = true; // Set the Timeline's "width" automatically.
                                      // Set autoWidth on the Timeline's first band's theme,
                                      // will affect all bands.
-            theme1.timeline_start = new Date(Date.UTC(1760, 0, 1));
-            theme1.timeline_stop  = new Date(Date.UTC(1780, 0, 1));
+            theme1.timeline_start = new Date(Date.UTC(1768, 0, 1));
+            theme1.timeline_stop  = new Date(Date.UTC(1770, 0, 1));
               
       
               
@@ -42,7 +42,7 @@
             var bandInfos = [
                 Timeline.createBandInfo({
                     width:          45, // set to a minimum, autoWidth will then adjust
-                    intervalUnit:   Timeline.DateTime.DECADE, 
+                    intervalUnit:   Timeline.DateTime.MONTH, 
                     intervalPixels: 200,
                     eventSource:    eventSource,
                     date:           d,
@@ -54,7 +54,7 @@
     
 
 
-           tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+          var tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
    tl.loadJSON('http://localhost:3000/histories/<%= @history.id %>/jsonized', function(json, url) {
        eventSource.loadJSON(json, url);
    }); 
@@ -67,7 +67,9 @@ tl.layout();
         }
         
         var resizeTimerID = null;
+
         function onResize() {
+          var tl;
             if (resizeTimerID == null) {
                 resizeTimerID = window.setTimeout(function() {
                     resizeTimerID = null;

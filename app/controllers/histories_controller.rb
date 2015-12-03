@@ -108,8 +108,19 @@ class HistoriesController < ApplicationController
 
   def compare
     if params[:history1_id] && params[:history2_id]
+      
       @history1=History.find(params[:history1_id])
       @history2=History.find(params[:history2_id])
+  
+      @indice1=History.find(params[:history1_id]).event_ids
+      @indice2=History.find(params[:history2_id]).event_ids
+
+      @event1=Event.where(:id => @indice1+@indice2)
+     
+     # @event1=Event.where(:id => @indice1).order('start DESC') 
+     # @events_1 = @history1.events.select("title, start, end, durationEvent, description")
+     
+
     end
 
   end

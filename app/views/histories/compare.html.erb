@@ -5,6 +5,9 @@
 <%= render 'compareform' %>
 
 <% if @history1 && @history2  %>
+
+ <%= @indice1 %>
+  <%= @indice2 %>
 <table>
 <tr>
 
@@ -13,6 +16,7 @@
 <% @history1.registres.each do |registre| %>
    <li>
   <span><%= registre.event.title %></span>
+  <span> |  <%= registre.event.start %></span>
   <span> |  <%= registre.event.place %></span>
   <span> <%= link_to "| Voir", registre.event%></span>
    </li>
@@ -26,19 +30,37 @@
 <% @history2.registres.each do |registre| %>
    <li>
   <span><%= Event.find(registre.event_id).title %></span>
-  <span> |  <%= registre.event.place %></span>
+  <span> |  <%= registre.event.start %></span>
+  <span> |  <%= registre.event.place %></span><span> 
   <span> <%= link_to "| Voir", registre.event%></span>
    </li>
 <% end %>
 
 </ol>
 </td>
-
-
-
-
 </tr>
 </table>
+
+
+
+<ol>
+<% @event1.each do |event| %>
+   <li>
+    <% if @indice1.include? event.id %>
+       <span> <b><font color="red"><%= event.title %></font></b></span> 
+    <% else %>
+        <span> <%= event.title %></span> 
+
+    <% end %>
+
+
+      <span> |  <%= event.start %></span>
+      <span> |  <%= event.place %></span><span> 
+      <span> <%= link_to "| Voir", event%></span>
+   </li>
+<% end %>
+
+</ol>
 
 
 <% end %>

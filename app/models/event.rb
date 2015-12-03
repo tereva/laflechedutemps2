@@ -29,7 +29,7 @@ class Event < ActiveRecord::Base
   has_many :registres, foreign_key: "event_id", dependent: :destroy
   has_many  :histories, through: :registres
 
-
+default_scope order: 'events.start DESC'
 
   def self.import(file, history_id, user_id)
   	CSV.foreach(file.path, headers: true) do |row|
