@@ -1,0 +1,56 @@
+<h1>Parse Gedcom</h1>
+
+<% if @form %>
+
+
+<p>
+Nous avons trouver <%= @i %> personnes dans la genealogie<br>
+Nous avons trouver <%= @n %> erreur<br>
+Il y a <%= @lines %> lignes<br>
+</p>
+
+<p>
+
+<ul>
+<% @line_utf8.each do |error|%>
+<li>Erreur ligne <%= error[:numero] %> : <%= error[:ligne] %> </li>
+ <% end %>
+</ul>
+
+</p>
+
+
+<table>
+	<tr>
+		<td>
+			<ol>
+			<% @all.each do |pers| %>
+			   <li>
+			   	<% if pers[:genealogy] %>
+			  <span><b><font color="red"><%= pers[:title] %></font></b></span>
+			   <% else %>
+			<span><%= pers[:title] %></span>
+			   <% end %>
+			  <span><%= pers[:start] %></span>
+			  <span><%= pers[:place] %></span>
+			   <span> ligne <%= pers[:numero] %> : <%= pers[:ligne] %> </span>
+
+			   </li>
+			<% end %>
+			</ol>
+		</td> 
+	</tr>
+</table>
+
+
+<% else %> 
+
+<%= form_tag genealogy_static_pages_path, multipart: true,
+                    class: "nifty_form" do %>
+  <%= file_field_tag :file %>
+  <%= select_tag(:history1_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %>
+  <%= submit_tag "Import" , class: "btn btn-large btn-primary" %>
+<% end %>
+
+
+<% end %>

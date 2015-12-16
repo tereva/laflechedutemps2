@@ -115,6 +115,8 @@ class HistoriesController < ApplicationController
       @indice1=History.find(params[:history1_id]).event_ids
       @indice2=History.find(params[:history2_id]).event_ids
 
+      @indice3=@indice1+@indice2
+
       @event1=Event.where(:id => @indice1+@indice2)
      
      # @event1=Event.where(:id => @indice1).order('start DESC') 
@@ -122,6 +124,8 @@ class HistoriesController < ApplicationController
      
 
     end
+
+
 
   end
 

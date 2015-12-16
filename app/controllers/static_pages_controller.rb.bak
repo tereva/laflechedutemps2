@@ -1,0 +1,177 @@
+require 'date'
+
+class StaticPagesController < ApplicationController
+ 
+
+
+  def home
+
+  	@histories_block_five = History.where(approved: true).limit(5)
+    @events_block_five = Event.where(approved: true).limit(5)
+  	if signed_admin?
+  		@histories_block_admin = History.all
+      @registres_block_admin = Registre.all
+      @events_block_admin = Event.all
+  	end
+  	if signed_in?
+  		@histories_block_contrib = current_user.histories
+  	end
+
+  end
+
+ 
+  def help
+  end
+
+
+
+  def genealogy
+
+
+      
+    # parsing simple fichier gedcom
+    if params[:file] 
+     #render params[:file].read
+    
+      @i = 0
+      @n=0
+      @lines=0
+
+      all = [] # futur array of hash
+      date=nil
+      temp=nil
+      start=nil
+      birt=0
+      deat=0
+      name='toto'
+      birtplace=nil
+      birtdate=nil
+      deatplace=nil
+      deatdate=nil
+
+      @line_utf8=[]
+
+
+      contents = File.open(params[:file].path, "r:iso8859-2"){ |file| file.read}
+      contents = contents.gsub("\r", "\n")
+      contents = contents.gsub("\n\n", "\n")
+
+      file = contents.split("\n")
+
+
+
+      #File.open(params[:file].path, 'r:iso8859-2') do |file|
+
+
+        file.each do |line|
+
+        #line = line.gsub!("\r", "\r\n") remplace \r par \r\n
+
+        @line_utf8.push({:ligne => line, :numero => @lines})
+        
+        @lines+=1
+          # traitement de l'erreur "invalid byte sequence in UTF-8" => ignore les codes interdits
+          #if line.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+          #if line.encode( &quot;UTF-8&quot;, &quot;binary&quot;, :invalid =&gt; :replace, :undef =&gt; :replace)
+           #if line = line.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '') 
+           # @n+=1
+            #@line_utf8.push({:ligne => line, :numero => @lines})
+          #end
+
+         
+
+          if  /0\x20\x40(I.*)\x40/.match(line) #nouvelle personne
+
+           
+            if @i>0 # enregistrer la precedente personne, sauf si c'est le premier 
+              #if birtdate 
+
+                begin
+                  start = DateTime.strptime(birtdate , "%d %b %Y")
+                rescue Exception => exc
+                  #flash[:notice] = "Erreur ligne : " + @lines.to_s
+                  start =  DateTime.strptime("1 JAN 2000" , "%d %b %Y")
+                end
+                all.push({:title => name, :start=>  start, :place => birtplace, :genealogy => true, 
+                  :ligne => line, :numero => @lines})
+
+              #else
+              #  all.push({:title => 'birtdate', :start=>  DateTime.strptime("1 JAN 2000" , "%d %b %Y"),
+              #  :place => birtplace, :genealogy => true})
+              #end 
+            end
+
+            @i += 1
+            birt=0
+            deat=0
+            name='toto'
+            birtplace=nil
+            birtdate=nil
+            deatplace=nil
+            deatdate=nil
+          elsif temp = /1\x20NAME\x20(.*)/.match(line) #nouvelle personne
+            name = temp[1]
+          elsif /1\x20BIRT/.match(line) # evt naissance
+            birt=1
+           deat=0
+          elsif /1\x20DEAT/.match(line) 
+            deat=1
+            birt=0
+          elsif date=/2\x20DATE\x20(.*)/.match(line) # attribut date
+            if birt==1 
+              birtdate= date[1]
+            elsif deat==1 
+              deatdate=date[1]
+            end     
+          elsif place=/2\x20PLAC\x20(.*)/.match(line) # attribut lieu
+            if birt==1
+              birtplace=place[1]
+          elsif deat==1
+            deatplace=place[1]
+          end
+        end
+      #end
+    end
+
+  if birtdate # on enregistre la dernière personne à 
+    begin
+      start = DateTime.strptime(birtdate , "%d %b %Y")
+    rescue Exception => exc
+      start =  DateTime.strptime("1 JAN 2000" , "%d %b %Y")
+    end
+    #all.push({:title => name, :start=>  start, :place => birtplace, :genealogy => true})    
+    all.push({:title => name, :start=>  start, :place => birtplace, :genealogy => true, 
+                  :numero => @lines})
+  end
+   
+
+    # selection de histoire
+    if params[:history1_id] 
+      @history1=History.find(params[:history1_id])
+      events = @history1.events.select("title, start, end, durationEvent, description, place")
+      @form=true
+      events.each do |event|
+        all.push({:title => event.title, :start => event.start, :place => event.place, :genealogy => false})
+      end
+    end
+
+
+
+    @all= all.sort_by{|hsh| hsh[:start]}
+    #@all = all
+
+  end
+end
+
+
+
+  
+
+
+
+  #def parse
+  #  render  params[:file].read 
+  #end
+
+
+end

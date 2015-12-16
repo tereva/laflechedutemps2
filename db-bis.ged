@@ -1,0 +1,34 @@
+0 HEAD
+1 SOUR GeneWeb
+2 VERS 6.05-exp
+2 NAME gwb2ged
+2 CORP INRIA
+3 ADDR Domaine de Voluceau
+4 CONT B.P 105 - Rocquencourt
+4 CITY Le Chesnay Cedex
+4 POST 78153
+4 CTRY France
+3 PHON +33 01 39 63 55 11
+2 DATA tvaillard.gwb
+1 DATE 20 SEP 2012
+2 TIME 19:46:11
+1 FILE base.ged.tmp
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Jean /VAILLARD/
+1 SEX M
+1 BIRT
+2 DATE 02 JUN 1930
+2 PLAC Cavaillon, , , ,
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Patricia /PARKIN/
+1 SEX F
+1 BIRT
+2 DATE 17 MAR 1943
+2 PLAC Bora-Bora, , , ,
+1 FAMC @F2@
+1 FAMS @F1@

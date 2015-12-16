@@ -3,7 +3,17 @@ Krono::Application.routes.draw do
 
  resources :events do
     collection {post :import}
+
   end
+
+
+   resources :static_pages do
+   # collection {post :parse} 
+    collection {post :genealogy}
+
+  end
+
+
 
 
   resources :histories
@@ -25,11 +35,12 @@ Krono::Application.routes.draw do
     get 'compare', :on => :member
     get 'jsonized', :on => :member
     get 'timeline', :on => :member
+
   end
 
-
-
   root to: 'static_pages#home'
+  root to: 'static_pages#genealogy'
+
 
   match '/signup',to: 'users#new'
   match '/signin', to: 'sessions#new'
@@ -38,12 +49,11 @@ Krono::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
   match '/home', to: 'static_pages#home'
-
   match '/compare', to: 'histories#compare'
+  match '/genealogy', to: 'static_pages#genealogy'
 
 
-match '/timeline', to: 'histories#show_timeline'
-match '/jsonized', to: 'histories#jsonized'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

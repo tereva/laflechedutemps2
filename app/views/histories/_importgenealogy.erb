@@ -1,0 +1,9 @@
+<h2>Import Gedcom</h2>
+
+
+<%= form_tag genealogy_history_path, multipart: true,
+                    class: "nifty_form" do %>
+  <%= file_field_tag :file %>
+  <%= hidden_field_tag(:history_id, @history.id ) %>
+  <%= submit_tag "Import" , class: "btn btn-large btn-primary" %>
+<% end %>

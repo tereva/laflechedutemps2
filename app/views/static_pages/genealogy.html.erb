@@ -1,44 +1,57 @@
-<h1>Comapraisons de 2 chronologies</h1>
+<h1>Parse Gedcom</h1>
 
+<% if @form %>
+<p>
+Nous avons trouver <%= @pers%> personnes dans la genealogie<br>
+Nous avons analysé <%= @lines %> lignes<br>
 
+<% if @debug.length > 0 %> 
+	<ul>
+		<% @debug.each do |error|%>
+			<li>Ligne :<%= error[:line] %> : <%= error[:content] %> </li>
+		 <% end %>
+	</ul>
+<% end %>
 
-<%= render 'compareform' %>
+<% if @date_log.length > 0 %> 
+	Il y a  <%= @date_log.length %> erreurs sur le format de la date, aux lignes :
+	<ul>
+		<% @date_log.each do |error|%>
+			<li>Ligne :<%= error[:line] %> : <%= error[:date] %> </li>
+		 <% end %>
+	</ul>
+<% end %>
+</p>
 
-<% if @history1 && @history2  %>
 <table>
-<tr>
-
-<td>
-<ol>
-<% @history1.registres.each do |registre| %>
-   <li>
-  <span><%= Event.find(registre.event_id).title %></span>
-  <span> |  <%= registre.event.place %></span>
-  <span> <%= link_to "| Voir", registre.event%></span>
-   </li>
-<% end %>
-
-</ol>
-</td>
-
-<td>
-<ol>
-<% @history2.registres.each do |registre| %>
-   <li>
-  <span><%= Event.find(registre.event_id).title %></span>
-  <span> |  <%= registre.event.place %></span>
-  <span> <%= link_to "| Voir", registre.event%></span>
-   </li>
-<% end %>
-
-</ol>
-</td>
-
-
-
-
-</tr>
+	<tr>
+		<td>
+			<ol>
+			<% @all.each do |pers| %>
+			   <li>
+			   	<font color=<%= pers[:textColor]%>>
+				<span><%= pers[:title] %></span>
+			  	<span><%= pers[:start] %></span>
+			  	<span><%= pers[:end] %></span>
+			  	<span><%= pers[:place] %></span>
+			  	<span><%= pers[:durationEvent] %></span>
+			   </font>
+			   </li>
+			<% end %>
+			</ol>
+		</td> 
+	</tr>
 </table>
+
+
+<% else %> 
+
+<%= form_tag genealogy_static_pages_path, multipart: true,
+                    class: "nifty_form" do %>
+  <%= file_field_tag :file %>
+  <%= select_tag(:history1_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %>
+  <%= submit_tag "Import" , class: "btn btn-large btn-primary" %>
+<% end %>
 
 
 <% end %>
