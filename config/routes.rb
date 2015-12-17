@@ -40,6 +40,8 @@ Krono::Application.routes.draw do
 
   root to: 'static_pages#home'
   root to: 'static_pages#genealogy'
+  root to: 'static_pages#genealogy_timeline'
+
 
 
   match '/signup',to: 'users#new'
@@ -51,8 +53,8 @@ Krono::Application.routes.draw do
   match '/home', to: 'static_pages#home'
   match '/compare', to: 'histories#compare'
   match '/genealogy', to: 'static_pages#genealogy'
-
-
+  match '/genealogy_timeline', to: 'static_pages#genealogy_timeline'
+  match '/parse', to: 'static_pages#parse'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
