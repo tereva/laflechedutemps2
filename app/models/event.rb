@@ -15,7 +15,7 @@
 #
 
 class Event < ActiveRecord::Base
-  attr_accessible :title, :start, :end, :durationEvent, :place,:description
+  attr_accessible :title, :start, :end, :durationEvent, :place,:description, :linked_history_id
    belongs_to :user
    
  # before_save { |event| event.title = title.downcase }
@@ -28,6 +28,8 @@ class Event < ActiveRecord::Base
 
   has_many :registres, foreign_key: "event_id", dependent: :destroy
   has_many  :histories, through: :registres
+
+
 
 default_scope order: 'events.start DESC'
 

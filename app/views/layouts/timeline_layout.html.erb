@@ -32,17 +32,17 @@
             theme1.autoWidth = true; // Set the Timeline's "width" automatically.
                                      // Set autoWidth on the Timeline's first band's theme,
                                      // will affect all bands.
-            theme1.timeline_start = new Date(Date.UTC(1768, 0, 1));
-            theme1.timeline_stop  = new Date(Date.UTC(1770, 0, 1));
+            theme1.timeline_start = new Date(Date.UTC(1700, 0, 1));
+            theme1.timeline_stop  = new Date(Date.UTC(1850, 0, 1));
               
       
               
-            var d = Timeline.DateTime.parseGregorianDateTime("1768")
+            var d = Timeline.DateTime.parseGregorianDateTime("1760")
             
             var bandInfos = [
                 Timeline.createBandInfo({
                     width:          45, // set to a minimum, autoWidth will then adjust
-                    intervalUnit:   Timeline.DateTime.MONTH, 
+                    intervalUnit:   Timeline.DateTime.YEAR, 
                     intervalPixels: 200,
                     eventSource:    eventSource,
                     date:           d,

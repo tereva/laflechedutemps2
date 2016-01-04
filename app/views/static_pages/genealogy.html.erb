@@ -31,7 +31,21 @@ Nous avons analysé <%= @lines %> lignes<br>
 			<% @all.each do |pers| %>
 			   <li>
 			   	<font color=<%= pers[:textColor]%>>
-				<span><%= pers[:title] %></span>
+				<span>
+
+					<% if pers[:link] %>
+                     <%= link_to pers[:title], history_path(pers[:link]) %>
+
+					<% else %>
+						<%= pers[:title] %>
+					<% end %>
+
+
+
+                </span>
+			  	
+
+
 			  	<span><%= pers[:start] %></span>
 			  	<span><%= pers[:end] %></span>
 			  	<span><%= pers[:place] %></span>
@@ -47,10 +61,10 @@ Nous avons analysé <%= @lines %> lignes<br>
 
 <% else %> 
 
-<%= form_tag genealogy_static_pages_path, multipart: true,
-                    class: "nifty_form" do %>
+<%= form_tag genealogy_static_pages_path, multipart: true  do %>
+  <%= select_tag(:history1_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %> 
+  <span class="btn btn-default btn-file"> Selectionnez un Gedcom <%= file_field_tag :file %></span><br>
   <%= file_field_tag :file %>
-  <%= select_tag(:history1_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %>
   <%= submit_tag "Import" , class: "btn btn-large btn-primary" %>
 <% end %>
 

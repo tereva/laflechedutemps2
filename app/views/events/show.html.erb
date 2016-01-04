@@ -30,6 +30,13 @@
   <%= @event.description %>
 </p>
 
+<p>
+  <b>Linked History:</b>
+  <%= @event.linked_history_id ? History.find(@event.linked_history_id).title : 
+  @event.linked_history_id %>
+</p>
+
+
 <% if signed_admin? %>
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <% end %>

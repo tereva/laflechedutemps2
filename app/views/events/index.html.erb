@@ -19,6 +19,7 @@
     <td><%= event.durationEvent %></td>
     <td><%= event.place %></td>
     <td><%= event.description %></td>
+     <td><%= event.linked_history_id %></td>
     <td><%= link_to 'Show', event %></td>
      <% if signed_admin? %> 
       <td><%= link_to ' | Edit', edit_event_path(event) %></td>

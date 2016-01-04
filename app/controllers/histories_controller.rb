@@ -29,15 +29,22 @@ class HistoriesController < ApplicationController
   
   def jsonized
    @history = History.find(params[:id])
-   @events = @history.events.select("title, start, end, durationEvent, description")
-   
-   #@events.each do |event|
-    #@eventAtt = {'start' => event.start, 'end' => event.end, 'description' => event.title}
-   #end
+   events = @history.events.select("title, start, end, durationEvent, description, place, linked_history_id")
+   all=[]
+   events.each do |event|
+    if event.linked_history_id
+      all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
+        :durationEvent => event.durationEvent, :link => timeline_history_path(event.linked_history_id)})    
+    else
+      all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
+        :durationEvent => event.durationEvent})
+    end
+  end
+
   @data =  {'wiki-url'=>'http://simile.mit.edu/shelf',
         'wiki-section'=>'Simile Cubism Timeline',
         'dateTimeFormat'=>'Gregorian', 
-        'events'=> @events} 
+        'events'=> all, } 
 
     #@data =  {title: @history.title,  description: @history.description} 
     render json: @data

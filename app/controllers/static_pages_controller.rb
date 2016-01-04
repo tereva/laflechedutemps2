@@ -127,7 +127,7 @@ class StaticPagesController < ApplicationController
         elsif date=/2\x20DATE\x20(.*)/.match(line) # attribut date
           if birt==1 
             begin
-              birtdate= DateTime.strptime(date[1] , "%d %b %Y")
+            birtdate= DateTime.strptime(date[1] , "%d %b %Y") 
             rescue Exception => exc
               date_error=true
               @date_log.push({:line => @lines, :date => date[1] })
@@ -163,8 +163,8 @@ class StaticPagesController < ApplicationController
       events = @history.events.select("title, start, end, durationEvent, description, place")
       @form=true
       events.each do |event|
-        all.push({:title => event.title, :start => event.start, :end => event.end,:place => event.place,
-        :durationEvent => event.durationEvent, :textColor=> "blue"})
+        all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
+        :durationEvent => event.durationEvent, :textColor=> "blue" })     
       end
       @all= all.sort_by{|hsh| hsh[:start]}
 
@@ -219,7 +219,7 @@ class StaticPagesController < ApplicationController
           if @pers>0 # enregistrer la precedente personne, sauf si c'est le premier  
             if !date_error && birtdate # birtdate doit exister obligatoirement
               all.push({:title => name, :start=>  birtdate, :end => deatdate, :place => birtplace, 
-                :durationEvent => deatdate ? true : false, :textColor => "red"})
+                :durationEvent => deatdate ? true : false, :textColor => "red", :link => nil })
             else
               date_error = false
             end
@@ -243,14 +243,19 @@ class StaticPagesController < ApplicationController
         elsif date=/2\x20DATE\x20(.*)/.match(line) # attribut date
           if birt==1 
             begin
-              birtdate= DateTime.strptime(date[1] , "%d %b %Y")
+              #birtdate= DateTime.strptime(date[1] , "%d %b %Y")
+              date[1].match(/\s/) ? birtdate= DateTime.strptime(date[1] , "%d %b %Y") : 
+                    birtdate= DateTime.strptime(date[1] , "%Y")
             rescue Exception => exc
               date_error=true
               @date_log.push({:line => @lines, :date => date[1] })
             end
           elsif deat==1 
             begin
-              deatdate= DateTime.strptime(date[1] , "%d %b %Y")
+              date[1].match(/\s/) ? deatdate= DateTime.strptime(date[1] , "%d %b %Y") : 
+                    deatdate= DateTime.strptime(date[1] , "%Y")
+
+              #deatdate= DateTime.strptime(date[1] , "%d %b %Y")
             rescue Exception => exc
               date_error=true
               @date_log.push({:line => @lines, :date => date[1] })
@@ -276,11 +281,19 @@ class StaticPagesController < ApplicationController
     # selection de histoire
     if params[:history1_id] 
       @history1=History.find(params[:history1_id])
-      events = @history1.events.select("title, start, end, durationEvent, description, place")
+      events = @history1.events.select("title, start, end, durationEvent, description, place, linked_history_id ")
       @form=true
       events.each do |event|
+        #link="#"
+        #if event.durationEvent 
+        # if event.linked_history_id 
+        #   link = "http://localhost:3000/histories/"+event.linked_history_id.to_s
+        #  end
+        #end
         all.push({:title => event.title, :start => event.start, :end => event.end,:place => event.place,
-        :durationEvent => event.durationEvent, :textColor=> "blue"})
+        :durationEvent => event.durationEvent, :textColor=> "blue", :link => event.linked_history_id, 
+        :description => event.description
+      })
       end
       @all= all.sort_by{|hsh| hsh[:start]}
 
