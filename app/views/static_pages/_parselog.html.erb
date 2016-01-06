@@ -1,0 +1,23 @@
+
+
+<p>
+Nous avons analysé <%= @lines %> lignes et trouvé <%= @pers%> personnes dans la genealogie
+</p>
+<% if @date_log.length > 0 %> 
+<p>
+	Il y a  <%= @date_log.length %> erreurs sur les formats de dates :
+	
+		<% @date_log.each do |error|%>
+	      <%= error[:date] %>(<%= error[:line]%>),&nbsp;
+		 <% end %>
+</p>
+<% end %>
+<% if @person_log.length > 0 %> 
+<p>
+Il y a  <%= @person_log.length %> individus sans date de naissance :
+		<% @person_log.each do |error|%>
+			<%= error[:name] %> (<%= error[:line] %>),&nbsp; 
+		 <% end %>
+</p>
+<% end %>
+

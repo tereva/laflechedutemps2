@@ -1,9 +1,12 @@
 <li>
-<span><%= event.title %></span>
-<span>
-| Lieu : <%= event.place %>.
-|  <%= link_to "Show", event %>
-</span>
+<b>[<%= event.start.strftime("%d %b %Y") %>] <%= event.title %> | Lieu : <%= event.place %> | 
+	<%= event.end  ? ( event.durationEvent ? "| Fin : " + event.end.strftime("%d/%m/%Y").to_s : "") 
+	: "" %> </b> 
+	<%= event.linked_history_id ? link_to("(Show)", history_path(event.linked_history_id))  : "" %> 
+	 <% if signed_admin? %> 
+      <%= link_to '[Edit] ', edit_event_path(event) %>
+      <%= link_to '[Destroy]', event, confirm: 'Are you sure?', method: :delete %>
+    <% end %>
 <p>
 <%= event.description %>
 </p>

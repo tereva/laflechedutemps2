@@ -1,29 +1,18 @@
-<h1>Parse Gedcom</h1>
+<h1>Comparaison Chrono-généalogique</h1>
+
 
 <% if @form %>
-<p>
-Fichier <%= @path %><br>
-Nous avons trouver <%= @pers%> personnes dans la genealogie<br>
-Nous avons analysé <%= @lines %> lignes<br>
 
-<% if @debug.length > 0 %> 
-	<ul>
-		<% @debug.each do |error|%>
-			<li>Ligne :<%= error[:line] %> : <%= error[:content] %> </li>
-		 <% end %>
-	</ul>
-<% end %>
+<h3>Données...</h3>
+<ul>
+<li>Chronologie selectionée (bleu) : <%= @history.title %></li>
+<li> Fichier Gedcom parsé (rouge) : <%= @path %></li>
+</ul>	
 
-<% if @date_log.length > 0 %> 
-	Il y a  <%= @date_log.length %> erreurs sur le format de la date, aux lignes :
-	<ul>
-		<% @date_log.each do |error|%>
-			<li>Ligne :<%= error[:line] %> : <%= error[:date] %> </li>
-		 <% end %>
-	</ul>
-<% end %>
-</p>
+<h3>Statistiques du parsing Gedcom...</h3>
+<%= render 'parselog'  %>
 
+<h3>Résultats comparés</h3>
 <table>
 	<tr>
 		<td>
@@ -32,24 +21,16 @@ Nous avons analysé <%= @lines %> lignes<br>
 			   <li>
 			   	<font color=<%= pers[:textColor]%>>
 				<span>
-
 					<% if pers[:link] %>
                      <%= link_to pers[:title], history_path(pers[:link]) %>
 
 					<% else %>
 						<%= pers[:title] %>
 					<% end %>
-
-
-
-                </span>
-			  	
-
-
-			  	<span><%= pers[:start] %></span>
-			  	<span><%= pers[:end] %></span>
-			  	<span><%= pers[:place] %></span>
-			  	<span><%= pers[:durationEvent] %></span>
+                </span>			  	
+			  	<span><%= pers[:start] ? " | "+pers[:start].strftime("%d %b %Y") : "" %></span>
+			  	<span><%= pers[:end] ? " | "+pers[:end].strftime("%d %b %Y") : ""%></span>
+			  	<span><%= pers[:place] ? " | "+pers[:place] : "" %></span>
 			   </font>
 			   </li>
 			<% end %>
@@ -61,10 +42,11 @@ Nous avons analysé <%= @lines %> lignes<br>
 
 <% else %> 
 
-<%= form_tag genealogy_static_pages_path, multipart: true  do %>
-  <%= select_tag(:history1_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %> 
-  <span class="btn btn-default btn-file"> Selectionnez un Gedcom <%= file_field_tag :file %></span><br>
-  <%= file_field_tag :file %>
+<%= form_tag genealogy_static_pages_path, multipart: true, class: "nifty_form" do %>  
+
+<%= file_field_tag :file %>
+  <%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %> 
+
   <%= submit_tag "Import" , class: "btn btn-large btn-primary" %>
 <% end %>
 

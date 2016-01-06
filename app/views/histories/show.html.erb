@@ -1,23 +1,17 @@
 <p id="notice"><%= notice %></p>
+<%= link_to '<< Retour', histories_path %>
 
+ <h1><%= @history.title %></h1>   
 
-<p>
-  <b>Title:</b>
-  <%= @history.title %>
-</p>
+ <h2> Résumé</h2> 
 
-<p>
-  <b>Description:</b>
-  <%= @history.description %>
-</p>
-
-<%= link_to 'Back', histories_path %>
+<p><%= @history.description %></p>
 
 
  <% if @history.events.any? %>
-  <h3>Events (<%= @history.events.count %>)</h3>                 
-  <ol>
+  <h2>Évènements (<%= @history.events.count %>)</h2>                 
+  <ul>
    <%= render @events %>
-  </ol>
+  </ul>
  <%= will_paginate @events %>                                     
  <% end %>  
