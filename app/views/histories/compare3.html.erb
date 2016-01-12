@@ -1,0 +1,47 @@
+<h1>Comparaison histoire-histoire</h1>
+
+<%= form_tag({controller: "histories", action: "compare2"}, method:"post",
+                    class: "nifty_form") do %>
+<%= select_tag(:history1_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %>
+
+<%= select_tag(:history2_id, options_from_collection_for_select(History.all, :id, :title))  %>
+
+
+<%= submit_tag 'Texte', class: "btn btn-large btn-primary" %>
+<%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-large btn-primary" %>
+
+
+<% end %>
+
+
+<% if @form %>
+
+
+<h3>Données...</h3>
+<ul>
+<li>Histoire 1 (bleu) : <%= @history1.title %></li>
+<li> Histoire 2 (rouge) : <%= @history2.title %></li>
+<li> Id chrono-compa : <%= @history1.id %>_<%= @history2.id %></i>
+</ul>	
+
+
+<h3>Frise</h3>
+
+<div id="doc3" class="yui-t7">
+   <div id="bd" role="main">
+
+	   <div class="yui-g">
+	     <div id='my-timeline'></div>
+	     <p>To move the Timeline: use the mouse scroll wheel, the arrow keys or grab and drag the Timeline.</p>
+	   </div> 
+	   
+	 </div>
+   <div id="ft" role="contentinfo">
+     <p>Thanks to the <a href=''>Simile Timeline project</a> Timeline version <span id='tl_ver'></span></p>
+     <script>Timeline.writeVersion('tl_ver')</script> 
+   </div>
+</div>
+
+<% end %>
+
+

@@ -19,8 +19,9 @@ class User < ActiveRecord::Base
   # methodes dispo :
   # cf p434
   has_many :histories
-
   has_many :events
+  has_many :gedcoms
+
 
 
   # mise en minuscule avant sauvegarde dans la base

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160104104449) do
+ActiveRecord::Schema.define(:version => 20160112141940) do
 
   create_table "chronologies", :force => true do |t|
     t.string   "title"
@@ -38,6 +38,19 @@ ActiveRecord::Schema.define(:version => 20160104104449) do
   end
 
   add_index "events", ["user_id", "created_at"], :name => "index_events_on_user_id_and_created_at"
+
+  create_table "gedcoms", :force => true do |t|
+    t.string   "name"
+    t.string   "content"
+    t.boolean  "public",      :default => false
+    t.integer  "user_id"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "approved",    :default => false
+    t.string   "description"
+  end
+
+  add_index "gedcoms", ["user_id", "created_at"], :name => "index_gedcoms_on_user_id_and_created_at"
 
   create_table "histories", :force => true do |t|
     t.string   "title"

@@ -49,6 +49,9 @@ default_scope order: 'events.start DESC'
   	end
   end
 
+
+  
+
 end
 
 

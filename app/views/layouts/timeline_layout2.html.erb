@@ -42,7 +42,7 @@
             var bandInfos = [
                 Timeline.createBandInfo({
                     width:          45, // set to a minimum, autoWidth will then adjust
-                    intervalUnit:   Timeline.DateTime.YEAR, 
+                    intervalUnit:   Timeline.DateTime.DECADE, 
                     intervalPixels: 200,
                     eventSource:    eventSource,
                     date:           d,
@@ -55,7 +55,7 @@
 
 
           var tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
-   tl.loadJSON('http://localhost:3000/jsonized?id=<%= @history.id %>', function(json, url) {
+   tl.loadJSON('http://localhost:3000/compare3?history1_id=<%= @select1 %>&history2_id=<%= @select2 %>', function(json, url) {
        eventSource.loadJSON(json, url);
    }); 
 
@@ -88,7 +88,9 @@ tl.layout();
    <% flash.each do |key, value| %>
     <%= content_tag(:div, value, class: "alert alert-#{key}") %>
    <% end %>
-  <%= yield %>
+
+ <%= yield %>
+
   <%= render 'layouts/footer' %>
   <%= debug(params) if Rails.env.development? %>
  </div>

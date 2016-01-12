@@ -1,0 +1,52 @@
+<h1>Comparaison Chrono-généalogique</h1>
+
+<%= form_tag compareHisGed_gedcoms_path, multipart: true, class: "nifty_form" do %>
+
+<%= file_field_tag :file %>
+<%= select_tag(:gedcom_id, options_from_collection_for_select(Gedcom.where(public: true), :id, :name))  %> 
+<%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %> 
+
+  <%= submit_tag "Texte" , :name => 'text_button', class: "btn btn-large btn-primary" %>
+  <%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-large btn-primary" %>
+
+<% end %>
+
+<% if @form %>
+
+<h3>Données...</h3>
+<ul>
+<li>Chronologie selectionée (bleu) : <%= @history.title %></li>
+<li> Fichier Gedcom parsé (rouge) : <%= @path %></li>
+</ul>	
+
+<h3>Statistiques du parsing Gedcom...</h3>
+<%= render 'parselog'  %>
+
+<h3>Résultats comparés</h3>
+<table>
+	<tr>
+		<td>
+			<ol>
+			<% @resu.each do |evt| %>
+			   <li>
+			   	<font color=<%= evt[:textColor]%>>
+				<span>
+					<% if evt[:link] %>
+                     <%= link_to evt[:title], evt[:link] %>
+
+					<% else %>
+						<%= evt[:title] %>
+					<% end %>
+                </span>			  	
+			  	<span><%= evt[:start] ? " | "+evt[:start].strftime("%d %b %Y") : "" %></span>
+			  	<span><%= evt[:end] ? " | "+evt[:end].strftime("%d %b %Y") : ""%></span>
+			  	<span><%= evt[:place] ? " | "+evt[:place] : "" %></span>
+			   </font>
+			   </li>
+			<% end %>
+			</ol>
+		</td> 
+	</tr>
+</table>
+
+<% end %>

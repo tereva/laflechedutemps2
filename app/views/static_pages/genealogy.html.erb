@@ -1,6 +1,14 @@
 <h1>Comparaison Chrono-généalogique</h1>
 
 
+<%= form_tag genealogy_static_pages_path, multipart: true, class: "nifty_form" do %>  
+
+<%= file_field_tag :file %>
+  <%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %> 
+
+  <%= submit_tag "Import" , class: "btn btn-large btn-primary" %>
+<% end %>
+
 <% if @form %>
 
 <h3>Données...</h3>
@@ -38,17 +46,5 @@
 		</td> 
 	</tr>
 </table>
-
-
-<% else %> 
-
-<%= form_tag genealogy_static_pages_path, multipart: true, class: "nifty_form" do %>  
-
-<%= file_field_tag :file %>
-  <%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %> 
-
-  <%= submit_tag "Import" , class: "btn btn-large btn-primary" %>
-<% end %>
-
 
 <% end %>

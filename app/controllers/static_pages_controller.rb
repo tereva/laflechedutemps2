@@ -9,13 +9,16 @@ class StaticPagesController < ApplicationController
 
   	@histories_block_five = History.where(approved: true).limit(5)
     @events_block_five = Event.where(approved: true).limit(5)
+    @gedcoms_block_five= Gedcom.where(public: true).limit(5)
   	if signed_admin?
   		@histories_block_admin = History.all
       @registres_block_admin = Registre.all
       @events_block_admin = Event.all
+      @gedcoms_block_admin= Gedcom.all
   	end
   	if signed_in?
   		@histories_block_contrib = current_user.histories
+      @gedcoms_block_contrib = current_user.gedcoms
   	end
 
   end
@@ -316,7 +319,7 @@ def parse
 
   end # GENEALOGy
 
-  def genealogy
+  def genealogy # comparaison fusion txt
 
     if params[:file] 
      #render params[:file].read
@@ -346,6 +349,8 @@ def parse
 
       contents = contents.gsub("\r", "\n")
       contents = contents.gsub("\n\n", "\n")
+
+      #gedcom = current_user.gedcoms.create(name: @path, content: contents, public: true)
 
       file = contents.split("\n")
 
@@ -384,28 +389,43 @@ def parse
           if birt==1 
             begin
               date = date[1].squish
-              #date[1].match(/\s/) ? birtdate= DateTime.strptime(date[1] , "%d %b %Y") : 
-              #      birtdate= DateTime.strptime(date[1] , "%Y")
-
-              date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%d %b %Y") : 
-                   (date.match(/\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%b %Y") : 
-                       (  date.match(/\d{3,4}/) ? birtdate= DateTime.strptime(date , "%Y") : raise )
-                    )
-
-            date_error = false
+              #date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%d %b %Y") : 
+              #     (date.match(/\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%b %Y") : 
+              #         (  date.match(/\d{3,4}/) ? birtdate= DateTime.strptime(date , "%Y") : raise )
+              #      )
+              date_error = false
+              case date
+                when /\d{1,2}\s\D{3}\s\d{3,4}/
+                  birtdate= DateTime.strptime(date , "%d %b %Y")
+                when /\D{3}\s\d{3,4}/
+                  birtdate= DateTime.strptime(date, "%b %Y")
+                when /\d{3,4}/
+                  birtdate= DateTime.strptime(date , "%Y")
+                else 
+                  date_error = true
+                  raise
+              end
+              
             rescue Exception => exc
               @date_log.push({:line => @lines, :date => date })
             end
           elsif deat==1 
             begin
               date = date[1].squish
-              #date[1].match(/\s/) ? deatdate= DateTime.strptime(date[1] , "%d %b %Y") : 
-                #deatdate= DateTime.strptime(date[1] , "%Y")
-                date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? deatdate= DateTime.strptime(date , "%d %b %Y") : 
-                   (date.match(/\D{3}\s\d{3,4}/) ? deatdate= DateTime.strptime(date, "%b %Y") : 
-                        ( date.match(/\d{3,4}/) ? deatdate= DateTime.strptime(date , "%Y") : raise)
-
-                    )
+             # date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? deatdate= DateTime.strptime(date , "%d %b %Y") : 
+             #      (date.match(/\D{3}\s\d{3,4}/) ? deatdate= DateTime.strptime(date, "%b %Y") : 
+             #           ( date.match(/\d{3,4}/) ? deatdate= DateTime.strptime(date , "%Y") : raise)
+             #       )
+            case date
+              when /\d{1,2}\s\D{3}\s\d{3,4}/
+                deatdate= DateTime.strptime(date , "%d %b %Y")
+              when /\D{3}\s\d{3,4}/
+                deatdate= DateTime.strptime(date, "%b %Y")
+              when /\d{3,4}/
+                deatdate= DateTime.strptime(date , "%Y")
+              else 
+                raise
+            end
 
             rescue Exception => exc
               #date_error=true
@@ -421,7 +441,7 @@ def parse
         end # if/0\x20\x40(I.*)\x40/.match(line)
       end # file.each
 
-      if !date_error  && birtdate  
+      if !date_error   
         all.push({:title => name, :start=>  birtdate, :end => deatdate, :place => birtplace, 
                 :durationEvent => deatdate ? true : false, :textColor => "red"})
       end

@@ -1,11 +1,11 @@
 Krono::Application.routes.draw do
  
+ root to: 'static_pages#home'
 
  resources :events do
     collection {post :import}
 
   end
-
 
    resources :static_pages do
    # collection {post :parse} 
@@ -13,13 +13,18 @@ Krono::Application.routes.draw do
 
   end
 
+  resources :gedcoms do
+    collection {post :upload}
+    collection {post :compareHisGed}
 
+  end
 
 
   resources :histories
   resources :registres, only: [:create, :destroy]
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :gedcoms, only: [:show, :destroy]
 
 
   # Ajout de la methode toggle_approve comme ressource routable de l'objet Histoire
@@ -38,11 +43,15 @@ Krono::Application.routes.draw do
 
   end
 
-  root to: 'static_pages#home'
-  root to: 'static_pages#genealogy'
-  root to: 'static_pages#genealogy_timeline'
+  #resources :gedcoms do
+  #  get 'upload', :on => :member
+  #end
 
 
+  
+  #root to: 'static_pages#genealogy'
+  #root to: 'static_pages#genealogy_timeline'
+  #root to: 'gedcoms#upload'
 
   match '/signup',to: 'users#new'
   match '/signin', to: 'sessions#new'
@@ -55,6 +64,11 @@ Krono::Application.routes.draw do
   match '/genealogy', to: 'static_pages#genealogy'
   match '/genealogy_timeline', to: 'static_pages#genealogy_timeline'
   match '/parse', to: 'static_pages#parse'
+  match '/upload', to: 'gedcoms#upload'
+  match '/compare2', to: 'histories#compare2'
+  match '/compare3', to: 'histories#compare3'  
+  match '/jsonized', to: 'histories#jsonized'
+  match '/compareHisGed', to: 'gedcoms#compareHisGed'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

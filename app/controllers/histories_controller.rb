@@ -28,23 +28,27 @@ class HistoriesController < ApplicationController
 
   
   def jsonized
-   @history = History.find(params[:id])
-   events = @history.events.select("title, start, end, durationEvent, description, place, linked_history_id")
-   all=[]
-   events.each do |event|
-    if event.linked_history_id
-      all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
-        :durationEvent => event.durationEvent, :link => timeline_history_path(event.linked_history_id)})    
-    else
-      all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
-        :durationEvent => event.durationEvent})
-    end
-  end
+    result = []
+    @history = History.find(params[:id])
+    result = @history.prepareData("blue", "histories/", "/timeline")
+
+
+   #events = @history.events.select("title, start, end, durationEvent, description, place, linked_history_id")
+   #all=[]
+   #events.each do |event|
+   # if event.linked_history_id
+   #   all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
+   #     :durationEvent => event.durationEvent, :link => timeline_history_path(event.linked_history_id)})    
+   # else
+   #   all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
+   #     :durationEvent => event.durationEvent})
+   # end
+  #end
 
   @data =  {'wiki-url'=>'http://simile.mit.edu/shelf',
         'wiki-section'=>'Simile Cubism Timeline',
         'dateTimeFormat'=>'Gregorian', 
-        'events'=> all, } 
+        'events'=> result, } 
 
     #@data =  {title: @history.title,  description: @history.description} 
     render json: @data
@@ -131,10 +135,46 @@ class HistoriesController < ApplicationController
      
 
     end
+end
 
 
+def compare2
 
+  @select1 = params[:history1_id] ? params[:history1_id] : History.first.id
+  @select2 = params[:history2_id] ? params[:history2_id] : @select1
+  if params[:frise_button]
+    @form = true
+    @frise = true
+    render :layout => 'timeline_layout2'
+  elsif params[:history1_id]
+    if params[:history2_id]
+      history1=History.find(params[:history1_id])
+      history2=History.find(params[:history2_id])
+      tmp=history1.prepareData("blue", "histories/","")+history2.prepareData("red", "histories/","")
+      @result= tmp.sort_by{|evt| evt[:start]}
+      @form = true
+    end
   end
+end
+
+
+def compare3
+  if params[:history1_id]
+    if params[:history2_id]
+      history1=History.find(params[:history1_id])
+      history2=History.find(params[:history2_id])
+      tmp=history1.prepareData("blue", "histories/","/timeline")+history2.prepareData("red", "histories/","/timeline")
+      result= tmp.sort_by{|evt| evt[:start]}  
+      data =  {'wiki-url'=>'http://simile.mit.edu/shelf',
+        'wiki-section'=>'Simile Cubism Timeline',
+        'dateTimeFormat'=>'Gregorian', 
+        'events'=> result } 
+      render :json => data
+    end
+  end
+end
+
+
 
 private
 
