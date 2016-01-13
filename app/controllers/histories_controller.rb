@@ -23,34 +23,18 @@ class HistoriesController < ApplicationController
 
   def timeline
    @history = History.find(params[:id])
-   render :layout => 'timeline_layout'
+   @timeline_req='http://localhost:3000/jsonized?id='+@history.id.to_s
+   render :layout => 'timeline_layout2'
   end
 
   
   def jsonized
-    result = []
     @history = History.find(params[:id])
-    result = @history.prepareData("blue", "histories/", "/timeline")
-
-
-   #events = @history.events.select("title, start, end, durationEvent, description, place, linked_history_id")
-   #all=[]
-   #events.each do |event|
-   # if event.linked_history_id
-   #   all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
-   #     :durationEvent => event.durationEvent, :link => timeline_history_path(event.linked_history_id)})    
-   # else
-   #   all.push({:title => event.title, :start => event.start, :end => event.end,:description => event.description,
-   #     :durationEvent => event.durationEvent})
-   # end
-  #end
-
-  @data =  {'wiki-url'=>'http://simile.mit.edu/shelf',
+    result = @history.prepareData("black", "histories/", "/timeline")
+    @data =  {'wiki-url'=>'http://simile.mit.edu/shelf',
         'wiki-section'=>'Simile Cubism Timeline',
         'dateTimeFormat'=>'Gregorian', 
         'events'=> result, } 
-
-    #@data =  {title: @history.title,  description: @history.description} 
     render json: @data
   end
 
@@ -138,31 +122,27 @@ class HistoriesController < ApplicationController
 end
 
 
-def compare2
+def compareHisHis
 
-  @select1 = params[:history1_id] ? params[:history1_id] : History.first.id
-  @select2 = params[:history2_id] ? params[:history2_id] : @select1
+  @select1 = params[:h1] ? params[:h1] : History.first.id
+  @select2 = params[:h2] ? params[:h2] : @select1
   if params[:frise_button]
-    @form = true
-    @frise = true
-    render :layout => 'timeline_layout2'
-  elsif params[:history1_id]
-    if params[:history2_id]
-      history1=History.find(params[:history1_id])
-      history2=History.find(params[:history2_id])
-      tmp=history1.prepareData("blue", "histories/","")+history2.prepareData("red", "histories/","")
+    @timeline_req='http://localhost:3000/frise-two-histories?h1='+@select1.to_s+'&h2='+@select2.to_s
+    render :layout => 'timeline_layout2', :template => 'histories/frise'
+  elsif params[:texte_button]
+      @history1=History.find(@select1)
+      @history2=History.find(@select2)
+      tmp=@history1.prepareData("blue", "histories/","")+@history2.prepareData("red", "histories/","")
       @result= tmp.sort_by{|evt| evt[:start]}
-      @form = true
-    end
   end
 end
 
 
-def compare3
-  if params[:history1_id]
-    if params[:history2_id]
-      history1=History.find(params[:history1_id])
-      history2=History.find(params[:history2_id])
+def showFriseHisHis
+  if params[:h1]
+    if params[:h2]
+      history1=History.find(params[:h1])
+      history2=History.find(params[:h2])
       tmp=history1.prepareData("blue", "histories/","/timeline")+history2.prepareData("red", "histories/","/timeline")
       result= tmp.sort_by{|evt| evt[:start]}  
       data =  {'wiki-url'=>'http://simile.mit.edu/shelf',

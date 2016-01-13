@@ -16,7 +16,6 @@ Krono::Application.routes.draw do
   resources :gedcoms do
     collection {post :upload}
     collection {post :compareHisGed}
-
   end
 
 
@@ -37,7 +36,6 @@ Krono::Application.routes.draw do
   end
 
  resources :histories do
-    get 'compare', :on => :member
     get 'jsonized', :on => :member
     get 'timeline', :on => :member
 
@@ -65,11 +63,12 @@ Krono::Application.routes.draw do
   match '/genealogy_timeline', to: 'static_pages#genealogy_timeline'
   match '/parse', to: 'static_pages#parse'
   match '/upload', to: 'gedcoms#upload'
-  match '/compare2', to: 'histories#compare2'
-  match '/compare3', to: 'histories#compare3'  
   match '/jsonized', to: 'histories#jsonized'
-  match '/compareHisGed', to: 'gedcoms#compareHisGed'
-
+  match '/compare-history-gedcom', to: 'gedcoms#compareHisGed'  
+  match '/compare-two-histories', to: 'histories#compareHisHis'  
+  match '/frise-history', to: 'histories#showFrise'
+  match '/frise-two-histories', to: 'histories#showFriseHisHis'
+  match '/frise-history-gedcom', to: 'gedcoms#showFriseHisGed'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

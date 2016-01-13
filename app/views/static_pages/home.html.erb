@@ -48,7 +48,9 @@
     <% @gedcoms_block_five.each do |gedcom| %>
       <tr>
         <td><%= gedcom.name %></td>
-        <td><%= link_to 'Show', gedcom %></td>      
+        <td><%= link_to 'Show', gedcom %></td> 
+        <td><%= link_to ' | Destroy', gedcom, confirm: 'Are you sure?', method: :delete %></td>  
+
       </tr>
       <% end %>
     </table>

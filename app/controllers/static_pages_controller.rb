@@ -389,22 +389,22 @@ def parse
           if birt==1 
             begin
               date = date[1].squish
-              #date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%d %b %Y") : 
-              #     (date.match(/\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%b %Y") : 
-              #         (  date.match(/\d{3,4}/) ? birtdate= DateTime.strptime(date , "%Y") : raise )
-              #      )
+              date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%d %b %Y") : 
+                   (date.match(/\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%b %Y") : 
+                       (  date.match(/\d{3,4}/) ? birtdate= DateTime.strptime(date , "%Y") : raise )
+                    )
               date_error = false
-              case date
-                when /\d{1,2}\s\D{3}\s\d{3,4}/
-                  birtdate= DateTime.strptime(date , "%d %b %Y")
-                when /\D{3}\s\d{3,4}/
-                  birtdate= DateTime.strptime(date, "%b %Y")
-                when /\d{3,4}/
-                  birtdate= DateTime.strptime(date , "%Y")
-                else 
-                  date_error = true
-                  raise
-              end
+              #case date
+              #  when /\d{1,2}\s\D{3}\s\d{3,4}/
+              #    birtdate= DateTime.strptime(date , "%d %b %Y")
+              #  when /\D{3}\s\d{3,4}/
+              #    birtdate= DateTime.strptime(date, "%b %Y")
+              #  when /\d{3,4}/
+              #    birtdate= DateTime.strptime(date , "%Y")
+              #  else 
+              #    date_error = true
+              #    raise
+              #end
               
             rescue Exception => exc
               @date_log.push({:line => @lines, :date => date })

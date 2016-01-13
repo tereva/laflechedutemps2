@@ -1,2 +1,34 @@
 
-<%= @gedcom.name %>
+
+
+<h1><%= @gedcom.name %></h1>
+
+<h3>Statistiques du parsing Gedcom...</h3>
+<%= render 'parselog'  %>
+
+<h3>Résultats du parsing</h3>
+<table>
+	<tr>
+		<td>
+			<ol>
+			<% @resu.each do |evt| %>
+			   <li>
+			   	<font color=<%= evt[:textColor]%>>
+				<span>
+					<% if evt[:link] %>
+                     <%= link_to evt[:title], evt[:link] %>
+
+					<% else %>
+						<%= evt[:title] %>
+					<% end %>
+                </span>			  	
+			  	<span><%= evt[:start] ? " | "+evt[:start].strftime("%d %b %Y") : "" %></span>
+			  	<span><%= evt[:end] ? " | "+evt[:end].strftime("%d %b %Y") : ""%></span>
+			  	<span><%= evt[:place] ? " | "+evt[:place] : "" %></span>
+			   </font>
+			   </li>
+			<% end %>
+			</ol>
+		</td> 
+	</tr>
+</table>

@@ -1,11 +1,11 @@
 
 
 <p>
-Nous avons analysé <%= @lines %> lignes et trouvé <%= @pers%> personnes dans la genealogie
+<b>Nous avons analysé <%= @lines %> lignes et trouvé <%= @pers%> personnes dans la genealogie</b>
 </p>
 <% if @date_log.length > 0 %> 
 <p>
-	Il y a  <%= @date_log.length %> erreurs sur les formats de dates :
+	<b>Il y a  <%= @date_log.length %> erreurs sur les formats de dates :</b>
 	
 		<% @date_log.each do |error|%>
 	      <%= error[:date] %>(<%= error[:line]%>),&nbsp;
@@ -14,7 +14,7 @@ Nous avons analysé <%= @lines %> lignes et trouvé <%= @pers%> personnes dans l
 <% end %>
 <% if @person_log.length > 0 %> 
 <p>
-Il y a  <%= @person_log.length %> individus sans date de naissance :
+<b>Il y a  <%= @person_log.length %> individus sans date de naissance :</b>
 		<% @person_log.each do |error|%>
 			<%= error[:name] %> (<%= error[:line] %>),&nbsp; 
 		 <% end %>

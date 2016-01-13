@@ -55,7 +55,7 @@
 
 
           var tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
-   tl.loadJSON('http://localhost:3000/compare3?history1_id=<%= @select1 %>&history2_id=<%= @select2 %>', function(json, url) {
+   tl.loadJSON('<%= @timeline_req %>', function(json, url) {
        eventSource.loadJSON(json, url);
    }); 
 
@@ -89,7 +89,7 @@ tl.layout();
     <%= content_tag(:div, value, class: "alert alert-#{key}") %>
    <% end %>
 
- <%= yield %>
+   <%= yield %>
 
   <%= render 'layouts/footer' %>
   <%= debug(params) if Rails.env.development? %>

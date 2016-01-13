@@ -1,0 +1,18 @@
+
+<div class="row">
+ <div class="span6 offset3">
+
+<%= form_tag({controller: "histories", action: "compareHisHis"}, method:"post",
+                    class: "nifty_form") do %>
+<%= select_tag(:h1, options_from_collection_for_select(History.where(approved: true), :id, :title,
+ @select1), :style => "width:500px")   %>
+
+<%= select_tag(:h2, options_from_collection_for_select(History.all, :id, :title, @select2), :style => "width:500px")  %><br>
+
+<%= submit_tag 'Texte',:name => 'texte_button', class: "btn btn-large btn-primary" %>
+<%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-large btn-primary" %>
+
+<% end %>
+
+</div>
+ </div>

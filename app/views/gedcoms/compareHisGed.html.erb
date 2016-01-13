@@ -1,22 +1,13 @@
 <h1>Comparaison Chrono-généalogique</h1>
 
-<%= form_tag compareHisGed_gedcoms_path, multipart: true, class: "nifty_form" do %>
+<%= render 'compareHisGedForm' %>
 
-<%= file_field_tag :file %>
-<%= select_tag(:gedcom_id, options_from_collection_for_select(Gedcom.where(public: true), :id, :name))  %> 
-<%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title))  %> 
-
-  <%= submit_tag "Texte" , :name => 'text_button', class: "btn btn-large btn-primary" %>
-  <%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-large btn-primary" %>
-
-<% end %>
-
-<% if @form %>
+<% if @resu %>
 
 <h3>Données...</h3>
 <ul>
 <li>Chronologie selectionée (bleu) : <%= @history.title %></li>
-<li> Fichier Gedcom parsé (rouge) : <%= @path %></li>
+<li> Fichier Gedcom parsé (rouge) : <%= @gedcom.name%></li>
 </ul>	
 
 <h3>Statistiques du parsing Gedcom...</h3>

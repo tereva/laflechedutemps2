@@ -1,0 +1,16 @@
+
+
+<div class="row">
+ <div class="span6 offset3">
+<%= form_tag compareHisGed_gedcoms_path, multipart: true, class: "nifty_form" do %>
+<%= file_field_tag :file %>
+<%= select_tag(:gedcom_id, options_from_collection_for_select(Gedcom.where(public: true), :id, :name, 
+@g), :style => "width:500px")  %> 
+<%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title,
+@h), :style => "width:500px")%> 
+  <%= submit_tag "Texte" , :name => 'text_button', class: "btn btn-large btn-primary" %>
+  <%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-large btn-primary" %>
+
+<% end %>
+</div>
+</div>
