@@ -1,16 +1,51 @@
-
-
-<div class="row">
- <div class="span6 offset3">
+  
+ <div class="hero-unit">
 <%= form_tag compareHisGed_gedcoms_path, multipart: true, class: "nifty_form" do %>
-<%= file_field_tag :file %>
-<%= select_tag(:gedcom_id, options_from_collection_for_select(Gedcom.where(public: true), :id, :name, 
-@g), :style => "width:500px")  %> 
-<%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title,
-@h), :style => "width:500px")%> 
+
+<div class="control-group" >
+	<div class="controls">
+		<%= check_box_tag :ged_choice, '1', @ged_choice_default %>
+		<span>Téléchargez votre fichier GEDCOM ou cochez pour utiliser un de nos fichiers</span>
+	</div>
+</div>
+
+
+
+<div class="control-group" >
+	<div class="controls">
+		<div id="upload-gedcom">
+			<div style="position:relative;">
+			        <a class='btn btn-default' href='javascript:;'>
+			            Choose File...
+			            <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+			        </a>
+			        &nbsp;
+			        <span class='label label-info' id="upload-file-info"><%=            @gedcom_name ?  @gedcom_name : "" %></span>
+			</div>
+		</div>
+		<div id="select-gedcom"  style="display:none;">
+			<%= select_tag(:gedcom_id, options_from_collection_for_select(Gedcom.where(public: true), :id, :name, @g), :style => "width:500px")  %> 
+		</div>
+	</div>
+</div>
+
+
+
+<div class="control-group" >
+	<div class="controls">
+	<%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title,
+	@h), :style => "width:500px")%> 
+	</div>
+</div>
+
+<div class="controls-groups">
+<div class="controls">	
   <%= submit_tag "Texte" , :name => 'text_button', class: "btn btn-large btn-primary" %>
   <%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-large btn-primary" %>
+</div>
+</div>
 
 <% end %>
+
 </div>
-</div>
+

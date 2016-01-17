@@ -2,7 +2,8 @@ class Gedcom < ActiveRecord::Base
   attr_accessible :content, :name, :description, :public
 
   belongs_to :user
-  
+
+  validates :description, presence: true
   validates :name, presence: true
   validates :user_id, presence: true
 
@@ -16,7 +17,7 @@ def parse(color)
 	pers = 0
 	lines=0    
 	birt=0
-    deat=0
+  deat=0
 
 	person_log = []
 	date_log = [] 

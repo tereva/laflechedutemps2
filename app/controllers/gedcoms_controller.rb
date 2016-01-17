@@ -1,6 +1,6 @@
 class GedcomsController < ApplicationController
 
- before_filter :signed_admin, only: [:upload, :destroy]
+ before_filter :signed_admin, only: [:upload, :destroy, :edit, :update]
 
   def upload
 
@@ -27,16 +27,18 @@ class GedcomsController < ApplicationController
   def compareHisGed
     @h = params[:history_id] ? params[:history_id] : History.first
     @g = params[:gedcom_id] ? params[:gedcom_id] : Gedcom.first
+    @ged_choice_default = false
     if params[:utf8] # le formulaire est en cours...
       @history = History.find(@h)
+      @ged_choice_default = (params[:ged_choice] == '1') ? true : false 
       if params[:frise_button]
         if params[:file] 
           @gedcom_name= params[:file].original_filename
           @path = Rails.root.join('public', 'GEDCOM', @gedcom_name)
           File.open(@path, "wb") { |f| f.write(params[:file].read) }
-          @timeline_req='http://localhost:3000/frise-history-gedcom?h='+@h.to_s+'&p='+@path.to_s
+          @timeline_req=root_url+'frise-history-gedcom?h='+@h.to_s+'&p='+@path.to_s
         else 
-          @timeline_req='http://localhost:3000/frise-history-gedcom?h='+@h.to_s+'&g='+@g.to_s
+          @timeline_req=root_url+'frise-history-gedcom?h='+@h.to_s+'&g='+@g.to_s
           @gedcom_name= Gedcom.find(@g).name
         end
         render :layout => 'timeline_layout2', :template => 'gedcoms/frise'
@@ -45,9 +47,10 @@ class GedcomsController < ApplicationController
           @gedcom = Gedcom.new
           @gedcom.content = ((File.open(params[:file].path, "r:iso8859-2"){ |f| 
             f.read}).gsub("\r", "\n")).gsub("\n\n", "\n")
-          @gedcom.name= params[:file].original_filename
+          @gedcom_name= params[:file].original_filename
         else 
           @gedcom = Gedcom.find(@g)
+          @gedcom_name= @gedcom.name
         end
         tmp, @date_log, @person_log, @lines, @pers = @gedcom.parse("red")
         tmp += @history.prepareData("blue", "histories/","")
@@ -86,6 +89,25 @@ class GedcomsController < ApplicationController
     tmp, @date_log, @person_log, @lines, @pers = @gedcom.parse("black")
     @resu= tmp.sort_by{|evt| evt[:start]}
   end
+
+
+  def edit
+    @gedcom = Gedcom.find(params[:id])
+  end
+
+  # PUT /events/1
+  # PUT /events/1.json
+  def update
+    @gedcom = Gedcom.find(params[:id])
+    respond_to do |format|
+      if @gedcom.update_attributes(params[:gedcom])
+        format.html { redirect_to root_path, notice: 'Gedcom was successfully updated.' }
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
 
 
   def destroy

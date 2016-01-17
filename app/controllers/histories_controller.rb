@@ -23,7 +23,8 @@ class HistoriesController < ApplicationController
 
   def timeline
    @history = History.find(params[:id])
-   @timeline_req='http://localhost:3000/jsonized?id='+@history.id.to_s
+   #@timeline_req='http://localhost:3000/jsonized?id='+@history.id.to_s
+   @timeline_req=root_url+'jsonized?id='+@history.id.to_s
    render :layout => 'timeline_layout2'
   end
 

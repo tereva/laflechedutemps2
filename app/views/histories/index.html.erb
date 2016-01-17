@@ -1,5 +1,22 @@
 
-<h1>Toutes les Histoires valides</h1>
+<h1>Toutes les Histoires validées</h1>
+
+ <p>Il y a <%= @histories.count %> histoires disponibles.</p>
+
+<ol> 
+<% @histories.each do |histo| %>
+<li>
+<b><%= link_to histo.title, histo %> (<%= histo.events.count %>)</b>
+<% if signed_admin? %> 
+  <%= link_to ' Edit', edit_history_path(histo) %>
+  <%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+<% end %>
+<p><%= histo.description %></p>
+</li> 
+<% end %>
+</ol>
+
+
 
     <table>
       <tr>
@@ -10,7 +27,7 @@
     <% @histories.each do |histo| %>
       <tr>
         <td><%= histo.title %></td>
-        <td><%= histo.description %></td>
+        <td></td>
         <td><%= link_to 'Show', histo %></td>
         <% if signed_admin? %> 
           <td><%= link_to ' | Edit', edit_history_path(histo) %></td>

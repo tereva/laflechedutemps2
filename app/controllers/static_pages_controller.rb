@@ -342,6 +342,7 @@ def parse
       @date_log = [] 
       @person_log = []
       @debug = []
+      date_error = true
 
       @path= params[:file].original_filename
       contents = File.open(params[:file].path, "r:iso8859-2"){ |file| file.read} 
@@ -388,47 +389,48 @@ def parse
         elsif date=/2\x20DATE\x20(.*)/.match(line) # attribut date
           if birt==1 
             begin
-              date = date[1].squish
-              date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%d %b %Y") : 
-                   (date.match(/\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%b %Y") : 
-                       (  date.match(/\d{3,4}/) ? birtdate= DateTime.strptime(date , "%Y") : raise )
-                    )
-              date_error = false
-              #case date
-              #  when /\d{1,2}\s\D{3}\s\d{3,4}/
-              #    birtdate= DateTime.strptime(date , "%d %b %Y")
-              #  when /\D{3}\s\d{3,4}/
-              #    birtdate= DateTime.strptime(date, "%b %Y")
-              #  when /\d{3,4}/
-              #    birtdate= DateTime.strptime(date , "%Y")
-              #  else 
-              #    date_error = true
-              #    raise
-              #end
+               date = date[1].squish
+               date_error = false
+              # date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%d %b %Y") : 
+              #      (date.match(/\D{3}\s\d{3,4}/) ? birtdate= DateTime.strptime(date , "%b %Y") : 
+              #          (  date.match(/\d{3,4}/) ? birtdate= DateTime.strptime(date , "%Y") : raise )
+              #       )
+              
+              case date
+                when /\d{1,2}\s\D{3}\s\d{3,4}/
+                  birtdate= DateTime.strptime(date , "%d %b %Y")
+                when /\D{3}\s\d{3,4}/
+                  birtdate= DateTime.strptime(date, "%b %Y")
+                when /\d{3,4}/
+                  birtdate= DateTime.strptime(date , "%Y")
+                else 
+                  raise
+              end
               
             rescue Exception => exc
+              date_error = true
               @date_log.push({:line => @lines, :date => date })
             end
           elsif deat==1 
             begin
               date = date[1].squish
-             # date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? deatdate= DateTime.strptime(date , "%d %b %Y") : 
-             #      (date.match(/\D{3}\s\d{3,4}/) ? deatdate= DateTime.strptime(date, "%b %Y") : 
-             #           ( date.match(/\d{3,4}/) ? deatdate= DateTime.strptime(date , "%Y") : raise)
-             #       )
-            case date
-              when /\d{1,2}\s\D{3}\s\d{3,4}/
-                deatdate= DateTime.strptime(date , "%d %b %Y")
-              when /\D{3}\s\d{3,4}/
-                deatdate= DateTime.strptime(date, "%b %Y")
-              when /\d{3,4}/
-                deatdate= DateTime.strptime(date , "%Y")
-              else 
-                raise
+            #   date.match(/\d{1,2}\s\D{3}\s\d{3,4}/) ? deatdate= DateTime.strptime(date , "%d %b %Y") : 
+            #        (date.match(/\D{3}\s\d{3,4}/) ? deatdate= DateTime.strptime(date, "%b %Y") : 
+            #             ( date.match(/\d{3,4}/) ? deatdate= DateTime.strptime(date , "%Y") : raise)
+            #         )
+            
+             case date
+             when /\d{1,2}\s\D{3}\s\d{3,4}/
+               deatdate= DateTime.strptime(date , "%d %b %Y")
+            when /\D{3}\s\d{3,4}/
+               deatdate= DateTime.strptime(date, "%b %Y")
+             when /\d{3,4}/
+               deatdate= DateTime.strptime(date , "%Y")
+             else 
+               raise
             end
 
             rescue Exception => exc
-              #date_error=true
               @date_log.push({:line => @lines, :date => date })
             end
           end     
@@ -467,7 +469,7 @@ def parse
       })
       end
       @all= all.sort_by{|hsh| hsh[:start]}
-
+      #@all= all
     data =  {'wiki-url'=>'http://simile.mit.edu/shelf',
         'wiki-section'=>'Simile Cubism Timeline',
         'dateTimeFormat'=>'Gregorian', 

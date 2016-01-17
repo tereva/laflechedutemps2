@@ -49,8 +49,6 @@
       <tr>
         <td><%= gedcom.name %></td>
         <td><%= link_to 'Show', gedcom %></td> 
-        <td><%= link_to ' | Destroy', gedcom, confirm: 'Are you sure?', method: :delete %></td>  
-
       </tr>
       <% end %>
     </table>
@@ -106,6 +104,36 @@
 
 
 	<% if current_user.admin %>  
+
+
+  <h2>ADMIN : (<%= @gedcoms_block_admin.count %>) Gedcom </h2>
+
+     <table>
+      <tr>
+        <th>User</th>
+        <th>Status</th>
+        <th>Validation</th>
+        <th>Nom</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+  <% @gedcoms_block_contrib.each do |gedcom| %>
+      <tr>
+        <td><%= gedcom.user.name %></td> 
+        <td><%= gedcom.public ? '[Public]' : '[Privé]'%></td> 
+        <td><%= gedcom.approved ? '[Approved]' : '[Not approved]'%></td> 
+        <td><%= gedcom.name %> </td>
+         <td><%= gedcom.description %> </td>
+        <td><%= link_to 'Show', gedcom %></td>
+        <td><%= link_to ' | Edit', edit_gedcom_path(gedcom) %></td>
+        <td><%= link_to ' | Destroy', gedcom, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+      <% end %>
+    </table>
+
 
 
 	<h2>ADMIN : (<%= @histories_block_admin.count %>) Histoires </h2>
