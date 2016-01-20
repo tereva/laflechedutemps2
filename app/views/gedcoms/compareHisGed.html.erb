@@ -4,12 +4,33 @@
 
 <% if @resu %>
 
+
+<div class="panel panel-primary">  
+	<div class="panel-heading">Panel footer</div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+
 <h3>Données...</h3>
 <ul>
 <li>Chronologie selectionée (bleu) : <%= @history.title %></li>
 <li> Fichier Gedcom parsé (rouge) : <%= @gedcom.name%></li>
-</ul>	
+</ul>
+	<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+    <span class="sr-only">60% Complete</span>
+  </div>
+</div>
 
+<div class="panel panel-default panelrow">
+    <div class="panel-heading">
+        <h3 class="panel-title">Panel title</h3>
+    </div>
+    <div class="panel-body">
+        Panel content
+    </div>
+</div>
 
 <h3>Statistiques du parsing Gedcom...</h3>
 <span class='label label-info'><%= check_box_tag :stat_ged, '1', false %> Masquer les détails...</span>
