@@ -31,10 +31,8 @@ GEM
     annotate (2.4.1.beta1)
     arel (3.0.3)
     bcrypt-ruby (3.0.1)
-    bootstrap-sass (2.3.1.0)
+    bootstrap-sass (3.3.1.0)
       sass (~> 3.2)
-    bootstrap-will_paginate (0.0.6)
-      will_paginate
     builder (3.0.4)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -153,6 +151,8 @@ GEM
       multi_json (>= 1.0.2)
     websocket (1.2.1)
     will_paginate (3.0.3)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
@@ -162,8 +162,7 @@ PLATFORMS
 DEPENDENCIES
   annotate (~> 2.4.1.beta)
   bcrypt-ruby (= 3.0.1)
-  bootstrap-sass (= 2.3.1.0)
-  bootstrap-will_paginate (= 0.0.6)
+  bootstrap-sass (~> 3.3.1.0)
   capybara (= 1.1.2)
   coffee-rails (= 3.2.2)
   debugger
@@ -177,3 +176,4 @@ DEPENDENCIES
   sqlite3 (= 1.3.5)
   uglifier (= 1.2.3)
   will_paginate (= 3.0.3)
+  will_paginate-bootstrap (= 1.0.1)

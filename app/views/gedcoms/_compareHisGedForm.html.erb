@@ -1,51 +1,90 @@
-  
- <div class="hero-unit">
-<%= form_tag compareHisGed_gedcoms_path, multipart: true, class: "nifty_form" do %>
 
-<div class="control-group" >
-	<div class="controls">
-		<%= check_box_tag :ged_choice, '1', @ged_choice_default %>
-		<span>Téléchargez votre fichier GEDCOM ou cochez pour utiliser un de nos fichiers</span>
-	</div>
+<div class="row"> <!-- row -->
+
+ <% if @resu %>  
+ <div class="col-md-6">
+  <% else %>
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <% end %> 
+
+    <div class="panel panel-primary panelrow">
+      <div class="panel-heading">
+        Selectionnez les données
+
+      </div>
+      <div class="panel-body">
+
+
+        <%= form_tag compareHisGed_gedcoms_path, multipart: true, class: "form-vertical" do %>
+        <div class="form-group">
+          <div class="row">
+
+            <%= check_box_tag :ged_choice, '1', @ged_choice_default, :class => "col-sm-1" %>
+            <%= label_tag :ged_choice, "Cliquez pour utiliser nos Gedcoms", :class => "col-sm-11" %>
+          </div>  
+        </div>
+
+        <div class="form-group">
+          <div id="upload-gedcom">
+           <div style="position:relative;">
+             <a class='btn btn-default' href='javascript:;'>
+               Uploadez un Gedcom
+               <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+             </a>
+             &nbsp;
+             <span class='label label-info' id="upload-file-info"><%=            @gedcom_name ?  @gedcom_name : "" %></span>
+           </div>
+         </div>
+         <div id="select-gedcom"  style="display:none;">
+           <%= select_tag(:gedcom_id, options_from_collection_for_select(Gedcom.where(public: true), :id, :name, @g))  %> 
+         </div>
+       </div>
+
+       <div class="form-group">
+        <%= label_tag :history_id, "Selectionnez une chronologie:" %>
+        <%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title,@h))%> 
+      </div>
+      <div class="col-md-6">
+        <%= submit_tag "Texte" , :name => 'text_button', class: "btn btn-primary" %>
+      </div>
+      <div class="col-md-6">
+       <%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-primary" %>
+     </div>
+
+     <% end %>
+
+
+   </div><!--  panel body -->
+ </div> <!-- panel row -->
+</div><!-- <div class="col-md-6"> -->
+
+<% if @resu %>  
+<div class="col-md-6">
+  <div class="panel panel-info panelrow">
+
+    <div class="panel-heading">
+      <h3 class="panel-title">Statistique</h3>
+    </div>
+    <div class="panel-body">  
+
+      <ul> 
+        <li>Chronologie selectionée (bleu) : <%= @history.title %></li>
+        <li> Fichier Gedcom parsé (rouge) : <%= @gedcom_name%></li>
+        <li>Nombre de lignes analysées : <%= @lines %> </li>
+        <li>Nombre d'individus : <%= @pers%></li>
+        <li>Nombre d'individus sans date de naissance : <%= @person_log.length %></li>
+        <li>Nombre de format de date non pris en charge  : <%= @date_log.length %> </li>
+      </ul> 
+
+      <div class="row">
+       <%= check_box_tag :stat_ged, '1', false, :class => "col-sm-1" %>Afficher les erreurs en détail
+     </div>   
+      <div id="stat-ged" style="display:none;">
+        <%= render 'parselog'  %>
+      </div>
 </div>
-
-
-
-<div class="control-group" >
-	<div class="controls">
-		<div id="upload-gedcom">
-			<div style="position:relative;">
-			        <a class='btn btn-default' href='javascript:;'>
-			            Choose File...
-			            <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
-			        </a>
-			        &nbsp;
-			        <span class='label label-info' id="upload-file-info"><%=            @gedcom_name ?  @gedcom_name : "" %></span>
-			</div>
-		</div>
-		<div id="select-gedcom"  style="display:none;">
-			<%= select_tag(:gedcom_id, options_from_collection_for_select(Gedcom.where(public: true), :id, :name, @g), :style => "width:500px")  %> 
-		</div>
-	</div>
-</div>
-
-
-
-<div class="control-group" >
-	<div class="controls">
-	<%= select_tag(:history_id, options_from_collection_for_select(History.where(approved: true), :id, :title,
-	@h), :style => "width:500px")%> 
-	</div>
-</div>
-
-<div class="controls-groups">
-<div class="controls">	
-  <%= submit_tag "Texte" , :name => 'text_button', class: "btn btn-large btn-primary" %>
-  <%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-large btn-primary" %>
 </div>
 </div>
-
-<% end %>
-
-</div>
-
+  <% end %> 
+</div> <!-- row -->

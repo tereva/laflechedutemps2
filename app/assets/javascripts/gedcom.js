@@ -17,7 +17,7 @@ $('#ged_choice').change(function() {
 });
 
 $('#stat_ged').change(function() {
-    $('#stat-ged').toggle(!this.checked);
+    $('#stat-ged').toggle(this.checked);
 });
 
 

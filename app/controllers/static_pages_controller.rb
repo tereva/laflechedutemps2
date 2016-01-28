@@ -3,7 +3,9 @@ require 'date'
 
 class StaticPagesController < ApplicationController
  
-
+def index
+render :layout => 'one_page_layout'
+end
 
   def home
 

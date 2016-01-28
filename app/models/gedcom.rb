@@ -23,13 +23,14 @@ def parse(color)
 	date_log = [] 
 	all = []
 	
-	name='toto'
+	name=nil
 	birtplace=nil
 	birtdate=nil
 	deatplace=nil
 	deatdate=nil
-  	temp=nil
+  temp=nil
 	date=nil
+  sex = nil
 
 	date_error = true
 
@@ -39,7 +40,7 @@ def parse(color)
     if  /0\x20\x40(I.*)\x40/.match(line) #nouvelle personne
       if pers>0 # enregistrer la precedente personne, sauf si c'est le premier  
         if !date_error # birtdate existe et au bon format
-          all.push({:title => name, :start=>  birtdate, :end => deatdate, :place => birtplace, 
+          all.push({:sex => sex, :ged => true, :title => name, :start=>  birtdate, :end => deatdate, :place => birtplace, 
             :durationEvent => deatdate ? true : false, :textColor => color })
         else
           person_log.push({:line => lines, :name => name })
@@ -48,14 +49,15 @@ def parse(color)
       pers += 1
       birt=0
       deat=0
-      name='toto'
+      name=nil
       birtplace=nil
       birtdate=nil
       deatplace=nil
       deatdate=nil
       date_error = true
+      sex = nil
     elsif temp = /1\x20NAME\x20(.*)/.match(line) #nouvelle personne
-      name = temp[1]
+      name = temp[1].gsub('/','')
     elsif /1\x20BIRT/.match(line) # evt naissance
       birt=1
       deat=0
@@ -110,11 +112,14 @@ def parse(color)
       elsif deat==1
       deatplace=place[1]
       end
+
+    elsif temp=/1\x20SEX\x20(.*)/.match(line) # attribut sex
+      sex = temp[1].gsub('\x20','')
     end # if/0\x20\x40(I.*)\x40/.match(line)
   end # file.each
 
   if !date_error   
-    all.push({:title => name, :start=>  birtdate, :end => deatdate, :place => birtplace, 
+    all.push({:sex => sex, :ged => true, :title => name, :start=>  birtdate, :end => deatdate, :place => birtplace, 
             :durationEvent => deatdate ? true : false, :textColor => color})
    else
      person_log.push({:line => lines, :name => name })

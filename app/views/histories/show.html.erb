@@ -13,5 +13,8 @@
   <ul>
    <%= render @events %>
   </ul>
- <%= will_paginate @events %>                                     
- <% end %>  
+  <% end %>    
+<div class="pagination">
+  <%= will_paginate @events, renderer: BootstrapPagination::Rails, bootstrap: 3   %>
+</div>                                 
+
