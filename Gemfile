@@ -9,6 +9,7 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 #Version du tutorial... : gem 'bootstrap-will_paginate', '0.0.6' 
 gem 'will_paginate-bootstrap', '1.0.1' # version pour bootstrap 3
+gem 'font-awesome-sass', '~> 4.4.0'
 
 group :development, :test do
  gem 'sqlite3', '1.3.5'

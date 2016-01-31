@@ -1,33 +1,14 @@
-<h1>Listing events</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Start</th>
-    <th>End</th>
-    <th>Durationevent</th>
-    <th>Place</th>
-    <th>Description</th>
+<h1>Tous les Évèvements</h1>
 
-  </tr>
+ <p>Il y a <%= @events.count %> évènements disponibles.</p>
+  <ul>
+   <%= render @events %>
+  </ul>
+ 
+<div class="pagination">
+  <%= will_paginate @events, renderer: BootstrapPagination::Rails, bootstrap: 3   %>
+</div> 
 
-<% @events.each do |event| %>
-  <tr>
-    <td><%= event.title %></td>
-    <td><%= event.start %></td>
-    <td><%= event.end %></td>
-    <td><%= event.durationEvent %></td>
-    <td><%= event.place %></td>
-    <td><%= event.description %></td>
-     <td><%= event.linked_history_id %></td>
-    <td><%= link_to 'Show', event %></td>
-     <% if signed_admin? %> 
-      <td><%= link_to ' | Edit', edit_event_path(event) %></td>
-      <td><%= link_to ' | Destroy', event, confirm: 'Are you sure?', method: :delete %></td>
-    <% end %>
-  </tr>
-<% end %>
-</table>
 
-<br />
 

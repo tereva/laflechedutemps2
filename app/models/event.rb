@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
 
 
 
-default_scope order: 'events.start DESC'
+default_scope order: 'events.updated_at DESC'
 
   def self.import(file, history_id, user_id)
   	CSV.foreach(file.path, headers: true) do |row|

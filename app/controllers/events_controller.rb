@@ -10,6 +10,7 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.where(approved: true)
+    @events = @events.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
