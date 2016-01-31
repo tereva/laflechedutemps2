@@ -22,7 +22,7 @@ end
   		@histories_block_contrib = current_user.histories
       @gedcoms_block_contrib = current_user.gedcoms
   	end
-
+   render :layout => 'home_layout'
   end
 
  
