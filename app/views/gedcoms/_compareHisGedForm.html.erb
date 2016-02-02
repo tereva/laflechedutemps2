@@ -1,25 +1,20 @@
 
 <div class="row"> <!-- row -->
 
- <% if @resu %>  
- <div class="col-md-6">
-  <% else %>
-  <div class="col-md-3"></div>
+<% if @resu %>
   <div class="col-md-6">
-    <% end %> 
-
+<% else %>
+  <div class="col-md-6 col-md-offset-3">  
+<% end %>
     <div class="panel panel-primary panelrow">
       <div class="panel-heading">
         Selectionnez les données
-
       </div>
+
       <div class="panel-body">
-
-
         <%= form_tag compareHisGed_gedcoms_path, multipart: true, class: "form-vertical" do %>
         <div class="form-group">
           <div class="row">
-
             <%= check_box_tag :ged_choice, '1', @ged_choice_default, :class => "col-sm-1" %>
             <%= label_tag :ged_choice, "Cliquez pour utiliser nos Gedcoms", :class => "col-sm-11" %>
           </div>  
@@ -80,11 +75,11 @@
       <div class="row">
        <%= check_box_tag :stat_ged, '1', false, :class => "col-sm-1" %>Afficher les erreurs en détail
      </div>   
-      <div id="stat-ged" style="display:none;">
-        <%= render 'parselog'  %>
-      </div>
+     <div id="stat-ged" style="display:none;">
+      <%= render 'parselog'  %>
+    </div>
+  </div>
 </div>
 </div>
-</div>
-  <% end %> 
+<% end %> 
 </div> <!-- row -->

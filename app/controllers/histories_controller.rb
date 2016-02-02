@@ -7,7 +7,8 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
-    @histories = History.where(approved: true)
+    @histories = History.where(approved: true).paginate(page: params[:page])
+
   end
 
   # GET /histories/1

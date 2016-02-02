@@ -1,0 +1,32 @@
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3"> 
+
+		<div class="panel panel-primary panelrow">
+			<div class="panel-heading">
+				Selectionnez les données
+			</div>
+
+			<div class="panel-body">
+
+				<%= form_tag({controller: "histories", action: "compareHisHis"}, method:"post",
+				class: "nifty_form") do %> 
+				<div class="form-group">
+					<%= select_tag(:h1, options_from_collection_for_select(History.where(approved: true), :id, :title,
+					@select1))   %>
+				</div>
+				<div class="form-group">
+					<%= select_tag(:h2, options_from_collection_for_select(History.all, :id, :title, @select2))  %>
+				</div>
+				<div class="col-md-6"> 
+					<%= submit_tag 'Texte',:name => 'texte_button', class: "btn btn-large btn-primary" %> 
+				</div>
+				<div class="col-md-6"> 
+					<%= submit_tag 'Frise', :name => 'frise_button',class: "btn btn-large btn-primary" %>
+				</div>
+				<% end %>
+			</div>
+
+		</div>
+	</div> <!-- col md6 -->
+</div> <!-- row -->

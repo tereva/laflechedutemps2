@@ -1,0 +1,17 @@
+<h1>Toutes les généalogies</h1>
+
+ <p>Il y a <%= @gedcoms.count %> généalogies disponibles.</p>
+
+<ol> 
+<% @gedcoms.each do |ged| %>
+<li>
+<b><%= link_to ged.name, ged %></b>
+<% if signed_admin? %> 
+  <%= link_to ' Edit', edit_history_path(ged) %>
+  <%= link_to ' | Destroy', ged, confirm: 'Are you sure?', method: :delete %></td>
+<% end %>
+<p><%= ged.description %></p>
+</li> 
+<% end %>
+</ol>
+

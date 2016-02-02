@@ -2,6 +2,11 @@ class GedcomsController < ApplicationController
 
  before_filter :signed_admin, only: [:upload, :destroy, :edit, :update]
 
+
+ def index
+  @gedcoms = Gedcom.where(approved: true, public: true)
+end
+
  def upload
 
   if params[:file] 
