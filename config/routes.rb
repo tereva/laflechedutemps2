@@ -4,7 +4,7 @@ Krono::Application.routes.draw do
 
  resources :events do
     collection {post :import}
-
+    get 'toggle_approve', :on => :member
   end
 
    resources :static_pages do
@@ -16,6 +16,7 @@ Krono::Application.routes.draw do
   resources :gedcoms do
     collection {post :upload}
     collection {post :compareHisGed}
+    get 'toggle_approve', :on => :member
   end
 
 
@@ -27,17 +28,15 @@ Krono::Application.routes.draw do
 
 
   # Ajout de la methode toggle_approve comme ressource routable de l'objet Histoire
-  resources :users do
-    get 'toggle_approve', :on => :member
-  end
 
-   resources :registres do
+  resources :registres do
     get 'toggle_approve', :on => :member
   end
 
  resources :histories do
     get 'jsonized', :on => :member
     get 'timeline', :on => :member
+    get 'toggle_approve', :on => :member
 
   end
 

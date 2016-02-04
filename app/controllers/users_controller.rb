@@ -39,16 +39,6 @@ class UsersController < ApplicationController
 		end
 	end
 
- 	def toggle_approve
-    @histo2=History.find(params[:id])
-    @histo2.toggle!(:approved)
-    
-    respond_to do |format|
-      format.js
-    end
-
-    #render :nothing => true
-  end
 
 
 private

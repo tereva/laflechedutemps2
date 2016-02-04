@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160112141940) do
+ActiveRecord::Schema.define(:version => 20160204085918) do
 
   create_table "chronologies", :force => true do |t|
     t.string   "title"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20160112141940) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "approved",   :default => false
+    t.integer  "user_id"
   end
 
   add_index "registres", ["event_id"], :name => "index_registres_on_event_id"

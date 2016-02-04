@@ -4,31 +4,47 @@
 <h1><%= @gedcom.name %></h1>
 
 <h3>Statistiques du parsing Gedcom...</h3>
-<%= render 'parselog'  %>
+
+<ul> 
+	<li>Nombre de lignes analysées : <%= @lines %> </li>
+	<li>Nombre d'individus : <%= @pers%></li>
+	<li>Nombre d'individus sans date de naissance : <%= @person_log.length %></li>
+	<li>Nombre de format de date non pris en charge  : <%= @date_log.length %> </li>
+</ul> 
+
+<div class="row">
+	<%= check_box_tag :stat_ged, '1', false, :class => "col-sm-1" %>Afficher les erreurs en détail
+</div>   
+<div id="stat-ged" style="display:none;">
+	<%= render 'parselog'  %>
+</div>
+
+
 
 <h3>Résultats du parsing</h3>
-<table>
-	<tr>
-		<td>
-			<ol>
-			<% @resu.each do |evt| %>
-			   <li>
-			   	<font color=<%= evt[:textColor]%>>
-				<span>
-					<% if evt[:link] %>
-                     <%= link_to evt[:title], evt[:link] %>
 
-					<% else %>
-						<%= evt[:title] %>
-					<% end %>
-                </span>			  	
-			  	<span><%= evt[:start] ? " | "+evt[:start].strftime("%d %b %Y") : "" %></span>
-			  	<span><%= evt[:end] ? " | "+evt[:end].strftime("%d %b %Y") : ""%></span>
-			  	<span><%= evt[:place] ? " | "+evt[:place] : "" %></span>
-			   </font>
-			   </li>
-			<% end %>
-			</ol>
-		</td> 
-	</tr>
-</table>
+
+<ol>
+	<% @resu.each do |evt| %>
+	<li>
+		<font color=<%= evt[:textColor]%>>
+			<span>
+				<%= evt[:title] %>
+				<% if evt[:sex] =~ /f/i %> 
+				<%= evt[:start] ? " | Née le "+evt[:start].strftime("%d %b %Y") : "" %>
+				<%= evt[:place] ? " à "+evt[:place] : "" %>
+				<%= evt[:end] ? " | Décédée le "+evt[:end].strftime("%d %b %Y") : ""%>
+				<% else %>
+				<%= evt[:start] ? " | Né le "+evt[:start].strftime("%d %b %Y") : "" %>
+				<%= evt[:place] ? " à "+evt[:place] : "" %>
+				<%= evt[:end] ? " | Décédé le "+evt[:end].strftime("%d %b %Y") : ""%>
+				<% end %>
+
+
+				
+			</span>
+		</font>
+	</li>
+	<% end %>
+</ol>
+

@@ -1,255 +1,298 @@
-<!-- <div class="jumbotron">
-<h1>Welcome to KRONOFIL</h1>
-<p>This is the home page for KRONOFIL application</p>
-</div>
- -->
-        <!-- Call to Action Well -->
+<hr id="about" class="featurette-divider">
 
-<!--         <div class="row">
-            <div class="col-lg-12">
-                <div class="well text-center">
-                    This is a well that is a great spot for a business tagline or phone number for easy access!
-                </div>
-            </div>  -->
+<div class="row">
+  <div class="featurette" >
+    <img class="featurette-image img-circle img-responsive pull-right" src="<%= asset_path('laine2.jpg') %>" >
+    <h2 class="featurette-heading">Déroulez les fils du temps... 
+      <span class="text-muted">démêlez les noeuds des fils</span>
+    </h2>
+    <p class="lead"> L'idée originelle du projet KRONOFIL émerge d'un désir de pouvoir contextualiser dans l'espace et le temps une généalogie. Plus généralement, on peut faire le constat trivial suivant : la bonne compréhension des évènements historiques ou généalogiques nécéssite l'observation d'un contexte global dans lequel ils se déroulent. Une chronologie est finalement, à l'image d'une pelote de laine...au milieu d'autre pelotes : dans un joyeux mélange, parfois entremêlées, souvent reliées par un lien de causalité dans l'espace et le temps. Venez ici tirer ces fils...tirer vos fils..les uns à côté des autres</p>
 
-  <!-- First Featurette -->
-        <hr id="about" class="featurette-divider">
-
-  <div class="row">
-        <div class="featurette" >
-            <img class="featurette-image img-circle img-responsive pull-right" src="<%= asset_path('laine2.jpg') %>" >
-            <h2 class="featurette-heading">Déroulez les fils du temps... 
-                <span class="text-muted">...démêlez les noeuds des fils</span>
-            </h2>
-            <p class="lead"> L'idée originelle du projet KRONOFIL émerge d'un désir de pouvoir contextualiser dans l'espace et le temps une généalogie. Plus généralement, on peut faire le constat trivial suivant : la bonne compréhension des évènements historiques ou généalogiques nécéssite l'observation d'un contexte global dans lequel ils se déroulent. Une chronologie est finalement, à l'image d'une pelote de laine...au mileu d'autre pelotes : dans un joyeux mélange, parfois entremêlées, souvent reliées par un lien de causalité, dans l'espace et le temps. Venez ici tirer ces fils...tirer vos fils..les uns à côté des autres</p>
-
-            <a class="btn btn-info" href="#summary">Dérouler</a>
-        </div>
-        
+    <a class="btn btn-info" href="#summary">Dérouler</a>
   </div>
 
+</div>
 
-        <hr class="featurette-divider" id="summary">
 
-        <!-- Content Row -->
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Les dernieres Histoires...</h2>
-                  <ul class="list-group"> 
-                    <% @histories_block_five.each do |histo| %> 
-                    <li class="list-group-item">
-                      <span class="badge"><%= histo.events.count %></span>  
-                      <%= link_to histo.title, histo %> 
-                    </li>
-                    <% end %>
-                  </ul>                 
-                <a class="btn btn-info" href="<%= histories_path %>">Voir plus...</a>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <h2>Les derniers Evènements...</h2>
-                <p>
-                 <ul class="list-group"> 
-                    <% @events_block_five.each do |event| %>
-                    <li class="list-group-item">
-                      <span class="badge"><%= event.histories.count %></span>
-                      <%= link_to event.title, event %> 
-                    </li>
-                    <% end %>
-                  </ul>      
-                </p>
-                <a class="btn btn-info" href="<%= events_path %>">Voir plus...</a>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <h2>Les dernières généalogies</h2>
-                  <p>
-                 <ul class="list-group"> 
-                    <% @gedcoms_block_five.each do |gedcom| %>
-                    <li class="list-group-item">
-                      <%= link_to gedcom.name, gedcom %> 
-                    </li>
-                    <% end %>
-                  </ul>      
-                </p>
-                <a class="btn btn-info" href="<%= gedcoms_path %>">Voir plus...</a>
-          
-            </div>
-            <!-- /.col-md-4 -->
-        </div>
-        <!-- /.row -->
+<hr class="featurette-divider" id="summary">
+
+<!-- Content Row -->
+<div class="row">
+  <div class="col-md-4">
+    <h2>Les dernieres Histoires...</h2>
+    <ul class="list-group"> 
+      <% @histories_block_five.each do |histo| %> 
+      <li class="list-group-item">
+        <span class="badge"><%= histo.events.count %></span>  
+        <%= link_to histo.title, histo %> 
+      </li>
+      <% end %>
+    </ul>                 
+    <a class="btn btn-info" href="<%= histories_path %>">Voir plus...</a>
+  </div>
+  <!-- /.col-md-4 -->
+  <div class="col-md-4">
+    <h2>Les derniers Evènements...</h2>
+    <p>
+     <ul class="list-group"> 
+      <% @events_block_five.each do |event| %>
+      <li class="list-group-item">
+        <span class="badge"><%= event.updated_at.strftime("%d %b %Y") %></span>
+        <%= link_to event.title, event %> 
+      </li>
+      <% end %>
+    </ul>      
+  </p>
+  <a class="btn btn-info" href="<%= events_path %>">Voir plus...</a>
+</div>
+<!-- /.col-md-4 -->
+<div class="col-md-4">
+  <h2>Les dernières généalogies</h2>
+  <p>
+   <ul class="list-group"> 
+    <% @gedcoms_block_five.each do |gedcom| %>
+    <li class="list-group-item">
+      <%= link_to gedcom.name, gedcom %> 
+    </li>
+    <% end %>
+  </ul>      
+</p>
+<a class="btn btn-info" href="<%= gedcoms_path %>">Voir plus...</a>
+
+</div>
+<!-- /.col-md-4 -->
+</div>
+<!-- /.row -->
 
 <% if signed_in? %>
 
 
 <h2> CONTRIB : Toutes mes histoires</h2>
 
-    <table>
-      <tr>
-        <th>Status</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th></th>
-        <th></th>
-      </tr>
+<table>
+  <tr>
+    <th>Status</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+  </tr>
 
   <% @histories_block_contrib.each do |histo| %>
-      <tr>
-        <td><%= histo.approved ? '[Approved]' : '[Not approved]'%></td> 
-        <td><%= histo.title %>  (<%= histo.events.count %> évènements)</td>
-        <td><%= link_to 'Show', histo %></td>
-        <td><%= link_to ' | Edit', edit_history_path(histo) %></td> 
-          <% if !histo.approved || current_user.admin %> 
- <td><%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
-          <% end %>
-      </tr>
-      <% end %>
-    </table>
+  <tr>
+    <td><%= histo.approved ? '[Approved]' : '[Not approved]'%></td> 
+    <td><%= histo.title %>  (<%= histo.events.count %> évènements)</td>
+    <td><%= link_to 'Show', histo %></td>
+    <td><%= link_to ' | Edit', edit_history_path(histo) %></td> 
+    <% if !histo.approved || current_user.admin %> 
+    <td><%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+
 
 <h2> CONTRIB : Toutes mes Gedcoms</h2>
 
-    <table>
-      <tr>
-        <th>Status</th>
-        <th>Title</th>
-        <th></th>
-        <th></th>
-      </tr>
+<table>
+  <tr>
+    <th>Status</th>
+    <th>Title</th>
+    <th></th>
+    <th></th>
+  </tr>
 
   <% @gedcoms_block_contrib.each do |gedcom| %>
-      <tr>
-        <td><%= gedcom.public ? '[Public]' : '[Privé]'%></td> 
-        <td><%= gedcom.name %> </td>
-        <td><%= link_to 'Show', gedcom %></td>
-        <td><%= link_to ' | Destroy', gedcom, confirm: 'Are you sure?', method: :delete %></td>
-      </tr>
-      <% end %>
-    </table>
-
-
-	<% if current_user.admin %>  
-
-
-  <h2>ADMIN : (<%= @gedcoms_block_admin.count %>) Gedcom </h2>
-
-     <table>
-      <tr>
-        <th>User</th>
-        <th>Status</th>
-        <th>Validation</th>
-        <th>Nom</th>
-        <th>Description</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-
-  <% @gedcoms_block_contrib.each do |gedcom| %>
-      <tr>
-        <td><%= gedcom.user.name %></td> 
-        <td><%= gedcom.public ? '[Public]' : '[Privé]'%></td> 
-        <td><%= gedcom.approved ? '[Approved]' : '[Not approved]'%></td> 
-        <td><%= gedcom.name %> </td>
-         <td><%= gedcom.description %> </td>
-        <td><%= link_to 'Show', gedcom %></td>
-        <td><%= link_to ' | Edit', edit_gedcom_path(gedcom) %></td>
-        <td><%= link_to ' | Destroy', gedcom, confirm: 'Are you sure?', method: :delete %></td>
-      </tr>
-      <% end %>
-    </table>
+  <tr>
+    <td><%= gedcom.public ? '[Public]' : '[Privé]'%></td> 
+    <td><%= gedcom.name %> </td>
+    <td><%= link_to 'Show', gedcom %></td>
+    <td><%= link_to ' | Destroy', gedcom, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+  <% end %>
+</table>
 
 
 
-	<h2>ADMIN : (<%= @histories_block_admin.count %>) Histoires </h2>
-
-    <table>
-      <tr>
-        <th>Status</th>
-        <th>Proprio</th>
-        <th>Titre</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-	<% @histories_block_admin.each do |histo| %>
-      <tr>
-        <td><%= histo.approved ? '[Approved]' : '[Not approved]'%></td> 
-        <td>[<%= histo.user ? histo.user.name : 'Nil' %>]</td>
-        <td><%= histo.title %>  (<%= histo.events.count %> évènements)</td>
-        <td><%= link_to 'Show | ', histo %></td>
-        <td><%= link_to 'Edit | ', edit_history_path(histo) %></td> 
-        <td><%= link_to approve_link_text(histo), toggle_approve_user_path(histo), :remote => true, :id => "approve_link_#{histo.id}" %></td> 
-        <td><%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
-      </tr>
-      <% end %>
-    </table>
+<% if current_user.admin %>  
 
 
+<h2>ADMIN :  à valider</h2>
 
+<div class="row"> <!--  row 1  -->
 
-  <h2>ADMIN : (<%= @events_block_admin.count %>) Evènements</h2>
+  <!-- Premier bloc : inclusions -->
+  <div class="col-md-6">
+   <div class="panel panel-primary panelrow">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-9">
+          Inclusions (<%= @registres_block_admin.count %>)
+        </div>
+        <div class="col-md-2 text-right">
+         Masquer 
 
-    <table>
-      <tr>
-        <th>Status</th>
-        <th>Proprio</th>
-        <th>Titre</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-  <% @events_block_admin.each do |event| %>
-      <tr>
-        <td><%= event.approved ? '[Approved]' : '[Not approved]'%></td> 
-        <td>[<%= event.user ? event.user.name : 'Nil' %>]</td>
-        <td><%= event.title %></td>
-         <td><%= link_to 'Show | ', event %></td>
-        <td><%= link_to 'Edit | ', edit_event_path(event) %></td> 
-        <td><%= link_to approve_link_text(event), toggle_approve_user_path(event), :remote => true, :id => "approve_link_#{event.id}" %></td> 
-        <td><%= link_to ' | Destroy', event, confirm: 'Are you sure?', method: :delete %></td>
-      </tr>
-      <% end %>
-    </table>
-
-
-
-
-
-  <h2>ADMIN : Inlcusion à valider</h2>
-
-    <table>
-      <tr>
-        <th>Titre Histoire</th>
-        <th>Titre Evenement</th>
-        <th></th>
-        <th></th>
-      </tr>
-  <% @registres_block_admin.each do |registre| %>
+       </div>
+       <div class="col-md-1 text-right">
+         <%= check_box_tag :show_inclusion_box, '0', false, :class => "col-sm-1" %> 
+       </div>
+     </div>
+   </div>
+   <div id="show_inclusion">
+     <table class="table">
+      <% @registres_block_admin.each do |registre| %>
       <tr>
         <td>
-          <% if registre.history %>
-          <%= link_to registre.history.title, edit_history_path(registre.history )%>
-          <% end %>
+        [<%= registre.user ? registre.user.name : 'Nil' %>]
+      </td>
+        <td>  
+         <% if registre.history %>
+         <%= link_to registre.history.title, edit_history_path(registre.history )%>
+         <% end %>
+       </td>
+       <td>  
+        <%= link_to registre.event.title,  registre.event %>
+      </td>
+      <td>
+       <%= link_to approve_link_text(registre), toggle_approve_registre_path(registre), :remote => true, :id => "approve_link_registre_#{registre.id}", class: "btn btn-xs btn-success" %>
+     </td>
+     <td>
+      <%= link_to 'Destroy', registre, confirm: 'Are you sure?', method: :delete, class: "btn  btn-xs btn-danger" %>
+    </td>
+  </tr>
+  <% end %>
+</table> <!--  panel-body -->
+</div> <!-- show inclusion -->
+</div> <!-- panel  -->
+</div><!-- col-md-3-->
+
+<!-- Deuxieme bloc : histoires-->
+<div class="col-md-6">
+ <div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-md-9">
+        Histoires (<%= @histories_block_admin.count %>)
+      </div>
+      <div class="col-md-2 text-right">
+       Masquer 
+     </div>
+     <div class="col-md-1 text-right">
+       <%= check_box_tag :show_history_box, '0', false, :class => "col-sm-1" %> 
+     </div>
+   </div>
+ </div>  
+ <div id="show_history">
+   <table class="table"> 
+    <% @histories_block_admin.each do |history| %>
+    <tr>
+      <td>
+        [<%= history.user ? histo.user.name : 'Nil' %>]
+      </td>
+      <td>
+        <%= link_to history.title, edit_history_path(history) %>
+      </td>
+      <td>
+       <%= link_to approve_link_text(history), toggle_approve_history_path(history), :remote => true, :id => "approve_link_history_#{history.id}", class: "btn btn-xs btn-success" %>
+     </td> 
+     <td>
+      <%= link_to 'Destroy', history, confirm: 'Are you sure?', method: :delete, class: "btn btn-xs btn-danger" %>
+    </td>
+  </tr> <!-- one row -->
+  <% end %>
+</table> <!--  panel-body -->
+</div><!-- show_history -->
+</div> <!-- panel  -->
+</div><!-- bloc 2 row 1-->
+
+</div><!-- fin row 1 -->
+
+<div class="row"> <!--  row 2  -->
+
+  <!-- Premier bloc : Events -->
+
+  <div class="col-md-6">
+   <div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-9">
+          Évènements (<%= @events_block_admin.count %>)
+        </div>
+        <div class="col-md-2 text-right">
+         Masquer 
+       </div>
+       <div class="col-md-1 text-right">
+         <%= check_box_tag :show_event_box, '0', false, :class => "col-sm-1" %> 
+       </div>
+     </div>
+   </div>  
+   <div id="show_event">
+     <table class="table"> 
+      <% @events_block_admin.each do |event| %>
+      <tr>
+        <td>
+          [<%= event.user ? event.user.name : 'Nil' %>]
         </td>
-        <td><%= link_to registre.event.title,  registre.event %></td>
-        <td><%= link_to approve_link_text(registre), toggle_approve_registre_path(registre), :remote => true, :id => "approve_link_#{registre.id}" %></td> 
-        <td><%= link_to ' | Destroy', registre, confirm: 'Are you sure?', method: :delete %></td>
-      </tr>
-      <% end %>
-    </table>
+        <td>
+          <%= link_to event.title, edit_event_path(event) %>
+        </td>
+        <td>
+         <%= link_to approve_link_text(event), toggle_approve_event_path(event), :remote => true, :id => "approve_link_event_#{event.id}", class: "btn btn-xs btn-success" %>
+       </td> 
+       <td>
+        <%= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete, class: "btn btn-xs btn-danger" %>
+      </td>
+    </tr> <!-- one row -->
+    <% end %>
+  </table> <!--  panel-body -->
+</div><!-- show_history -->
+</div> <!-- panel  -->
+</div><!-- bloc 1 row 2-->
 
 
+<!--  Bloc2 row 2 : Gedcoms -->
 
+<div class="col-md-6">
+ <div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-md-9">
+        Gedcoms (<%= @gedcoms_block_admin.count %>)
+      </div>
+      <div class="col-md-2 text-right">
+       Masquer 
+     </div>
+     <div class="col-md-1 text-right">
+       <%= check_box_tag :show_gedcom_box, '0', false, :class => "col-sm-1" %> 
+     </div>
+   </div>
+ </div>  
+ <div id="show_gedcom">
+   <table class="table"> 
+    <% @gedcoms_block_admin.each do |gedcom| %>
+    <tr>
+      <td>
+        [<%= gedcom.user ? gedcom.user.name : 'Nil' %>]
+      </td>
+      <td>
+        <%= link_to gedcom.name, edit_gedcom_path(gedcom) %>
+      </td>
+      <td>
+       <%= link_to approve_link_text(gedcom), toggle_approve_gedcom_path(gedcom), :remote => true, :id => "approve_link_gedcom_#{gedcom.id}", class: "btn btn-xs btn-success" %>
+     </td> 
+     <td>
+      <%= link_to 'Destroy', gedcom, confirm: 'Are you sure?', method: :delete, class: "btn btn-xs btn-danger" %>
+    </td>
+  </tr> <!-- one row -->
+  <% end %>
+</table> <!--  panel-body -->
+</div><!-- show_gedcom -->
+</div> <!-- panel  -->
 
-	<% end %>
+</div><!-- bloc 2 row 2-->
+</div><!-- fin row 2 -->
 
+<% end %> <!-- admin -->
 
-
-<% end %>
-
-
-
-
-
+<% end %> <!-- contrib  -->

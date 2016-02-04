@@ -13,9 +13,9 @@ end
     @events_block_five = Event.where(approved: true).limit(5)
     @gedcoms_block_five= Gedcom.where(public: true).limit(5)
   	if signed_admin?
-  		@histories_block_admin = History.all
-      @registres_block_admin = Registre.all
-      @events_block_admin = Event.all
+  		@histories_block_admin = History.where(approved: false)
+      @registres_block_admin = Registre.where(approved: false)
+      @events_block_admin = Event.where(approved: false)
       @gedcoms_block_admin= Gedcom.all
   	end
   	if signed_in?

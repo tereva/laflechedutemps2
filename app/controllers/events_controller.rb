@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
   before_filter :signed_user, only: [:new, :create, :edit, :update, :destroy]
-  before_filter :signed_admin, only: [:import]
+  before_filter :signed_admin, only: [:import, :toggle_approve]
   before_filter :can_modify_event,  only: [:edit, :update, :destroy] 
   before_filter :can_show_event,  only: [:show] 
 
@@ -97,6 +97,15 @@ class EventsController < ApplicationController
     Event.import(params[:file], params[:history_id], current_user.id)
     redirect_to events_url, notice: "Events imported"
   end
+
+
+def toggle_approve
+    @event2=Event.find(params[:id])
+    @event2.toggle!(:approved)
+    respond_to do |format|
+      format.js
+    end
+end
 
 private 
 

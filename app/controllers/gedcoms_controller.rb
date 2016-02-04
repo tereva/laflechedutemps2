@@ -150,6 +150,17 @@ def compareHisGed
     end
   end
 
+  def toggle_approve
+    @gedcom2=Gedcom.find(params[:id])
+    @gedcom2.toggle!(:approved)
+    
+    respond_to do |format|
+      format.js
+    end
+
+    #render :nothing => true
+  end
+
 end
 
 

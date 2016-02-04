@@ -5,7 +5,8 @@ before_filter :signed_admin, only: [:destroy, :toggle_approve]
 
   def create
 
-  @registre=Registre.new(history_id:params[:history_id],event_id:params[:event_id] )
+  #@registre=Registre.new(history_id:params[:history_id],event_id:params[:event_id] )
+  @registre=current_user.registres.build(history_id:params[:history_id],event_id:params[:event_id] )
   if @registre.save
       if current_user.admin 
           @registre.toggle!(:approved)

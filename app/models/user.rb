@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_many :histories
   has_many :events
   has_many :gedcoms
+  has_many :registres
 
 
 

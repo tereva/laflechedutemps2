@@ -1,6 +1,10 @@
 <h1>Toutes les généalogies</h1>
 
- <p>Il y a <%= @gedcoms.count %> généalogies disponibles.</p>
+ <p>
+ 	Il y a <%= @gedcoms.count %> généalogies disponibles. Vous pouvez visualiser 
+ 	la liste des individus qui les composent, sans information de relation à ce stade.
+ </p>
+
 
 <ol> 
 <% @gedcoms.each do |ged| %>

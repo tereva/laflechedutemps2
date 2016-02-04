@@ -1,3 +1,5 @@
+<% provide(:title, @history.title ) %>
+
 <p id="notice"><%= notice %></p>
 <%= link_to '<< Retour', histories_path %>
 <p><a class="btn btn-primary btn-lg" role="button" href= "<%= timeline_history_path(@history)%>" >Frise</a></p>
