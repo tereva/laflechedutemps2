@@ -1,3 +1,4 @@
+
 <hr id="about" class="featurette-divider">
 
 <div class="row">
@@ -12,7 +13,6 @@
   </div>
 
 </div>
-
 
 <hr class="featurette-divider" id="summary">
 
@@ -33,7 +33,6 @@
   <!-- /.col-md-4 -->
   <div class="col-md-4">
     <h2>Les derniers Evènements...</h2>
-    <p>
      <ul class="list-group"> 
       <% @events_block_five.each do |event| %>
       <li class="list-group-item">
@@ -42,7 +41,6 @@
       </li>
       <% end %>
     </ul>      
-  </p>
   <a class="btn btn-info" href="<%= events_path %>">Voir plus...</a>
 </div>
 <!-- /.col-md-4 -->
@@ -65,58 +63,211 @@
 <!-- /.row -->
 
 <% if signed_in? %>
+<hr class="featurette-divider">
 
+<h2>CONTRIB : Gestion de vos contributions</h2>
 
-<h2> CONTRIB : Toutes mes histoires</h2>
+<p>
+Vous avez la possibilité de modifier vos contributions (histoire, évènement, gedcom) jusqu'à leur "approbation". 
+</p>
 
-<table>
-  <tr>
-    <th>Status</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="row"> <!--  row 1  -->
 
-  <% @histories_block_contrib.each do |histo| %>
-  <tr>
-    <td><%= histo.approved ? '[Approved]' : '[Not approved]'%></td> 
-    <td><%= histo.title %>  (<%= histo.events.count %> évènements)</td>
-    <td><%= link_to 'Show', histo %></td>
-    <td><%= link_to ' | Edit', edit_history_path(histo) %></td> 
-    <% if !histo.approved || current_user.admin %> 
-    <td><%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+  <!-- Premier bloc : inclusions -->
+  <div class="col-md-6">
+   <div class="panel panel-primary panelrow">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-9">
+          Inclusions (<%= @registres_block_contrib.count %>)
+        </div>
+        <div class="col-md-2 text-right">
+         Masquer 
+
+       </div>
+       <div class="col-md-1 text-right">
+         <%= check_box_tag :show_inclusion_box_contrib, '0', true, :class => "col-sm-1" %> 
+       </div>
+     </div>
+   </div>
+   <div id="show_inclusion_contrib" style="display:none;">
+     <table class="table">
+      <% @registres_block_contrib.each do |registre| %>
+      <tr>
+        <td>
+         <%= registre.approved ? '[Approved]' : '[Not approved]'%>
+       </td>
+       <td>  
+         <% if registre.history %>
+         <%= link_to registre.history.title, edit_history_path(registre.history )%>
+         <% end %>  
+       </td>
+       <td>  
+        <%= link_to registre.event.title,  registre.event %>
+      </td>
+      <td>
+        <% if !registre.approved || current_user.admin %> 
+        <%= link_to 'Destroy', registre, confirm: 'Are you sure?', method: :delete, class: "btn  btn-xs btn-danger" %> 
+        <% end %>
+      </td>
+    </tr>
     <% end %>
-  </tr>
-  <% end %>
-</table>
+  </table> <!--  panel-body -->
+</div> <!-- show inclusion -->
+</div> <!-- panel  -->
+</div><!-- col-md-3-->
+
+<!-- Deuxieme bloc : histoires-->
+<div class="col-md-6">
+ <div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-md-9">
+        Histoires (<%= @histories_block_contrib.count %>)
+      </div>
+      <div class="col-md-2 text-right">
+       Masquer 
+     </div>
+     <div class="col-md-1 text-right">
+       <%= check_box_tag :show_history_box_contrib, '0', true, :class => "col-sm-1" %> 
+     </div>
+   </div>
+ </div>  
+ <div id="show_history_contrib" style="display:none;">
+   <table class="table"> 
+    <% @histories_block_contrib.each do |history| %>
+    <tr>
+      <td>
+        <%= history.approved ? '[Approved]' : '[Not approved]'%>
+      </td>
+      <td>
+        <%= history.title %>
+      </td>
+      <td>  
+        <%= link_to 'Voir', history, class: "btn btn-xs btn-success" %>
+      </td>  
+      <% if !history.approved || current_user.admin %> 
+      <td>  
+        <%= link_to 'Edit', edit_history_path(history), class: "btn btn-xs btn-success" %>
+      </td>
+      <td>
+        <%= link_to 'Destroy', history, confirm: 'Are you sure?', method: :delete, class: "btn btn-xs btn-danger" %>
+      </td>
+      <% end %>
+    </tr> <!-- one row -->
+    <% end %>
+  </table> <!--  panel-body -->
+</div><!-- show_history -->
+</div> <!-- panel  -->
+</div><!-- bloc 2 row 1-->
+
+</div><!-- fin row 1 -->
+
+<div class="row"> <!--  row 2  -->
+
+  <!-- Premier bloc : Events -->
+
+  <div class="col-md-6">
+   <div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-9">
+          Évènements (<%= @events_block_contrib.count %>)
+        </div>
+        <div class="col-md-2 text-right">
+         Masquer 
+       </div>
+       <div class="col-md-1 text-right">
+         <%= check_box_tag :show_event_box_contrib, '0', true, :class => "col-sm-1" %> 
+       </div>
+     </div>
+   </div>  
+   <div id="show_event_contrib" style="display:none;">
+     <table class="table"> 
+      <% @events_block_contrib.each do |event| %>
+      <tr>
+        <td>
+         <%= event.approved ? '[Approved]' : '[Not approved]'%>
+       </td>
+         <td>
+         <%= event.title %>
+       </td>
+       <td>  
+        <%= link_to 'Voir', event, class: "btn btn-xs btn-success" %>
+      </td>  
+      <% if !event.approved || current_user.admin %> 
+      <td>  
+        <%= link_to 'Edit', edit_event_path(event), class: "btn btn-xs btn-success" %>
+      </td>
+      <td>
+        <%= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete, class: "btn btn-xs btn-danger" %>
+      </td>
+      <% end %>
+    </tr> <!-- one row -->
+    <% end %>
+  </table> <!--  panel-body -->
+</div><!-- show_history -->
+</div> <!-- panel  -->
+</div><!-- bloc 1 row 2-->
 
 
+<!--  Bloc2 row 2 : Gedcoms -->
 
-<h2> CONTRIB : Toutes mes Gedcoms</h2>
+<div class="col-md-6">
+ <div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-md-9">
+        Gedcoms (<%= @gedcoms_block_contrib.count %>)
+      </div>
+      <div class="col-md-2 text-right">
+       Masquer 
+     </div>
+     <div class="col-md-1 text-right">
+       <%= check_box_tag :show_gedcom_box_contrib, '0', true, :class => "col-sm-1" %> 
+     </div>
+   </div>
+ </div>  
+ <div id="show_gedcom_contrib" style="display:none;">
+   <table class="table"> 
+    <% @gedcoms_block_contrib.each do |gedcom| %>
+    <tr>
+      <td>
+        <%= gedcom.approved ? '[Approved]' : '[Not approved]'%>
+      </td>
+      <td>
+        <%= gedcom.public ? '[Public]' : '[Private]'%>
+      </td>
+      <td>
+        <%= gedcom.name  %>
+      </td>
 
-<table>
-  <tr>
-    <th>Status</th>
-    <th>Title</th>
-    <th></th>
-    <th></th>
-  </tr>
+      <td>  
+        <%= link_to 'Voir', gedcom, class: "btn btn-xs btn-success" %>
+      </td>
 
-  <% @gedcoms_block_contrib.each do |gedcom| %>
-  <tr>
-    <td><%= gedcom.public ? '[Public]' : '[Privé]'%></td> 
-    <td><%= gedcom.name %> </td>
-    <td><%= link_to 'Show', gedcom %></td>
-    <td><%= link_to ' | Destroy', gedcom, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-  <% end %>
-</table>
+      <% if !gedcom.approved || current_user.admin %> 
+      <td>  
+        <%= link_to 'Edit', edit_gedcom_path(gedcom), class: "btn btn-xs btn-success" %>
+      </td>
+      <td>
+        <%= link_to 'Destroy', gedcom, confirm: 'Are you sure?', method: :delete, class: "btn btn-xs btn-danger" %>
+      </td>
+      <% end %>
+    </tr> <!-- one row -->
+    <% end %>
+  </table> <!--  panel-body -->
+</div><!-- show_gedcom -->
+</div> <!-- panel  -->
+
+</div><!-- bloc 2 row 2-->
+</div><!-- fin row 2 -->
 
 
 
 <% if current_user.admin %>  
 
+<hr class="featurette-divider">
 
 <h2>ADMIN :  à valider</h2>
 
@@ -135,17 +286,17 @@
 
        </div>
        <div class="col-md-1 text-right">
-         <%= check_box_tag :show_inclusion_box, '0', false, :class => "col-sm-1" %> 
+         <%= check_box_tag :show_inclusion_box, '0', true, :class => "col-sm-1" %> 
        </div>
      </div>
    </div>
-   <div id="show_inclusion">
+   <div id="show_inclusion" style="display:none;">
      <table class="table">
       <% @registres_block_admin.each do |registre| %>
       <tr>
         <td>
-        [<%= registre.user ? registre.user.name : 'Nil' %>]
-      </td>
+          [<%= registre.user ? registre.user.name : 'Nil' %>]
+        </td>
         <td>  
          <% if registre.history %>
          <%= link_to registre.history.title, edit_history_path(registre.history )%>
@@ -179,16 +330,16 @@
        Masquer 
      </div>
      <div class="col-md-1 text-right">
-       <%= check_box_tag :show_history_box, '0', false, :class => "col-sm-1" %> 
+       <%= check_box_tag :show_history_box, '0', true, :class => "col-sm-1" %> 
      </div>
    </div>
  </div>  
- <div id="show_history">
+ <div id="show_history" style="display:none;">
    <table class="table"> 
     <% @histories_block_admin.each do |history| %>
     <tr>
       <td>
-        [<%= history.user ? histo.user.name : 'Nil' %>]
+        [<%= history.user ? history.user.name : 'Nil' %>]
       </td>
       <td>
         <%= link_to history.title, edit_history_path(history) %>
@@ -223,11 +374,11 @@
          Masquer 
        </div>
        <div class="col-md-1 text-right">
-         <%= check_box_tag :show_event_box, '0', false, :class => "col-sm-1" %> 
+         <%= check_box_tag :show_event_box, '0', true, :class => "col-sm-1" %> 
        </div>
      </div>
    </div>  
-   <div id="show_event">
+   <div id="show_event" style="display:none;">
      <table class="table"> 
       <% @events_block_admin.each do |event| %>
       <tr>
@@ -264,11 +415,11 @@
        Masquer 
      </div>
      <div class="col-md-1 text-right">
-       <%= check_box_tag :show_gedcom_box, '0', false, :class => "col-sm-1" %> 
+       <%= check_box_tag :show_gedcom_box, '0', true, :class => "col-sm-1" %> 
      </div>
    </div>
  </div>  
- <div id="show_gedcom">
+ <div id="show_gedcom" style="display:none;">
    <table class="table"> 
     <% @gedcoms_block_admin.each do |gedcom| %>
     <tr>
@@ -294,5 +445,6 @@
 </div><!-- fin row 2 -->
 
 <% end %> <!-- admin -->
+
 
 <% end %> <!-- contrib  -->

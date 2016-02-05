@@ -1,3 +1,5 @@
+<% provide(:title, "Toutes les Histoires" ) %>
+<% provide(:meta_desc, "Toutes les Histoires classées par ordre anti-chronologique" ) %>
 
 <h1>Toutes les Histoires validées</h1>
 
@@ -9,7 +11,7 @@
 <b><%= link_to histo.title, histo %> (<%= histo.events.count %>)</b>
 <% if signed_admin? %> 
   <%= link_to ' Edit', edit_history_path(histo) %>
-  <%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %></td>
+  <%= link_to ' | Destroy', histo, confirm: 'Are you sure?', method: :delete %>
 <% end %>
 <p><%= histo.description %></p>
 </li> 

@@ -24,7 +24,7 @@ Krono::Application.routes.draw do
   resources :registres, only: [:create, :destroy]
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :gedcoms, only: [:show, :destroy]
+  resources :gedcoms, only: [:show, :destroy, :upload]
 
 
   # Ajout de la methode toggle_approve comme ressource routable de l'objet Histoire
@@ -61,7 +61,7 @@ Krono::Application.routes.draw do
   match '/genealogy', to: 'static_pages#genealogy'
   match '/genealogy_timeline', to: 'static_pages#genealogy_timeline'
   match '/parse', to: 'static_pages#parse'
-  match '/upload', to: 'gedcoms#upload'
+  match '/upload-gedcom', to: 'gedcoms#upload'
   match '/jsonized', to: 'histories#jsonized'
   match '/compare-history-gedcom', to: 'gedcoms#compareHisGed'  
   match '/compare-two-histories', to: 'histories#compareHisHis'  

@@ -8,21 +8,22 @@ class GedcomsController < ApplicationController
 end
 
  def upload
-
+  @gedcom = current_user.gedcoms.new
   if params[:file] 
    # check here if it s a gedcom file
-    gedcom = current_user.gedcoms.new
-    gedcom.name= sanitize_filename(params[:file].original_filename)
-    gedcom.content = ((File.open(params[:file].path, "r:iso8859-2"){ |f| 
+    #@gedcom = current_user.gedcoms.new
+    @gedcom.name= sanitize_filename(params[:file].original_filename)
+    @gedcom.content = ((File.open(params[:file].path, "r:iso8859-2"){ |f| 
       f.read}).gsub("\r", "\n")).gsub("\n\n", "\n")
-    gedcom.public = params[:public] 
-    gedcom.description = params[:description] 
-    if gedcom.save
-     flash[:success] = "Gedcom uploaded!"
-     redirect_to root_path
+    @gedcom.public = params[:public] 
+    @gedcom.description = params[:description] 
+    if @gedcom.save
+     flash.now[:success] = "Gedcom uploaded!"
+     #redirect_to root_path
+     render 'gedcoms/edit'
    else
      flash.now[:danger] = "Error : Gedcom not recorded !"
-     render 'gedcom/upload'
+     render 'gedcoms/upload'
    end
  end
  

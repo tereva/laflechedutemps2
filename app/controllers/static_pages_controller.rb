@@ -7,31 +7,32 @@ def index
 render :layout => 'one_page_layout'
 end
 
-  def home
+def home
 
-  	@histories_block_five = History.where(approved: true).limit(5)
-    @events_block_five = Event.where(approved: true).limit(5)
-    @gedcoms_block_five= Gedcom.where(public: true).limit(5)
-  	if signed_admin?
-  		@histories_block_admin = History.where(approved: false)
-      @registres_block_admin = Registre.where(approved: false)
-      @events_block_admin = Event.where(approved: false)
-      @gedcoms_block_admin= Gedcom.all
-  	end
-  	if signed_in?
-  		@histories_block_contrib = current_user.histories
-      @gedcoms_block_contrib = current_user.gedcoms
-  	end
-   render :layout => 'home_layout'
+ @histories_block_five = History.where(approved: true).limit(5)
+ @events_block_five = Event.where(approved: true).limit(5)
+ @gedcoms_block_five= Gedcom.where(public: true).limit(5)
+   if signed_admin?
+    @histories_block_admin = History.where(approved: false)
+    @registres_block_admin = Registre.where(approved: false)
+    @events_block_admin = Event.where(approved: false)
+    @gedcoms_block_admin= Gedcom.where(approved: false)
+
   end
+  if signed_in?
+    @histories_block_contrib = current_user.histories
+    @gedcoms_block_contrib = current_user.gedcoms
+    @registres_block_contrib = current_user.registres
+    @events_block_contrib = current_user.events
+  end
+  render :layout => 'home_layout'
+end
 
  
   def help
   end
 
-
   def genealogy_timeline
-
 
   if params[:file] && params[:history_id]
 

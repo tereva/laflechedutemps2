@@ -1,96 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><%= full_title(yield(:title)) %></title>
+  <title><%= full_title(yield(:title)) %></title>
+  <meta name="description" content= "<%=full_meta_desc(yield(:meta_desc)) %>" />
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
- <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> -->
+
 
   <%= render 'layouts/shim' %>
 
-<%= render 'layouts/google_analytics' if Rails.env.production? %>
+  <%= render 'layouts/google_analytics' if Rails.env.production? %>
 
-<body>
+  <body>
 
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <!-- <a class="navbar-brand" href="<%= root_path %>">KRONOFIL</a> -->
-    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+          <!-- <a class="navbar-brand" href="<%= root_path %>">KRONOFIL</a> -->
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+
+          <li class="dropdown">
+            <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chronologies<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+             <li><%= link_to "Histoires", histories_path%></li>
+             <li><%= link_to "Évènements",  events_path%> </li>
+             <li><%= link_to "Généalogies",  gedcoms_path%> </li>
+           </ul>
+         </li>
+
+         <li id="fat-menu" class="dropdown">
+          <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Superposer<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+           <li><%= link_to "histoire-histoire", '/compare-two-histories'%></li>
+           <li><%= link_to "histoire-généalogie",  '/compare-history-gedcom'%> </li>
+         </ul>
+       </li>
 
 
-      <ul class="nav navbar-nav navbar-right">
-
-    <li class="dropdown">
-      <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chronologies<b class="caret"></b></a>
-      <ul class="dropdown-menu">
-       <li><%= link_to "Histoires", histories_path%></li>
-       <li><%= link_to "Évènements",  events_path%> </li>
-       <li><%= link_to "Généalogies",  gedcoms_path%> </li>
-      </ul>
+       <% if signed_in? %>
+       <li id="fat-menu" class="dropdown">
+        <a href="#"  class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
+        <ul class="dropdown-menu">
+         <li><%= link_to "Home Page", root_path %></li>
+         <li><%= link_to "Ajouter une Histoire",  new_history_path %> </li>
+         <li><%= link_to "Ajouter un Evenement",  new_event_path %> </li>
+         <li><%= link_to "Uploader un Gedcom",  "/upload-gedcom"%> </li>
+         <% if signed_admin? %>
+         <li><%= link_to "Gérer contributeurs", users_path %></li>
+         <% end %>
+         <li><%= link_to "Modifier votre profil", edit_user_path(current_user) %></li>
+         <li class="divider"></li>
+         <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+       </ul>
      </li>
-    
-    <li id="fat-menu" class="dropdown">
-      <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Superposer<b class="caret"></b></a>
-      <ul class="dropdown-menu">
-       <li><%= link_to "histoire-histoire", '/compare-two-histories'%></li>
-       <li><%= link_to "histoire-généalogie",  '/compare-history-gedcom'%> </li>
-      </ul>
-     </li>
 
+     <% else %>
+     <li><%= link_to "Connectez-vous", signin_path %></li>
+     <% end %>
 
-    <% if signed_in? %>
-    <li id="fat-menu" class="dropdown">
-      <a href="#"  class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
-      <ul class="dropdown-menu">
-       <li><%= link_to "Home Page", root_path %></li>
-       <li><%= link_to "Ajouter une Histoire",  new_history_path %> </li>
-       <li><%= link_to "Ajouter un Evenement",  new_event_path %> </li>
-       <li><%= link_to "Uploader un Gedcom",  "upload" %> </li>
-       <% if signed_admin? %>
-        <li><%= link_to "Gérer contributeurs", users_path %></li>
-       <% end %>
-        <li><%= link_to "Modifier votre profil", edit_user_path(current_user) %></li>
-       <li class="divider"></li>
-       <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
-      </ul>
-     </li>
-
-    <% else %>
-      <li><%= link_to "Connectez-vous", signin_path %></li>
-    <% end %>
-
-      </ul>
-  </div><!-- /.container-fluid -->
+   </ul> 
+ </div>
+ </div>
 </nav>
 
 
 <header>
-<div class="container"> 
-<div class="jumbotron myBackground">
-        <h1 class="whitney">Kronofil</h1>
-      <!--   <h3 class="gotham">Un voyage dans le temps et l'espace</p> -->
-     <!--    <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p> -->
-     <p>Un voyage dans le temps et l'espace</p>
-     <!-- <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p> -->
-          <a href="#about" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
-</div>
-</div>
+  <div class="container"> 
+    <div class="jumbotron myBackground">
+      <h1 class="whitney">Kronofil</h1>
+   <p>Un voyage dans le temps et l'espace</p>
+      <a href="#about" class="btn btn-circle page-scroll">
+        <i class="fa fa-angle-double-down animated"></i>
+      </a>
+    </div>
+  </div>
 </header>
 
- <div class="container">
-   <% flash.each do |key, value| %>
-    <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-   <% end %>
-  <%= yield %>
-<%= render 'layouts/footer' %> 
+<div class="container">
+ <% flash.each do |key, value| %>
+ <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+ <% end %>
+ <%= yield %>
+ <%= render 'layouts/footer' %> 
 
-  <%= debug(params) if Rails.env.development? %> 
- </div>
+ <%= debug(params) if Rails.env.development? %> 
+</div>
 
 </body>
 </html>

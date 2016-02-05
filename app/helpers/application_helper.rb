@@ -1,12 +1,21 @@
 module ApplicationHelper
 
 # Returns the full title on a per-page basis.
- def full_title(page_title)
-  base_title = "La Fleche du Temps"
-  if page_title.empty?
+ def full_title(title)
+  base_title = "KRONOFIL"
+  if title.empty?
    base_title
   else
-   "#{base_title} | #{page_title}"
+   "#{base_title} | #{title}"
+  end
+ end
+
+def full_meta_desc(meta_desc)
+  base_desc = "KRONOFIL: la fleche du temps"
+  if meta_desc.empty?
+   base_desc
+  else
+   "#{base_desc} | #{meta_desc}"
   end
  end
 

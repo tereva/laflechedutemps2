@@ -16,6 +16,7 @@ class HistoriesController < ApplicationController
   def show
     @history = History.find(params[:id])
     @events = @history.events.paginate(page: params[:page])
+    @registres = Registre.where(history_id:params[:id] )
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @history }
