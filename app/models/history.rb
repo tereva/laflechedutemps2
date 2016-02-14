@@ -22,7 +22,7 @@ class History < ActiveRecord::Base
   has_many :registres, foreign_key: "history_id", dependent: :destroy
   has_many  :events, through: :registres
 
- default_scope order: 'histories.created_at DESC'
+ default_scope order: 'histories.updated_at DESC'
 
 end
 

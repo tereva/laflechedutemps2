@@ -1,3 +1,7 @@
+<% provide(:title, "Toutes les Généalogies" ) %>
+<% provide(:meta_desc, "Toutes les généalogies classées par date de modification" ) %>
+
+
 <h1>Toutes les généalogies</h1>
 
  <p>
@@ -11,7 +15,7 @@
 <li>
 <b><%= link_to ged.name, ged %></b>
 <% if signed_admin? %> 
-  <%= link_to ' Edit', edit_history_path(ged) %>
+  <%= link_to ' Edit', edit_gedcom_path(ged) %>
   <%= link_to ' | Destroy', ged, confirm: 'Are you sure?', method: :delete %></td>
 <% end %>
 <p><%= ged.description %></p>

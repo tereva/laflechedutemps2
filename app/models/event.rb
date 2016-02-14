@@ -21,7 +21,7 @@ class Event < ActiveRecord::Base
  # before_save { |event| event.title = title.downcase }
  # validates :title, presence: true, uniqueness: {case_sensitive: false}
   
-  validates :title, presence: true
+  validates :title, presence: true, uniqueness: true
   validates :start, presence: true
   validates :place, presence: true
   validates :user_id, presence: true
@@ -31,12 +31,12 @@ class Event < ActiveRecord::Base
 
 
 
-default_scope order: 'events.start DESC'
+default_scope order: 'events.updated_at DESC'
 
   def self.import(file, history_id, user_id)
   	CSV.foreach(file.path, headers: true) do |row|
 
-      event = find_by_id(row["id"]) || new
+      event = find_by_title(row["title"]) || new # check if same event (same title) already exists
       event.attributes = row.to_hash.slice(*accessible_attributes)
       event.user_id = user_id
       event.approved = true

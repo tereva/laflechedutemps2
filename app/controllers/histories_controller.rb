@@ -15,7 +15,7 @@ class HistoriesController < ApplicationController
   # GET /histories/1.json
   def show
     @history = History.find(params[:id])
-    @events = @history.events.paginate(page: params[:page])
+    @events = @history.events.reorder('start ASC').paginate(page: params[:page])
     @registres = Registre.where(history_id:params[:id] )
     respond_to do |format|
       format.html # show.html.erb

@@ -1,6 +1,4 @@
 
-
-
 <h1>Comparaison histoire-histoire</h1>
 
 
@@ -8,6 +6,10 @@
 
 
 <% if @result %>
+
+<% provide(:title, "Comparaison : "+@history1.title + " / " + @history2.title) %>
+<% provide(:meta_desc, "Comparaison de deux histoires" ) %>
+
 <h3>Les données</h3>
 <ul>
 <li>Histoire 1 (bleu) : <%= @history1.title %></li>
@@ -45,4 +47,12 @@
 		</td> 
 	</tr>
 </table>
+
+<% else %>
+
+
+<% provide(:title, "Comparaison de deux histoires" ) %>
+<% provide(:meta_desc, "Comparaison de deux histoires" ) %>
+
+
 <% end %>
