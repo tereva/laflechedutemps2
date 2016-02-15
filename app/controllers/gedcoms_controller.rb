@@ -52,7 +52,11 @@ def compareHisGed
         end
           # we "sanitize" the filename to prevent names like ../../name
           @gedcom_name= sanitize_filename(params[:file].original_filename)
-          @path = Rails.root.join('public', 'GEDCOM', @gedcom_name)
+          if Rails.env.production? 
+            @path = Rails.root.join('tmp', @gedcom_name)
+          else
+            @path = Rails.root.join('public', 'GEDCOM', @gedcom_name)
+          end
           # upload in /public/GEDCOM
           File.open(@path, "wb") { |f| f.write(params[:file].read) }
           @timeline_req=root_url+'frise-history-gedcom?h='+@h.to_s+'&p='+@path.to_s

@@ -133,7 +133,7 @@ def compareHisHis
   @select1 = params[:h1] ? params[:h1] : History.first.id
   @select2 = params[:h2] ? params[:h2] : @select1
   if params[:frise_button]
-    @timeline_req='http://localhost:3000/frise-two-histories?h1='+@select1.to_s+'&h2='+@select2.to_s
+    @timeline_req=root_url+'frise-two-histories?h1='+@select1.to_s+'&h2='+@select2.to_s
     render :layout => 'timeline_layout2', :template => 'histories/frise'
   elsif params[:texte_button]
       @history1=History.find(@select1)

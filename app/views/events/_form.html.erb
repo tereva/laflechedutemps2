@@ -37,7 +37,7 @@
   </div>
     <div class="field">
     <%= f.label :linked_history_id %><br />
-<%= f.select(:linked_history_id, options_from_collection_for_select(History.where(approved: true), :id, :title, @event.linked_history_id))  %> 
+<%= f.collection_select(:linked_history_id, History.where(approved: true), :id, :title,  :include_blank => true)   %> 
   </div>
   
   <div class="actions">
