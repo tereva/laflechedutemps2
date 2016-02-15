@@ -41,10 +41,13 @@ default_scope order: 'events.updated_at DESC'
       event.user_id = user_id
       event.approved = true
       event.save!
-      registre = event.registres.new
-      registre.history_id = history_id
-      registre.approved = true
-      registre.save!
+      if ! Registre.where(history_id: history_id,event_id:event.id)
+        registre = event.registres.new
+        registre.user_id = user_id
+        registre.history_id = history_id
+        registre.approved = true
+        registre.save!
+      end
 
   	end
   end
