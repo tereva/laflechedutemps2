@@ -14,9 +14,9 @@ before_filter :signed_admin, only: [:destroy, :toggle_approve]
       flash[:success] = "Event added to history!"
        redirect_to edit_history_path params[:history_id]
     else
-      render 'histories/index'
+      flash[:danger] = "Event already in history!"
+      redirect_to edit_history_path params[:history_id]
    end
-
   #@history= History.find(params[:history_id])
   #@event = Event.find(params[:event_id])
   #@history.registres.create(event_id:@event.id)

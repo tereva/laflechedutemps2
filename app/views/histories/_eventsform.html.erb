@@ -1,6 +1,6 @@
 <%= form_tag({controller: "registres", action: "create"}, method:"post",
                     class: "nifty_form") do %>
-<%= select_tag(:event_id, options_from_collection_for_select(Event.all, :id, :title))  %>
+<%= select_tag(:event_id, options_from_collection_for_select(@possible_events, :id, :title))  %>
 <%= hidden_field_tag(:history_id, @history.id ) %>
 <%= submit_tag "Ajouter", class: "btn btn-large btn-primary" %>
 <% end %>

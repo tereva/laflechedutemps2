@@ -56,13 +56,16 @@ class HistoriesController < ApplicationController
   # GET /histories/1/edit
   def edit
     @history = History.find(params[:id])
+    events_ids_to_exclude = History.find(params[:id]).event_ids
+    all_event_ids = Event.pluck(:id)
+    @possible_events = Event.where(:id=> all_event_ids-events_ids_to_exclude)
     #@events = @history.events.paginate(page: params[:page])
     #@event=Event.all
     #@registre = @history.registres.build
   end
 
   def create
-    @history = current_user.histories.build(params[:history])
+    @history = current_user.histories.build(params[:history]) 
     if @history.save
       if current_user.admin 
           @history.toggle!(:approved)
