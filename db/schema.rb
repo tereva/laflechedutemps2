@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160204085918) do
+ActiveRecord::Schema.define(:version => 20160216104629) do
 
   create_table "chronologies", :force => true do |t|
     t.string   "title"
@@ -41,12 +41,12 @@ ActiveRecord::Schema.define(:version => 20160204085918) do
 
   create_table "gedcoms", :force => true do |t|
     t.string   "name"
-    t.string   "content"
-    t.boolean  "public",      :default => false
+    t.text     "content",     :limit => 255
+    t.boolean  "public",                     :default => false
     t.integer  "user_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.boolean  "approved",    :default => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.boolean  "approved",                   :default => false
     t.string   "description"
   end
 
