@@ -1,6 +1,6 @@
 <li>
 	<b>
-<% if event.linked_history_id && event.linked_history_id != 0 %>
+<% if event.linked_history_id %>
 <a href="<%= history_path(event.linked_history_id)%>">
 [<%= event.start.strftime("%d %b %Y") %>] <%= event.title %> | Lieu : <%= event.place %>  
 	<%= event.end  ? ( event.durationEvent ? "| Fin : " + event.end.strftime("%d/%m/%Y").to_s : "") 
