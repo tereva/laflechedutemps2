@@ -1,0 +1,141 @@
+     
+
+
+
+var tl;
+        
+        function onLoad() {
+            var eventSource = new Timeline.DefaultEventSource(0);
+            
+            var theme = Timeline.ClassicTheme.create();
+            theme.event.instant.icon = "no-image-40.png";
+            theme.event.instant.iconWidth = 40;  // These are for the default stand-alone icon
+            theme.event.instant.iconHeight = 40;
+            
+ 
+            var d = Timeline.DateTime.parseGregorianDateTime("<%= @startdate %>")
+            
+            var bandInfos = [
+                Timeline.createBandInfo({
+                    width:          "90%", 
+                    intervalUnit:   Timeline.DateTime.WEEK, 
+                    intervalPixels: 150,
+                    eventSource:    eventSource,
+                    date:           d,
+                    theme:          theme,
+                    eventPainter:   Timeline.CompactEventPainter,
+                    eventPainterParams: {
+                        iconLabelGap:     5,
+                        labelRightMargin: 20,
+                        
+                        iconWidth:        80, // These are for per-event custom icons
+                        iconHeight:       80,
+                        
+                        stackConcurrentPreciseInstantEvents: {
+                            limit: 5,
+                            moreMessageTemplate:    "%0 More Events",
+                            icon:                   "no-image-80.png", // default icon in stacks
+                            iconWidth:              80,
+                            iconHeight:             80
+                        }
+                    }
+                }),
+                Timeline.createBandInfo({
+                    width:          "10%", 
+                    intervalUnit:   Timeline.DateTime.MONTH, 
+                    intervalPixels: 100,
+                    eventSource:    eventSource,
+                    date:           d,
+                    theme:          theme,
+                    layout:         'overview'  // original, overview, detailed
+                })
+            ];
+            bandInfos[1].syncWith = 0;
+            bandInfos[1].highlight = true;
+
+                      var tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+   tl.loadJSON('<%= @timeline_req %>', function(json, url) {
+       eventSource.loadJSON(json, url);
+            
+        }
+        
+        var resizeTimerID = null;
+        function onResize() {
+            if (resizeTimerID == null) {
+                resizeTimerID = window.setTimeout(function() {
+                    resizeTimerID = null;
+                    tl.layout();
+                }, 500);
+            }
+        }
+
+
+<div id="my-timeline"  style="height: 300px; border: 1px solid #aaa; overflow-x:hidden; overflow-y:scroll;"></div>
+
+
+
+
+       var tl;
+
+     
+        function onLoad() {
+           
+
+             var eventSource = new Timeline.DefaultEventSource();
+    
+
+
+            
+            // var theme1 = Timeline.ClassicTheme.create();
+            // theme1.autoWidth = true; // Set the Timeline's "width" automatically.
+                                     // Set autoWidth on the Timeline's first band's theme,
+                                     // will affect all bands.
+            // theme1.timeline_start = new Date(Date.UTC(1700, 0, 1));
+            // theme1.timeline_stop  = new Date(Date.UTC(1850, 0, 1));
+              
+      
+              
+           var d = Timeline.DateTime.parseGregorianDateTime("<%= @startdate %>")
+            
+            // var bandInfos = [
+            //     Timeline.createBandInfo({
+            //         width:          "70%", // set to a minimum, autoWidth will then adjust
+            //         intervalUnit:   Timeline.DateTime.YEAR, 
+            //         intervalPixels: 100,
+            //         eventSource:    eventSource,
+            //         date:           d,
+            //         // theme:          theme1,
+            //         // layout:         'original'  // original, overview, detailed
+            //     })
+
+            // ];
+
+              var bandInfos = [
+                      Timeline.createBandInfo({
+                          eventSource:    eventSource,
+                          date:           d,
+                          width:          "70%", 
+                          intervalUnit:   Timeline.DateTime.YEAR, 
+                          intervalPixels: 100
+                      }),
+                      Timeline.createBandInfo({       
+                          showEventText:  false,
+                          trackHeight:    0.5,
+                          trackGap:       0.2,
+                          eventSource:    eventSource,
+                          date:           d,
+                          width:          "30%", 
+                          intervalUnit:   Timeline.DateTime.DECADE, 
+                          intervalPixels: 200
+                      })
+                    ];
+
+            bandInfos[1].syncWith = 0;
+            bandInfos[1].highlight = true;
+            //bandInfos[1].eventPainter.setLayout(bandInfos[0].eventPainter.getLayout());
+
+
+
+
+
+     

@@ -25,6 +25,7 @@ class HistoriesController < ApplicationController
 
   def timeline
    @history = History.find(params[:id])
+   @startYear = @history.getStartYear
    #@timeline_req='http://localhost:3000/jsonized?id='+@history.id.to_s
    @timeline_req=root_url+'jsonized?id='+@history.id.to_s
    render :layout => 'timeline_layout2'
@@ -134,6 +135,7 @@ def compareHisHis
   @select2 = params[:h2] ? params[:h2] : @select1
   if params[:frise_button]
     @timeline_req=root_url+'frise-two-histories?h1='+@select1.to_s+'&h2='+@select2.to_s
+    @startYear = [History.find(@select1).getStartYear, History.find(@select2).getStartYear].min
     render :layout => 'timeline_layout2', :template => 'histories/frise'
   elsif params[:texte_button]
       @history1=History.find(@select1)

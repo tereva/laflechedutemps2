@@ -46,3 +46,9 @@ def prepareData(color, path, action)
  	end
  	return tmp
 end
+
+def getStartYear
+  self.events.last.start.year
+end
+
+

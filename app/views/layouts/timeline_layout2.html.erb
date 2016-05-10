@@ -11,71 +11,69 @@
 
 
    <!-- Load the Timeline library after reseting the fonts, etc -->
-   <script src="http://simile.mit.edu/timeline/api/timeline-api.js" type="text/javascript"></script>
+   <!-- <script src="http://simile.mit.edu/timeline/api/timeline-api.js" type="text/javascript"></script>-->
    
- 
+<!-- <script src="http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js" type="text/javascript"></script> -->
+
+<script src="http://simile-widgets.googlecode.com/svn/timeline/trunk/src/webapp/api/timeline-api.js?bundle=true" type="text/javascript" ></script>
 
 
+   <script>   
 
-   <script>        
-        var tl;
 
-     
+    var tl;
+        
         function onLoad() {
-           
-
-             var eventSource = new Timeline.DefaultEventSource();
-    
-
-
+            var eventSource = new Timeline.DefaultEventSource(0);
             
-            // var theme1 = Timeline.ClassicTheme.create();
-            // theme1.autoWidth = true; // Set the Timeline's "width" automatically.
-                                     // Set autoWidth on the Timeline's first band's theme,
-                                     // will affect all bands.
-            // theme1.timeline_start = new Date(Date.UTC(1700, 0, 1));
-            // theme1.timeline_stop  = new Date(Date.UTC(1850, 0, 1));
-              
-      
-              
-            var d = Timeline.DateTime.parseGregorianDateTime("1760")
+            var theme = Timeline.ClassicTheme.create();
+           /* theme.event.instant.icon = "no-image-40.png";
+            theme.event.instant.iconWidth = 40;  // These are for the default stand-alone icon
+            theme.event.instant.iconHeight = 40;*/
             
-            // var bandInfos = [
-            //     Timeline.createBandInfo({
-            //         width:          "70%", // set to a minimum, autoWidth will then adjust
-            //         intervalUnit:   Timeline.DateTime.YEAR, 
-            //         intervalPixels: 100,
-            //         eventSource:    eventSource,
-            //         date:           d,
-            //         // theme:          theme1,
-            //         // layout:         'original'  // original, overview, detailed
-            //     })
-
-            // ];
-
-              var bandInfos = [
-                      Timeline.createBandInfo({
-                          eventSource:    eventSource,
-                          date:           d,
-                          width:          "70%", 
-                          intervalUnit:   Timeline.DateTime.YEAR, 
-                          intervalPixels: 100
-                      }),
-                      Timeline.createBandInfo({       
-                          showEventText:  false,
-                          trackHeight:    0.5,
-                          trackGap:       0.2,
-                          eventSource:    eventSource,
-                          date:           d,
-                          width:          "30%", 
-                          intervalUnit:   Timeline.DateTime.DECADE, 
-                          intervalPixels: 200
-                      })
-                    ];
-
+            var d = Timeline.DateTime.parseGregorianDateTime("<%= @startYear %>")
+            //var d = Timeline.DateTime.parseGregorianDateTime("1800")
+            var bandInfos = [
+                Timeline.createBandInfo({
+                    width:          "80%", 
+                    intervalUnit:   Timeline.DateTime.YEAR, 
+                    intervalPixels: 150,
+                    eventSource:    eventSource,
+                    date:           d,
+                   theme:          theme,
+                   /* eventPainter:   Timeline.CompactEventPainter,
+                    eventPainterParams: {
+                        iconLabelGap:     5,
+                        labelRightMargin: 20,
+                        
+                        iconWidth:        80, // These are for per-event custom icons
+                        iconHeight:       80,
+                        
+                        stackConcurrentPreciseInstantEvents: {
+                            limit: 5,
+                            moreMessageTemplate:    "%0 More Events",
+                            icon:                   "no-image-80.png", // default icon in stacks
+                            iconWidth:              80,
+                            iconHeight:             80
+                        }
+                    }*/
+                }),
+                Timeline.createBandInfo({
+                    width:          "20%", 
+                    intervalUnit:   Timeline.DateTime.DECADE, 
+                    intervalPixels: 100,
+                    eventSource:    eventSource,
+                    date:           d,
+                    theme:          theme,
+                    layout:         'overview'  // original, overview, detailed
+                })
+            ];
             bandInfos[1].syncWith = 0;
             bandInfos[1].highlight = true;
-            bandInfos[1].eventPainter.setLayout(bandInfos[0].eventPainter.getLayout());
+
+
+
+
           
           tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
    tl.loadJSON('<%= @timeline_req %>', function(json, url) {
@@ -92,7 +90,6 @@
         var resizeTimerID = null;
 
         function onResize() {
-          var tl;
             if (resizeTimerID == null) {
                 resizeTimerID = window.setTimeout(function() {
                     resizeTimerID = null;
@@ -100,8 +97,19 @@
                 }, 500);
             }
         }
+   </script>   
+ <style>
+        div.timeline-event-icon {
+            border: 1px solid #aaa;
+            padding: 1px;
+            background: white;
+        }
+        div.timeline-event-icon-default {
+            border: none;
+            padding: 0px;
+        }
+    </style>
 
-   </script>
 
 </head>
 

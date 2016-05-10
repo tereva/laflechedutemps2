@@ -64,6 +64,7 @@ def compareHisGed
           @timeline_req=root_url+'frise-history-gedcom?h='+@h.to_s+'&g='+@g.to_s
           @gedcom_name= Gedcom.find(@g).name
         end
+         @startYear = @history.getStartYear
         render :layout => 'timeline_layout2', :template => 'gedcoms/frise'
       elsif params[:text_button] 
         if params[:file]  

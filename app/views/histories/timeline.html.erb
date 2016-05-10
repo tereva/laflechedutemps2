@@ -2,23 +2,18 @@
 <p>
   <a class="btn btn-primary btn-lg" role="button" href= "<%= history_path(@history)%>" >Texte</a>
 </p>
-<div id="doc3" class="yui-t7">
-   <div id="hd" role="banner">
-     <h1><%= @history.title %></h1>
-     <p><%= @history.description %></p>
-   </div>
-   <div id="bd" role="main">
 
-	   <div class="yui-g">
-	     <div id='my-timeline'></div>
-	     <p>To move the Timeline: use the mouse scroll wheel, the arrow keys or grab and drag the Timeline.</p>
-	   </div> 
-	   
-	 </div>
-   <div id="ft" role="contentinfo">
-     <p>Timeline version <span id='tl_ver'></span></p>
-     <script>Timeline.writeVersion('tl_ver')</script> 
-   </div>
-</div>
+<h1><%= @history.title %></h1>
+     
+<p><%= @history.description %></p>
+
+<!--
+
+   <p>Timeline version <span id='tl_ver'></span>.</p>
+      <script>Timeline.writeVersion('tl_ver')</script>
+
+-->
+<div id="my-timeline" class="timeline-default" style="height: 600px;"> </div>
+  
 
 		
