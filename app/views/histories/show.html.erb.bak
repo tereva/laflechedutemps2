@@ -1,6 +1,9 @@
+<!--
+
 <% provide(:title, @history.title ) %>
 <% provide(:meta_desc, @history.description ) %>
 
+-->
 
 <p id="notice"><%= notice %></p>
 <%= link_to '<< Retour', histories_path %>
@@ -10,10 +13,10 @@
 
  <h2> Résumé</h2> 
 
-<p><%= @history.description %></p> 
+<p><%= @history.description %></p>
 
 
- <% if @events %>
+ <% if @history.events.any? %>
   <h2>Évènements (<%= @history.events.count %>)</h2>                 
   <ul>
    <%= render @events %>

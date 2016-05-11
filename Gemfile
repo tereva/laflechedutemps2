@@ -13,7 +13,7 @@ gem 'will_paginate-bootstrap', '1.0.1' # version pour bootstrap 3
 gem 'font-awesome-sass', '~> 4.4.0'
 
 group :development, :test do
- gem 'sqlite3', '1.3.5'
+ gem 'sqlite3', '>= 1.3.10'
  gem 'rspec-rails', '2.9.0'
  gem 'annotate', '~>2.4.1.beta'
 end
@@ -31,7 +31,7 @@ gem 'jquery-rails'
 group :test do
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails', '1.4.0'
-  gem 'debugger'
+ # gem 'debugger', '~> 1.6', '>= 1.6.8'
 end
 
 group :production do
